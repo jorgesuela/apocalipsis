@@ -28,8 +28,9 @@ public class Suministro extends Equipo {
         this.valorEnergetico = valorEnergetico;
     }
 
-    public void mostrarInfo(){
-        System.out.println("nombre: " + getNombre());
+    @Override
+    public void mostrarInfo() {
+        super.mostrarInfo(); // Llama al método de la clase base para mostrar la información común
         System.out.println("valor energetico: " + getValorEnergetico());
         System.out.println("caducidad: " + getCaducidad());
     }

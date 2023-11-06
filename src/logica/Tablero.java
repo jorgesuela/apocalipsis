@@ -30,7 +30,7 @@ public class Tablero {
         }
     }
 
-    public void printTablero() {
+    /*public void printTablero() {
         for (int fila = 0; fila < filas; fila++) {
             for (int columna = 0; columna < columnas; columna++) {
                 List<String> objetosEnCasilla = new ArrayList<>();
@@ -81,6 +81,6 @@ public class Tablero {
             }
             System.out.println();
         }
-    }
+    }*/
 
 }

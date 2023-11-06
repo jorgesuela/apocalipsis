@@ -39,9 +39,9 @@ public class Arma extends Equipo {
         return valorExito;
     }
 
-    public void mostrarInfo(){
-        System.out.println("ARMA");
-        System.out.println("nombre: " + getNombre());
+    @Override
+    public void mostrarInfo() {
+        super.mostrarInfo(); // Llama al método de la clase base para mostrar la información común
         System.out.println("potencia: " + getPotencia().toString());
         System.out.println("alcance: " + getAlcance().toString());
         System.out.println("valExito: " + getValorExito());
@@ -114,6 +114,7 @@ public class Arma extends Equipo {
 
         return armaEncontrada;
     }
+
 
 }
 

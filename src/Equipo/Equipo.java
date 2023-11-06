@@ -18,4 +18,8 @@ public abstract class Equipo {
         this.nombre = nombre;
     }
 
+    public void mostrarInfo() {
+        System.out.println("Nombre del equipo: " + getNombre());
+    }
+
 }

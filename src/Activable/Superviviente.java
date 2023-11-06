@@ -82,11 +82,7 @@ public class Superviviente extends Activable {
 
     public void consultarEquipo(){
         for (Equipo equipacion : equipo) {
-            if (equipacion instanceof Arma arma) {
-                arma.mostrarInfo();
-            } else if (equipacion instanceof Suministro suministro) {
-                suministro.mostrarInfo();
-            }
+            equipacion.mostrarInfo();
         }
     }
 
