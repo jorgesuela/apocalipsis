@@ -30,42 +30,33 @@ public class Tablero {
         }
     }
 
-    /*public void printTablero() {
-        for (int fila = 0; fila < filas; fila++) {
-            for (int columna = 0; columna < columnas; columna++) {
+    public void printTablero(ArrayList<Zombi> listaZombis, ArrayList<Superviviente> listaSupervivientes) {
+        for (int fila = 0; fila < tamaño; fila++) {
+            for (int columna = 0; columna < tamaño; columna++) {
                 List<String> objetosEnCasilla = new ArrayList<>();
 
                 int cantidadZombis = 0;
-                int cantidadCiudadanos = 0;
+                int cantidadSupervivientes = 0;
                 int cantidadSuministros = 0;
 
                 //matrizCasillas esta mal, hay que pensar como hacer para comparar las casillas
                 for (Zombi zombi : listaZombis) {
-                    if (zombi.getPosicion().equals(matrizCasillas[fila][columna])) {
+                    if (zombi.getPosicion().equals(casillas[fila][columna])) {
                         cantidadZombis++; // Contar zombis en la casilla
                     }
                 }
 
                 for (Superviviente superviviente : listaSupervivientes) {
-                    if (superviviente.getPosicion().equals(matrizCasillas[fila][columna])) {
-                        cantidadCiudadanos++; // Contar ciudadanos en la casilla
-                    }
-                }
-                // no se si hay que mostrar el equipo tambien
-                for (Suministro suministro : listaSuministros) {
-                    if (suministro.getPosicion().equals(matrizCasillas[fila][columna])) {
-                        cantidadSuministros++; // Contar suministros en la casilla
+                    if (superviviente.getPosicion().equals(casillas[fila][columna])) {
+                        cantidadSupervivientes++; // Contar ciudadanos en la casilla
                     }
                 }
 
                 if (cantidadZombis > 0) {
                     objetosEnCasilla.add("Z" + cantidadZombis); // Agregar número de zombis
                 }
-                if (cantidadCiudadanos > 0) {
-                    objetosEnCasilla.add("C" + cantidadCiudadanos); // Agregar número de ciudadanos
-                }
-                if (cantidadSuministros > 0) {
-                    objetosEnCasilla.add("S" + cantidadSuministros); // Agregar número de suministros
+                if (cantidadSupervivientes > 0) {
+                    objetosEnCasilla.add("S" + cantidadSupervivientes); // Agregar número de supervivientes
                 }
 
                 if (objetosEnCasilla.isEmpty()) {
@@ -81,6 +72,6 @@ public class Tablero {
             }
             System.out.println();
         }
-    }*/
+    }
 
 }
