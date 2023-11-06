@@ -11,8 +11,16 @@ public class Tablero {
     private Casilla[][] casillas;
     private Integer tamaño;
 
-    public Tablero(int x) {
-        this.casillas = new Casilla[x][x];
+    public Tablero(int tamaño) {
+        this.tamaño = tamaño;
+        this.casillas = new Casilla[tamaño][tamaño];
+
+        // Inicializar el tablero
+        for (int i = 0; i < tamaño; i++) {
+            for (int j = 0; j < tamaño; j++) {
+                casillas[i][j] = new Casilla(i, j);
+            }
+        }
     }
 
     public Casilla getCasilla(int x, int y) {
@@ -20,14 +28,6 @@ public class Tablero {
             return casillas[x][y];
         }
         return null; // Devuelve null si las coordenadas están fuera de los límites del tablero
-    }
-
-    public void crearTablero() {
-        for (int i = 0; i < tamaño; i++) {
-            for (int j = 0; j < tamaño; j++) {
-                casillas[i][j] = new Casilla(i, j);
-            }
-        }
     }
 
     public void printTablero(ArrayList<Zombi> listaZombis, ArrayList<Superviviente> listaSupervivientes) {
