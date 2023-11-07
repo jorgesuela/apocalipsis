@@ -30,6 +30,18 @@ public class Tablero {
         return null; // Devuelve null si las coordenadas están fuera de los límites del tablero
     }
 
+    public String hayZombi(ArrayList<Zombi> listaZombis, int x, int y){
+        int contador = 0;
+        if (x >= 0 && x < casillas.length && y >= 0 && y < casillas[0].length) {
+            for (Zombi zombi : listaZombis) {
+                if (zombi.getPosicion().equals(casillas[x][y])) {
+                    contador += 1;
+                }
+            }
+        }
+        return "hay " + contador + " zombi/s en la casilla " + casillas[x][y].toString(); // devuelve n zombis de casilla
+    }
+
     public void printTablero(ArrayList<Zombi> listaZombis, ArrayList<Superviviente> listaSupervivientes) {
         // Imprimir números en la parte superior
         System.out.print("  ");
