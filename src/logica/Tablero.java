@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Tablero {
     private Casilla[][] casillas;
-    private Integer tamaño;
+    private int tamaño;
 
     public Tablero(int tamaño) {
         this.tamaño = tamaño;
@@ -31,7 +31,17 @@ public class Tablero {
     }
 
     public void printTablero(ArrayList<Zombi> listaZombis, ArrayList<Superviviente> listaSupervivientes) {
+        // Imprimir números en la parte superior
+        System.out.print("  ");
+        for (int col = 0; col < tamaño; col++) {
+            System.out.print(col + "  ");
+        }
+        System.out.println();
+
         for (int fila = 0; fila < tamaño; fila++) {
+            // Imprimir número a la izquierda
+            System.out.print(fila + " ");
+
             for (int columna = 0; columna < tamaño; columna++) {
                 List<String> objetosEnCasilla = new ArrayList<>();
 
@@ -39,7 +49,7 @@ public class Tablero {
                 int cantidadSupervivientes = 0;
                 int cantidadSuministros = 0;
 
-                //matrizCasillas esta mal, hay que pensar como hacer para comparar las casillas
+                // matrizCasillas esta mal, hay que pensar cómo hacer para comparar las casillas
                 for (Zombi zombi : listaZombis) {
                     if (zombi.getPosicion().equals(casillas[fila][columna])) {
                         cantidadZombis++; // Contar zombis en la casilla
@@ -60,18 +70,18 @@ public class Tablero {
                 }
 
                 if (objetosEnCasilla.isEmpty()) {
-                    System.out.print("-"); // Casilla vacía
+                    System.out.print("__ "); // Casilla vacía
                 } else {
                     // Si hay objetos en la casilla, mostrarlos todos
                     for (String objeto : objetosEnCasilla) {
                         System.out.print(objeto);
                     }
+                    System.out.print(" ");
                 }
-
-                System.out.print(" ");
             }
             System.out.println();
         }
     }
+
 
 }
