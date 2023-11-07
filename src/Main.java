@@ -28,7 +28,7 @@ public class Main {
         Casilla casilla1 = tablero.getCasilla(2, 2);
         Zombi zombi1 = new Toxico(casilla1, 1, 2);
 
-        Casilla casilla2 = tablero.getCasilla(4, 4);
+        Casilla casilla2 = tablero.getCasilla(3, 2);
         Zombi zombi2 = new Toxico(casilla2, 1, 2);
 
 // Crear listas de zombis y supervivientes
@@ -46,5 +46,7 @@ public class Main {
         zombi2.moverse(tablero);
         tablero.printTablero(listaZombi, listaSup);
         System.out.println(zombi2.getPosicion().toString());
+        System.out.println(tablero.hayZombi(listaZombi, 2, 2));
     }
 }
+
