@@ -80,6 +80,10 @@ public class Superviviente extends Activable {
         this.nbHeridas = nbHeridas;
     }
 
+    public void noHacerNada(){
+        System.out.println("El superviviente no hizo nada");
+    }
+
     public void consultarEquipo(){
         for (Equipo equipacion : equipo) {
             equipacion.mostrarInfo();
