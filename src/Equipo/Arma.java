@@ -115,6 +115,14 @@ public class Arma extends Equipo {
         return armaEncontrada;
     }
 
+    public Boolean lanzarDado(){
+        Random random = new Random();
+        int min = 1;
+        int max = 6;
+        int randomDados = random.nextInt(max - min + 1) + min;
+        return randomDados >= this.valorExito; // true si acertó | false si falló
+    }
+
 
 }
 
