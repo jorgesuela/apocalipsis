@@ -30,6 +30,10 @@ public class Tablero {
         return null; // Devuelve null si las coordenadas están fuera de los límites del tablero
     }
 
+    public int getTamaño(){
+        return this.tamaño;
+    }
+
     public String hayZombi(ArrayList<Zombi> listaZombis, int x, int y){
         int contador = 0;
         if (x >= 0 && x < casillas.length && y >= 0 && y < casillas[0].length) {
