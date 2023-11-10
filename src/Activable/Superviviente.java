@@ -22,7 +22,7 @@ public class Superviviente extends Activable {
         super(posicion);
         this.nombre = nombre;
         this.vivo = true;
-        this.nbAcciones = 3;
+        this.nbAcciones = 5;
         this.equipo = new ArrayList<>();
         this.armasActivas = new ArrayList<>();;
         this.killScore = 0;
@@ -182,6 +182,8 @@ public class Superviviente extends Activable {
             System.out.println("alguien ha buscado ya en esta casilla, no hay equipo");
         }
         else{ // si nadie ha buscado en esa casilla
+            //marcamos como que ya esta buscada la casilla
+            this.getPosicion().setBuscado(true);
             //generamos un random, 1 o 2, si 1 o 2 -> generamos Arma, si 3 -> generamos suministro
             Random random = new Random();
             int min = 1;
@@ -193,6 +195,8 @@ public class Superviviente extends Activable {
             else{
                 equipoNuevo = Suministro.generarSuministroAleatorio();
             }
+            System.out.println("se ha encontrado el siguiente equipo: ");
+            equipoNuevo.mostrarInfo();
 
             // comprobar si equipo ya esta completo
             if (equipo.size() == 5){ // ya no puedes llevar mas equipo, esta completo
@@ -219,7 +223,7 @@ public class Superviviente extends Activable {
             }
             else if (equipo.size() <= 4){ // puedes llevar mas equipo
                 equipo.add(equipoNuevo); //no esta completo -> añadir equipo encontrado
-                System.out.println("Se ha equipado a " + this.nombre + " con el arma encontrada");
+                System.out.println("Se ha guardado en el inventario de " + this.nombre + " el equipo encontrado");
             }
         }
 
@@ -227,7 +231,7 @@ public class Superviviente extends Activable {
     }
 
     public static Superviviente crearSuperviviente(Tablero tablero) {
-        Casilla posicionInicial = new Casilla(0,0);
+        Casilla posicionInicial = tablero.getCasilla(0, 0);
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Ingrese el nombre del superviviente:");
@@ -235,12 +239,14 @@ public class Superviviente extends Activable {
 
         System.out.println("Elige cual quieres que sea tu posicion inicial:");
         System.out.println("1: Arriba izquierda (0,0)");
-        System.out.println("2: Abajo izquierda (0," + tablero.getTamaño() + ")");
+        System.out.println("2: Abajo izquierda (0," + (tablero.getTamaño() - 1) + ")");
         int opcion = scanner.nextInt();
 
         switch (opcion) {
-            case 1 -> posicionInicial = tablero.getCasilla(0, 0);
-            case 2 -> posicionInicial = tablero.getCasilla(0, tablero.getTamaño());
+            case 1 :    posicionInicial = tablero.getCasilla(0, 0);
+                        break;
+            case 2 :    posicionInicial = tablero.getCasilla(tablero.getTamaño() - 1, 0);
+                        break;
         }
 
         // Crear y devolver el superviviente
