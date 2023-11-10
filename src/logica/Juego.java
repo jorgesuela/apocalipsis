@@ -1,6 +1,7 @@
 package logica;
 
 import Activable.Superviviente;
+import Activable.Toxico;
 import Activable.Zombi;
 import Equipo.*;
 
@@ -15,7 +16,15 @@ public class Juego {
     private Casilla objectivo;
     private Tablero tablero;
 
+    public Juego() {
+        this.supervivientes = new ArrayList<>();
+        this.zombis = new ArrayList<>();
+        this.equipo = new ArrayList<>();
+
+    }
+
     public void mostrarEstadisticas(){}
+
     public void mostrarMenuSuperviviente(){
         System.out.println("1: Moverse");
         System.out.println("2: Buscar");
@@ -23,21 +32,26 @@ public class Juego {
         System.out.println("4: Elegir arma");
         System.out.println("5: No hacer nada");
     }
+
     public void iniciar(){
         int contadorTurnos = 0;
         System.out.println("COMENZANDO EL JUEGO...");
-        
+
         // cuantos supervivientes?
         int numSupervivientes = seleccionarNumSupervivientes();
 
         // crear el tablero en base al numero de supervivientes
         crearTablero(numSupervivientes);
-        
-        // aqui habria que crear los supervivientes y zombis iniciales y meterlos al tablero
-        
+
+        // aqui creamos los supervivientes iniciales y los metemos al tablero
+        this.supervivientes = crearSupervivientes(numSupervivientes);
+        // falta meter los zombies iniciales!!!
+        Zombi zombi1 = new Toxico(tablero.getCasilla(3,3), 2, 2);
+        this.zombis.add(zombi1);
+
         // aqui deberia haber un menu despues de cada turno que te permitiera elegir
         // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
-        
+
         while(true){ // esta condicion habra que cambiarla, es solo para probar funcionalidades
             //turno de todos los supervivientes
             realizarTurnoSupervivientes();
@@ -51,14 +65,13 @@ public class Juego {
 
     }
     public void finalizar(){}
-    
+
     public void reiniciar(){}
-    
+
     public void realizarTurnoSupervivientes(){
         for(Superviviente superviviente: supervivientes){
             // mostrar el tablero antes de tomar acciones
-            int numAcciones = superviviente.getNbAcciones();
-            while(numAcciones > 0) {
+            while(superviviente.getNbAcciones() > 0) {
                 // mostrar tablero antes de acciones
                 tablero.printTablero(zombis, supervivientes);
                 System.out.println("¿Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
@@ -69,21 +82,21 @@ public class Juego {
 
                 switch (entrada) {
                     case "1":   superviviente.moverse(tablero);
-                                numAcciones--;
+                                superviviente.restarAcciones();
                                 break;
 
                     case "2":   superviviente.buscarEquipo();
-                                numAcciones--;
+                                superviviente.restarAcciones();
                                 break;
 
-                    case "3":   numAcciones--; // aqui falta la accion buscar
+                    case "3":   superviviente.restarAcciones(); // aqui falta la accion buscar
                                 break;
 
-                    case "4":   numAcciones--; // aqui falta la accion elegir arma
+                    case "4":   superviviente.restarAcciones(); // aqui falta la accion elegir arma
                                 break;
 
                     case "5":   superviviente.noHacerNada();
-                                numAcciones--;
+                                superviviente.restarAcciones();
                                 break;
 
                     default:
@@ -94,6 +107,8 @@ public class Juego {
             }
             //mostrar tablero al acabar acciones de superviviente
             tablero.printTablero(zombis, supervivientes);
+            //después del turno de cada superviviente, se reestablecen sus acciones a 5
+            superviviente.resetearAcciones();
         }
     }
     public int seleccionarNumSupervivientes() {
@@ -124,10 +139,10 @@ public class Juego {
     }
 
     public ArrayList<Superviviente> crearSupervivientes(int numSupervivientes){
-        ArrayList<Superviviente> supervivientes = new ArrayList<Superviviente>();
+        ArrayList<Superviviente> supervivientes = new ArrayList<>();
         for (int i = 1; i <= numSupervivientes; i++) {
             //hay que crear el metodo para crear supervivientes por teclado!!!
-            Superviviente newSuperviviente = Superviviente.crearSuperviviente();
+            Superviviente newSuperviviente = Superviviente.crearSuperviviente(tablero);
             supervivientes.add(newSuperviviente);
         }
         return supervivientes;
@@ -137,4 +152,3 @@ public class Juego {
     public void generarZombis(){}
 
 }
-
