@@ -2,6 +2,7 @@ package Activable;
 
 import Equipo.*;
 import logica.Casilla;
+import logica.Tablero;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -88,6 +89,15 @@ public class Superviviente extends Activable {
         for (Equipo equipacion : equipo) {
             equipacion.mostrarInfo();
         }
+    }
+
+    // este metodo habra que modificarlo para cuando haya que restar acciones extra!!!
+    public void restarAcciones(){
+        this.nbAcciones = this.nbAcciones - 1;
+    }
+
+    public void resetearAcciones(){
+        this.nbAcciones = 5;
     }
 
     public void cambiarArma(Arma armaNueva){
@@ -216,4 +226,26 @@ public class Superviviente extends Activable {
 
     }
 
+    public static Superviviente crearSuperviviente(Tablero tablero) {
+        Casilla posicionInicial = new Casilla(0,0);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el nombre del superviviente:");
+        String nombre = scanner.nextLine();
+
+        System.out.println("Elige cual quieres que sea tu posicion inicial:");
+        System.out.println("1: Arriba izquierda (0,0)");
+        System.out.println("2: Abajo izquierda (0," + tablero.getTamaño() + ")");
+        int opcion = scanner.nextInt();
+
+        switch (opcion) {
+            case 1 -> posicionInicial = tablero.getCasilla(0, 0);
+            case 2 -> posicionInicial = tablero.getCasilla(0, tablero.getTamaño());
+        }
+
+        // Crear y devolver el superviviente
+        return new Superviviente(posicionInicial, nombre);
+    }
+
 }
+
