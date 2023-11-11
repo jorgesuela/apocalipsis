@@ -4,10 +4,7 @@ import Equipo.*;
 import logica.Casilla;
 import logica.Tablero;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Superviviente extends Activable {
     private String nombre;
@@ -86,9 +83,14 @@ public class Superviviente extends Activable {
     }
 
     public void consultarEquipo(){
+        int contador = 1;
+        System.out.println("################# BOLSA DE " + this.nombre.toUpperCase(Locale.ROOT) + " #################");
         for (Equipo equipacion : equipo) {
+            System.out.println("--------------------------------------" + "Equipo " + contador + " --------------------------------------");
             equipacion.mostrarInfo();
+            contador++;
         }
+        System.out.println("##################################################");
     }
 
     // este metodo habra que modificarlo para cuando haya que restar acciones extra!!!
