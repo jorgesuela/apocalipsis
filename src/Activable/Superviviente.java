@@ -157,7 +157,7 @@ public class Superviviente extends Activable {
             System.out.println("¿Qué equipo quieres soltar?");
             for (int i = 0; i < equipo.size(); i++) {
                 Equipo equipacion = equipo.get(i);
-                System.out.println("Equipación " + (i + 1) + ": " + equipacion.getNombre());
+                System.out.println("Equipacion " + (i + 1) + ": " + equipacion.getNombre());
             }
 
             // Leer la entrada del usuario como una cadena
@@ -169,16 +169,16 @@ public class Superviviente extends Activable {
             try {
                 numero = Integer.parseInt(entrada);
             } catch (NumberFormatException e) {
-                System.out.println("Entrada no válida. Ingrese un número.");
+                System.out.println("Entrada no valida. Ingrese un número.");
                 continue; // Volver a pedir la entrada
             }
 
             if (numero >= 1 && numero <= equipo.size()) {
+                System.out.println("Se ha soltado el siguiente equipo: " + equipo.get(numero -1).getNombre() + ".");
                 equipo.remove(numero - 1); // Restamos 1 porque los índices comienzan en 0
-                System.out.println("Equipo eliminado con éxito.");
                 break; // Salir del bucle cuando se ha eliminado correctamente
             } else {
-                System.out.println("Selecciona un equipamiento válido.");
+                System.out.println("Selecciona un equipamiento valido.");
             }
         }
     }
