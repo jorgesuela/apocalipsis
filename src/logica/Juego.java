@@ -51,7 +51,7 @@ public class Juego {
         this.supervivientes = crearSupervivientes(numSupervivientes);
 
         // falta meter los zombies iniciales!!!
-        Zombi zombi1 = new Toxico(tablero.getCasilla(3,3), 2, 2);
+        Zombi zombi1 = new Toxico(tablero.getCasilla(2,3), 2, 1);
         this.zombis.add(zombi1);
 
         // aqui deberia haber un menu despues de cada turno que te permitiera elegir
@@ -161,7 +161,24 @@ public class Juego {
         return supervivientes;
     }
 
-    public void realzarActivacionesZombis(){}
+    public void realzarActivacionesZombis() {
+        for (Zombi zombi : zombis) {
+            for (int i = 1; i <= zombi.getNbActivaciones(); i++) {
+                // Obtener el superviviente más cercano
+                Superviviente supervivienteMasCercano = zombi.encontrarSupervivienteMasCercano(supervivientes);
+
+                // Verificar si el zombi está en la misma casilla que el superviviente
+                if (supervivienteMasCercano != null && zombi.getPosicion().equals(supervivienteMasCercano.getPosicion())) {
+                    // Si están en la misma casilla, morder al superviviente
+                    // zombi.morder(supervivienteMasCercano);
+                } else {
+                    // Si no están en la misma casilla, mover hacia el superviviente más cercano
+                    zombi.moverHaciaSupervivienteMasCercano(tablero, supervivientes, supervivienteMasCercano);
+                }
+            }
+        }
+    }
+
     public void generarZombis(){}
 
 }
