@@ -29,6 +29,9 @@ public class Juego {
         System.out.println("######ACCIONES SIN COSTE######");
         System.out.println("6: Consultar equipo");
         System.out.println("7: Consultar armas equipadas");
+        System.out.println("######OPCIONES DE PARTIDA######");
+        System.out.println("0: finalizar la partida");
+        System.out.println("10: reiniciar la partida");
     }
 
     public void iniciar(){
@@ -69,9 +72,19 @@ public class Juego {
 
 
     }
-    public void finalizar(){}
 
-    public void reiniciar(){}
+    public void finalizar() {
+        System.out.println("¡La partida ha finalizado!");
+        mostrarEstadisticas();
+        System.exit(0);  // Esto finaliza la ejecución del programa
+    }
+
+    public void reiniciar() {
+        System.out.println("Reiniciando la partida...");
+        supervivientes.clear();  // Limpiar la lista de supervivientes
+        zombis.clear();  // Limpiar la lista de zombis
+        iniciar();  // Volver a iniciar el juego
+    }
 
     public void realizarTurnoSupervivientes(){
         for(Superviviente superviviente: supervivientes){
@@ -87,6 +100,7 @@ public class Juego {
                 String entrada = scanner.nextLine();
 
                 switch (entrada) {
+                    case "0" -> this.finalizar();
                     case "1" -> superviviente.moverse(tablero, zombis);
                     case "2" -> superviviente.buscarEquipo();
                     case "3" -> superviviente.restarAcciones(1); //falta implementar atacar()
@@ -94,6 +108,7 @@ public class Juego {
                     case "5" -> superviviente.noHacerNada();
                     case "6" -> superviviente.consultarEquipo();
                     case "7" -> superviviente.armasEquipadas();
+                    case "10" -> this.reiniciar();
                     default -> System.out.println("Por favor, selecciona una accion valida");
                 }
 
