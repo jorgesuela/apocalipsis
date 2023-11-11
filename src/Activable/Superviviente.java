@@ -78,6 +78,33 @@ public class Superviviente extends Activable {
         this.nbHeridas = nbHeridas;
     }
 
+    public void moverse(Tablero tablero, int zombisCercanos) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Comprobar si el superviviente puede moverse
+        if (zombisCercanos >= 4 || this.getNbAcciones() < zombisCercanos + 1) {
+            System.out.println("El superviviente está atrapado por los zombis, no puede moverse.");
+            return;
+        }
+
+        // Restar acciones
+        this.setNbAcciones(this.getNbAcciones() - (zombisCercanos + 1));
+
+        // Sal del bucle si se selecciona una opción válida
+        String input;
+        while (true) {
+            System.out.println("Elige una direccion: up, down, left, right");
+            input = scanner.nextLine().toLowerCase();
+
+            if (moverEnDireccion(tablero, input)) {
+                System.out.println("El superviviente avanzo a la casilla" + this.getPosicion().toString());
+                break;
+            } else {
+                System.out.println("Opcion no valida. Por favor, elige una direccion valida.");
+            }
+        }
+    }
+
     public void consultarEquipo(){
         int contador = 1;
         System.out.println("################# BOLSA DE " + this.nombre.toUpperCase(Locale.ROOT) + " #################");
