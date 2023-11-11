@@ -14,14 +14,6 @@ import java.util.ArrayList;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        // crear arma aleatoria y mostrar info
-        Equipo arma = Arma.generarArmaAleatoria();
-        arma.mostrarInfo();
-
-        // crear suministro aleatorio y mostrar info
-        Equipo suministro = Suministro.generarSuministroAleatorio();
-        suministro.mostrarInfo();
-
         Juego juego = new Juego();
         juego.iniciar();
     }
