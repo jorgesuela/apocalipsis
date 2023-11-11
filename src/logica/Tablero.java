@@ -65,7 +65,7 @@ public class Tablero {
                 int cantidadSupervivientes = 0;
                 int cantidadSuministros = 0;
 
-                // matrizCasillas esta mal, hay que pensar cómo hacer para comparar las casillas
+                // matrizCasillas está mal, hay que pensar cómo hacer para comparar las casillas
                 for (Zombi zombi : listaZombis) {
                     if (zombi.getPosicion().equals(casillas[fila][columna])) {
                         cantidadZombis++; // Contar zombis en la casilla
@@ -74,7 +74,7 @@ public class Tablero {
 
                 for (Superviviente superviviente : listaSupervivientes) {
                     if (superviviente.getPosicion().equals(casillas[fila][columna])) {
-                        cantidadSupervivientes++; // Contar ciudadanos en la casilla
+                        cantidadSupervivientes++; // Contar supervivientes en la casilla
                     }
                 }
 
@@ -82,7 +82,12 @@ public class Tablero {
                     objetosEnCasilla.add("Z" + cantidadZombis); // Agregar número de zombis
                 }
                 if (cantidadSupervivientes > 0) {
-                    objetosEnCasilla.add("S" + cantidadSupervivientes); // Agregar número de supervivientes
+                    // Modificar para agregar etiqueta "S" y la cantidad o la inicial en mayúscula
+                    if (cantidadSupervivientes > 1) {
+                        objetosEnCasilla.add("S" + cantidadSupervivientes);
+                    } else {
+                        objetosEnCasilla.add("S" + obtenerInicialMayuscula(listaSupervivientes, fila, columna));
+                    }
                 }
 
                 if (objetosEnCasilla.isEmpty()) {
@@ -97,6 +102,17 @@ public class Tablero {
             }
             System.out.println();
         }
+    }
+
+    // Método para obtener la inicial en mayúscula del nombre del superviviente
+    private String obtenerInicialMayuscula(ArrayList<Superviviente> listaSupervivientes, int fila, int columna) {
+        for (Superviviente superviviente : listaSupervivientes) {
+            if (superviviente.getPosicion().equals(casillas[fila][columna])) {
+                String nombre = superviviente.getNombre();
+                return String.valueOf(nombre.charAt(0)).toUpperCase();
+            }
+        }
+        return "";
     }
 
 
