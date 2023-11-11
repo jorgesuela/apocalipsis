@@ -93,24 +93,19 @@ public class Juego {
                 String entrada = scanner.nextLine();
 
                 switch (entrada) {
-                    case "1":   int zombisCercanos = tablero.cuantosZombi(zombis, superviviente.getPosicion().getCoordx(),
-                                                                            superviviente.getPosicion().getCoordy());
-                                superviviente.moverse(tablero, zombisCercanos);
+                    case "1":   superviviente.moverse(tablero, zombis);
                                 break;
 
                     case "2":   superviviente.buscarEquipo();
-                                superviviente.restarAcciones();
                                 break;
 
-                    case "3":   superviviente.restarAcciones(); // aqui falta la accion buscar
+                    case "3":   superviviente.restarAcciones(1); //falta atacar
                                 break;
 
                     case "4":   superviviente.equiparArma();
-                                superviviente.restarAcciones(); // aqui falta la accion elegir arma
                                 break;
 
                     case "5":   superviviente.noHacerNada();
-                                superviviente.restarAcciones();
                                 break;
 
                     case "6":   superviviente.consultarEquipo();

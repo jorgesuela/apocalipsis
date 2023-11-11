@@ -78,17 +78,29 @@ public class Superviviente extends Activable {
         this.nbHeridas = nbHeridas;
     }
 
-    public void moverse(Tablero tablero, int zombisCercanos) {
+    // este metodo habra que modificarlo para cuando haya que restar acciones extra!!!
+    public void restarAcciones(int num){
+        this.nbAcciones = this.nbAcciones - num;
+    }
+
+    public void resetearAcciones(){
+        this.nbAcciones = 5;
+    }
+
+    public void moverse(Tablero tablero, ArrayList<Zombi> listaZombis) {
         Scanner scanner = new Scanner(System.in);
+
+        int zombisCercanos = tablero.cuantosZombi(listaZombis, this.getPosicion().getCoordx(),
+                this.getPosicion().getCoordy());
 
         // Comprobar si el superviviente puede moverse
         if (zombisCercanos >= 4 || this.getNbAcciones() < zombisCercanos + 1) {
-            System.out.println("El superviviente está atrapado por los zombis, no puede moverse.");
+            System.out.println("El superviviente esta atrapado por los zombis, no puede moverse.");
             return;
         }
 
         // Restar acciones
-        this.setNbAcciones(this.getNbAcciones() - (zombisCercanos + 1));
+        this.restarAcciones(zombisCercanos + 1);
 
         // Sal del bucle si se selecciona una opción válida
         String input;
@@ -128,20 +140,15 @@ public class Superviviente extends Activable {
     }
 
     public void noHacerNada(){
+        this.restarAcciones(1);
         System.out.println("El superviviente no hizo nada");
-    }
-
-    // este metodo habra que modificarlo para cuando haya que restar acciones extra!!!
-    public void restarAcciones(){
-        this.nbAcciones = this.nbAcciones - 1;
-    }
-
-    public void resetearAcciones(){
-        this.nbAcciones = 5;
     }
 
     public Arma elegirArma(){
         Scanner scanner = new Scanner(System.in);
+
+        this.restarAcciones(1);
+
         // mostrar la bolsa del superviviente
         this.consultarEquipo();
         while(true) {
@@ -233,6 +240,9 @@ public class Superviviente extends Activable {
 
     public void buscarEquipo(){
         Equipo equipoNuevo;
+
+        this.restarAcciones(1);
+
         // comprobar si ya se ha buscado equipo en esa casilla
         if (this.getPosicion().getBuscado()){ // si ya se ha buscado en esa casilla
             System.out.println("alguien ha buscado ya en esta casilla, no hay equipo");
