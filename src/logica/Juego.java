@@ -63,7 +63,14 @@ public class Juego {
             realzarActivacionesZombis();
 
             contadorTurnos++;
-            System.out.println("El turno " + contadorTurnos + " ha finalizado.");
+            System.out.println("");
+            System.out.println("---------------------------------------");
+            System.out.println("EL TURNO " + contadorTurnos + " HA FINALIZADO.");
+            System.out.println("---------------------------------------");
+            System.out.println("");
+            System.out.println("");
+            System.out.println("");
+
         }
 
 
@@ -79,6 +86,7 @@ public class Juego {
                 // mostrar tablero antes de acciones
                 tablero.printTablero(zombis, supervivientes);
                 System.out.println("¿Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
+                System.out.println("Te quedan " + superviviente.getNbAcciones() + " acciones.");
                 mostrarMenuSuperviviente();
                 // Leer la entrada del usuario como una cadena
                 Scanner scanner = new Scanner(System.in);
