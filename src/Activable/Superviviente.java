@@ -104,11 +104,9 @@ public class Superviviente extends Activable {
         while(true) {
             System.out.println("Ya tienes 2 armas equipadas");
             System.out.println("¿Qué arma quieres desequipar?");
-            for (int i = 0; i < equipo.size(); i++) {
-                if (equipo.get(i) instanceof Arma arma) {
-                    System.out.println("arma " + "'" +(i + 1)+ "'" + ": " + arma.getNombre());
+            for (int i = 0; i < armasActivas.size(); i++) {
+                System.out.println("arma " + "'" +(i + 1)+ "'" + ": " + armasActivas.get(i).getNombre());
                 }
-            }
 
             Scanner scanner = new Scanner(System.in);
             String entrada = scanner.nextLine();
@@ -123,7 +121,7 @@ public class Superviviente extends Activable {
             }
 
             if ((numero == 1) || (numero == 2)) {
-                armasActivas.set(numero, armaNueva); // Restamos 1 porque los índices comienzan en 0
+                armasActivas.set(numero - 1, armaNueva); // Restamos 1 porque los índices comienzan en 0
                 System.out.println("se ha desequipado el arma " + numero + " y se ha equipado: " + armaNueva.getNombre());
                 break; // Salir del bucle cuando se ha eliminado correctamente
             } else {
@@ -133,6 +131,17 @@ public class Superviviente extends Activable {
 
 
 
+    }
+
+    private void mostrarArmasDisponibles() {
+        int numeroArma = 1;
+        for (Equipo equipacion : equipo) {
+            if (equipacion instanceof Arma) {
+                Arma arma = (Arma) equipacion;
+                System.out.println("Arma " + numeroArma + ": " + arma.getNombre());
+                numeroArma++;
+            }
+        }
     }
 
     public void equiparArma(Arma armaAEquipar){
