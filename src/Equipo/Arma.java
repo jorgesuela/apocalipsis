@@ -50,10 +50,10 @@ public class Arma extends Equipo {
 
     public static Arma generarArmaAleatoria() {
         String nombreArma = "Arma";
-        int potencia = 0;
-        int alcance = 0;
-        int valorExito = 0;
-        int numDados = 0;
+        int potencia;
+        int alcance;
+        int valorExito;
+        int numDados;
         Random random = new Random();
         int min = 1;
         int max = 100;
@@ -74,6 +74,7 @@ public class Arma extends Equipo {
         // ALCANCE DE ARMA ENCONTRADA
         int randomAlcance = random.nextInt(max - min + 1) + min;
         if (randomAlcance < 20) {
+            alcance = 0;
             nombreArma += ", cuerpo a cuerpo";
         } else if (randomAlcance < 50) {
             alcance = 1;
