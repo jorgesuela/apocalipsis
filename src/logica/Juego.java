@@ -53,7 +53,8 @@ public class Juego {
         // aqui deberia haber un menu despues de cada turno que te permitiera elegir
         // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
 
-        while(true){ // esta condicion habra que cambiarla, es solo para probar funcionalidades
+        //esta condicion habra que cambiarla, es solo para probar funcionalidades!!!!!
+        while(true){
             //turno de todos los supervivientes
             realizarTurnoSupervivientes();
             //turno de todos los zombis
