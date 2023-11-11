@@ -3,24 +3,18 @@ package logica;
 import Activable.Superviviente;
 import Activable.Toxico;
 import Activable.Zombi;
-import Equipo.*;
-
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Juego {
     private ArrayList<Superviviente> supervivientes;
-    private ArrayList<Zombi> zombis;
-    private ArrayList<Equipo> equipo;
+    private final ArrayList<Zombi> zombis;
     private Casilla objectivo;
     private Tablero tablero;
 
     public Juego() {
         this.supervivientes = new ArrayList<>();
         this.zombis = new ArrayList<>();
-        this.equipo = new ArrayList<>();
-
     }
 
     public void mostrarEstadisticas(){}
@@ -63,13 +57,13 @@ public class Juego {
             realzarActivacionesZombis();
 
             contadorTurnos++;
-            System.out.println("");
+            System.out.println(" ");
             System.out.println("---------------------------------------");
             System.out.println("EL TURNO " + contadorTurnos + " HA FINALIZADO.");
             System.out.println("---------------------------------------");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
+            System.out.println(" ");
+            System.out.println(" ");
+            System.out.println(" ");
 
         }
 
@@ -93,30 +87,14 @@ public class Juego {
                 String entrada = scanner.nextLine();
 
                 switch (entrada) {
-                    case "1":   superviviente.moverse(tablero, zombis);
-                                break;
-
-                    case "2":   superviviente.buscarEquipo();
-                                break;
-
-                    case "3":   superviviente.restarAcciones(1); //falta atacar
-                                break;
-
-                    case "4":   superviviente.equiparArma();
-                                break;
-
-                    case "5":   superviviente.noHacerNada();
-                                break;
-
-                    case "6":   superviviente.consultarEquipo();
-                                break;
-
-                    case "7":   superviviente.armasEquipadas();
-                                break;
-
-                    default:
-                        System.out.println("Por favor, selecciona una accion valida");
-                        break;
+                    case "1" -> superviviente.moverse(tablero, zombis);
+                    case "2" -> superviviente.buscarEquipo();
+                    case "3" -> superviviente.restarAcciones(1); //falta implementar atacar()
+                    case "4" -> superviviente.equiparArma();
+                    case "5" -> superviviente.noHacerNada();
+                    case "6" -> superviviente.consultarEquipo();
+                    case "7" -> superviviente.armasEquipadas();
+                    default -> System.out.println("Por favor, selecciona una accion valida");
                 }
 
             }

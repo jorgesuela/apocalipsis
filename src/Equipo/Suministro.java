@@ -3,8 +3,8 @@ package Equipo;
 import java.util.Random;
 
 public class Suministro extends Equipo {
-    private String valorEnergetico;
-    private String caducidad;
+    private final String valorEnergetico;
+    private final String caducidad;
 
     public Suministro(String nombre, String valorEnergetico, String caducidad){
         super(nombre);
@@ -16,16 +16,8 @@ public class Suministro extends Equipo {
         return caducidad;
     }
 
-    public void setCaducidad(String caducidad) {
-        this.caducidad = caducidad;
-    }
-
     public String getValorEnergetico() {
         return valorEnergetico;
-    }
-
-    public void setValorEnergetico(String valorEnergetico) {
-        this.valorEnergetico = valorEnergetico;
     }
 
     @Override
@@ -45,12 +37,11 @@ public class Suministro extends Equipo {
         // Seleccionar un elemento al azar
         String nombre = alimentos[indiceAleatorio];
 
-        if(nombre == "Judias") valorEnergetico = "300kcal"; caducidad = "22/07/24";
-        if(nombre == "Galletas") valorEnergetico = "200kcal"; caducidad = "06/02/25";
-        if(nombre == "Garbanzos") valorEnergetico = "250kcal"; caducidad = "30/12/23";
-        if(nombre == "Chocolate") valorEnergetico = "500kcal"; caducidad = "01/09/27";
+        if(nombre.equals("Judias")){ valorEnergetico = "300kcal"; caducidad = "22/07/24";}
+        if(nombre.equals("Galletas")) {valorEnergetico = "200kcal"; caducidad = "06/02/25";}
+        if(nombre.equals("Garbanzos")) {valorEnergetico = "250kcal"; caducidad = "30/12/23";}
+        if(nombre.equals("Chocolate")) {valorEnergetico = "500kcal"; caducidad = "01/09/27";}
 
-        Suministro nuevoSuministro = new Suministro(nombre, valorEnergetico, caducidad);
-        return nuevoSuministro;
+        return new Suministro(nombre, valorEnergetico, caducidad);
     }
 }

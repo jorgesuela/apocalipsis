@@ -3,10 +3,10 @@ package Equipo;
 import java.util.Random;
 
 public class Arma extends Equipo {
-    private Integer potencia;
-    private Integer alcance;
-    private Integer valorExito;
-    private Integer numDados;
+    private final Integer potencia;
+    private final Integer alcance;
+    private final Integer valorExito;
+    private final Integer numDados;
 
     public Arma(String nombre, Integer potencia, Integer alcance, Integer valorExito, Integer numDados){
         super(nombre);
@@ -63,7 +63,7 @@ public class Arma extends Equipo {
         if (randomPotencia < 50) {
             potencia = 1;
             nombreArma += " mala";
-        } else if ((randomPotencia >= 50) && (randomPotencia < 90)) {
+        } else if (randomPotencia < 90) {
             potencia = 2;
             nombreArma += " estandar";
         } else {
@@ -74,12 +74,11 @@ public class Arma extends Equipo {
         // ALCANCE DE ARMA ENCONTRADA
         int randomAlcance = random.nextInt(max - min + 1) + min;
         if (randomAlcance < 20) {
-            alcance = 0;
             nombreArma += ", cuerpo a cuerpo";
-        } else if ((randomAlcance >= 20) && (randomAlcance < 50)) {
+        } else if (randomAlcance < 50) {
             alcance = 1;
             nombreArma += ", de corto alcance";
-        } else if ((randomAlcance >= 50) && (randomAlcance < 85)) {
+        } else if (randomAlcance < 85) {
             alcance = 2;
             nombreArma += ", de medio alcance";
         } else {
@@ -102,7 +101,7 @@ public class Arma extends Equipo {
         if (randomDados < 30) {
             numDados = 1;
             nombreArma += " y de disparo unico";
-        } else if ((randomDados >= 30) && (randomDados < 85)) {
+        } else if (randomDados < 85) {
             numDados = 2;
             nombreArma += " y de disparo doble";
         } else {
@@ -110,9 +109,7 @@ public class Arma extends Equipo {
             nombreArma += " y de disparo triple";
         }
 
-        Arma armaEncontrada = new Arma(nombreArma, potencia, alcance, valorExito, numDados);
-
-        return armaEncontrada;
+        return new Arma(nombreArma, potencia, alcance, valorExito, numDados);
     }
 
     public Boolean lanzarDado(){

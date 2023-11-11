@@ -10,7 +10,7 @@ public class Superviviente extends Activable {
     private String nombre;
     private Boolean vivo;
     private Integer nbAcciones;
-    private ArrayList<Equipo> equipo;
+    private final ArrayList<Equipo> equipo;
     private ArrayList<Arma> armasActivas;
     private Integer killScore;
     private Integer nbHeridas;
@@ -21,7 +21,7 @@ public class Superviviente extends Activable {
         this.vivo = true;
         this.nbAcciones = 5;
         this.equipo = new ArrayList<>();
-        this.armasActivas = new ArrayList<>();;
+        this.armasActivas = new ArrayList<>();
         this.killScore = 0;
         this.nbHeridas = 0;
     }
@@ -309,10 +309,8 @@ public class Superviviente extends Activable {
         int opcion = scanner.nextInt();
 
         switch (opcion) {
-            case 1 :    posicionInicial = tablero.getCasilla(0, 0);
-                        break;
-            case 2 :    posicionInicial = tablero.getCasilla(tablero.getTamaño() - 1, 0);
-                        break;
+            case 1 -> posicionInicial = tablero.getCasilla(0, 0);
+            case 2 -> posicionInicial = tablero.getCasilla(tablero.getTamaño() - 1, 0);
         }
 
         // Crear y devolver el superviviente

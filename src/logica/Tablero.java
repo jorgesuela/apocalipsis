@@ -2,14 +2,12 @@ package logica;
 
 import Activable.Superviviente;
 import Activable.Zombi;
-import Equipo.Suministro;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Tablero {
-    private Casilla[][] casillas;
-    private int tamaño;
+    private final Casilla[][] casillas;
+    private final int tamaño;
 
     public Tablero(int tamaño) {
         this.tamaño = tamaño;
@@ -63,7 +61,6 @@ public class Tablero {
 
                 int cantidadZombis = 0;
                 int cantidadSupervivientes = 0;
-                int cantidadSuministros = 0;
 
                 // matrizCasillas está mal, hay que pensar cómo hacer para comparar las casillas
                 for (Zombi zombi : listaZombis) {

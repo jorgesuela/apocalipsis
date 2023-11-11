@@ -3,8 +3,6 @@ package Activable;
 import logica.Casilla;
 import logica.Tablero;
 
-import java.util.Scanner;
-
 public abstract class Activable {
     private Casilla posicion;
 
