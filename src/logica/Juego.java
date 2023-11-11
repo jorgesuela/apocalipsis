@@ -31,6 +31,7 @@ public class Juego {
         System.out.println("3: Atacar");
         System.out.println("4: Elegir arma");
         System.out.println("5: No hacer nada");
+        System.out.println("6: Consultar equipo(no cuesta acciones:D)");
     }
 
     public void iniciar(){
@@ -97,6 +98,9 @@ public class Juego {
 
                     case "5":   superviviente.noHacerNada();
                                 superviviente.restarAcciones();
+                                break;
+
+                    case "6":   superviviente.consultarEquipo();
                                 break;
 
                     default:
