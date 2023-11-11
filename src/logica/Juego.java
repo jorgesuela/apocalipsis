@@ -44,8 +44,12 @@ public class Juego {
         // crear el tablero en base al numero de supervivientes
         crearTablero(numSupervivientes);
 
+        // cual sera la casilla objetivo?
+        objectivo = tablero.casillaObjetivo(tablero.getTamaño());
+
         // aqui creamos los supervivientes iniciales y los metemos al tablero
         this.supervivientes = crearSupervivientes(numSupervivientes);
+
         // falta meter los zombies iniciales!!!
         Zombi zombi1 = new Toxico(tablero.getCasilla(3,3), 2, 2);
         this.zombis.add(zombi1);
@@ -92,7 +96,7 @@ public class Juego {
             // mostrar el tablero antes de tomar acciones
             while(superviviente.getNbAcciones() > 0) {
                 // mostrar tablero antes de acciones
-                tablero.printTablero(zombis, supervivientes);
+                tablero.printTablero(zombis, supervivientes, objectivo);
                 System.out.println("Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
                 System.out.println("Te quedan " + superviviente.getNbAcciones() + " acciones.");
                 mostrarMenuSuperviviente();
@@ -115,7 +119,7 @@ public class Juego {
 
             }
             //mostrar tablero al acabar acciones de superviviente
-            tablero.printTablero(zombis, supervivientes);
+            tablero.printTablero(zombis, supervivientes, objectivo);
             //después del turno de cada superviviente, se reestablecen sus acciones a 5
             superviviente.resetearAcciones();
         }

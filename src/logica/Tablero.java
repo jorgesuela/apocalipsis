@@ -4,6 +4,7 @@ import Activable.Superviviente;
 import Activable.Zombi;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Tablero {
     private final Casilla[][] casillas;
@@ -44,7 +45,7 @@ public class Tablero {
         return contador; // devuelve n zombis de casilla
     }
 
-    public void printTablero(ArrayList<Zombi> listaZombis, ArrayList<Superviviente> listaSupervivientes) {
+    public void printTablero(ArrayList<Zombi> listaZombis, ArrayList<Superviviente> listaSupervivientes, Casilla casillaObjetivo) {
         // Imprimir números en la parte superior
         System.out.print("  ");
         for (int col = 0; col < tamaño; col++) {
@@ -73,6 +74,11 @@ public class Tablero {
                     if (superviviente.getPosicion().equals(casillas[fila][columna])) {
                         cantidadSupervivientes++; // Contar supervivientes en la casilla
                     }
+                }
+
+                // Verificar si la casilla es la casilla objetivo
+                if (casillas[fila][columna].equals(casillaObjetivo)) {
+                    objetosEnCasilla.add("EXIT");
                 }
 
                 if (cantidadZombis > 0) {
@@ -110,6 +116,14 @@ public class Tablero {
             }
         }
         return "";
+    }
+
+    public Casilla casillaObjetivo(int tamaño) {
+        Random random = new Random();
+        int fila = random.nextInt(tamaño);  // Fila al azar
+        int columna = tamaño - 1;  // Columna más a la derecha
+
+        return getCasilla(fila, columna);
     }
 
 
