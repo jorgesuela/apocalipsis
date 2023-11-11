@@ -34,7 +34,7 @@ public class Tablero {
         return this.tamaño;
     }
 
-    public String hayZombi(ArrayList<Zombi> listaZombis, int x, int y){
+    public int cuantosZombi(ArrayList<Zombi> listaZombis, int x, int y){
         int contador = 0;
         if (x >= 0 && x < casillas.length && y >= 0 && y < casillas[0].length) {
             for (Zombi zombi : listaZombis) {
@@ -43,7 +43,7 @@ public class Tablero {
                 }
             }
         }
-        return "hay " + contador + " zombi/s en la casilla " + casillas[x][y].toString(); // devuelve n zombis de casilla
+        return contador; // devuelve n zombis de casilla
     }
 
     public void printTablero(ArrayList<Zombi> listaZombis, ArrayList<Superviviente> listaSupervivientes) {
