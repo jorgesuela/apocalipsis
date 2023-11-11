@@ -85,7 +85,7 @@ public class Juego {
             while(superviviente.getNbAcciones() > 0) {
                 // mostrar tablero antes de acciones
                 tablero.printTablero(zombis, supervivientes);
-                System.out.println("¿Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
+                System.out.println("Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
                 System.out.println("Te quedan " + superviviente.getNbAcciones() + " acciones.");
                 mostrarMenuSuperviviente();
                 // Leer la entrada del usuario como una cadena
@@ -93,8 +93,9 @@ public class Juego {
                 String entrada = scanner.nextLine();
 
                 switch (entrada) {
-                    case "1":   superviviente.moverse(tablero);
-                                superviviente.restarAcciones();
+                    case "1":   int zombisCercanos = tablero.cuantosZombi(zombis, superviviente.getPosicion().getCoordx(),
+                                                                            superviviente.getPosicion().getCoordy());
+                                superviviente.moverse(tablero, zombisCercanos);
                                 break;
 
                     case "2":   superviviente.buscarEquipo();
