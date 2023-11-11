@@ -78,10 +78,6 @@ public class Superviviente extends Activable {
         this.nbHeridas = nbHeridas;
     }
 
-    public void noHacerNada(){
-        System.out.println("El superviviente no hizo nada");
-    }
-
     public void consultarEquipo(){
         int contador = 1;
         System.out.println("################# BOLSA DE " + this.nombre.toUpperCase(Locale.ROOT) + " #################");
@@ -93,6 +89,21 @@ public class Superviviente extends Activable {
         System.out.println("##################################################");
     }
 
+    public void armasEquipadas(){
+        int contador = 1;
+        System.out.println("############## ARMAS EQUIPADAS DE " + this.nombre.toUpperCase(Locale.ROOT) + " ##############");
+        for (Arma armaActiva : armasActivas) {
+            System.out.println("--------------------------------------" + "Arma activa " + contador + " --------------------------------------");
+            armaActiva.mostrarInfo();
+            contador++;
+        }
+        System.out.println("######################################################");
+    }
+
+    public void noHacerNada(){
+        System.out.println("El superviviente no hizo nada");
+    }
+
     // este metodo habra que modificarlo para cuando haya que restar acciones extra!!!
     public void restarAcciones(){
         this.nbAcciones = this.nbAcciones - 1;
@@ -102,13 +113,39 @@ public class Superviviente extends Activable {
         this.nbAcciones = 5;
     }
 
+    public Arma elegirArma(){
+        Scanner scanner = new Scanner(System.in);
+        // mostrar la bolsa del superviviente
+        this.consultarEquipo();
+        while(true) {
+            System.out.println("Seleccione 1 arma para equipar con el numero correspondiente: ");
+            int seleccion = scanner.nextInt();
+
+            // Validar la entrada del usuario
+            if (seleccion >= 1 && seleccion <= equipo.size() && equipo.get(seleccion - 1) != null && equipo.get(seleccion - 1) instanceof Arma) {
+                return (Arma) equipo.get(seleccion - 1);
+            } else {
+                System.out.println("Selección no válida. Inténtalo de nuevo.");
+            }
+        }
+    }
+
+    public void equiparArma(){
+        Arma armaAEquipar = this.elegirArma();
+        if (armasActivas.size() < 2){
+            armasActivas.add(armaAEquipar);
+            System.out.println("Se ha equipado el arma "+ armaAEquipar.getNombre());
+        }
+        else cambiarArma(armaAEquipar);
+    }
+
     public void cambiarArma(Arma armaNueva){
         while(true) {
             System.out.println("Ya tienes 2 armas equipadas");
-            System.out.println("¿Qué arma quieres desequipar?");
+            System.out.println("Que arma quieres desequipar?");
             for (int i = 0; i < armasActivas.size(); i++) {
                 System.out.println("arma " + "'" +(i + 1)+ "'" + ": " + armasActivas.get(i).getNombre());
-                }
+            }
 
             Scanner scanner = new Scanner(System.in);
             String entrada = scanner.nextLine();
@@ -133,25 +170,6 @@ public class Superviviente extends Activable {
 
 
 
-    }
-
-    private void mostrarArmasDisponibles() {
-        int numeroArma = 1;
-        for (Equipo equipacion : equipo) {
-            if (equipacion instanceof Arma) {
-                Arma arma = (Arma) equipacion;
-                System.out.println("Arma " + numeroArma + ": " + arma.getNombre());
-                numeroArma++;
-            }
-        }
-    }
-
-    public void equiparArma(Arma armaAEquipar){
-        if (armasActivas.size() < 2){
-            armasActivas.add(armaAEquipar);
-            System.out.println("Se ha equipado el arma "+ armaAEquipar.getNombre());
-        }
-        else cambiarArma(armaAEquipar);
     }
 
     public void soltarEquipo() {
