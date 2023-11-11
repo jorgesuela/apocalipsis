@@ -57,7 +57,8 @@ public class Juego {
         // aqui deberia haber un menu despues de cada turno que te permitiera elegir
         // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
 
-        //esta condicion habra que cambiarla, es solo para probar funcionalidades!!!!!
+        //esta condicion while true habra que cambiarla, es solo para probar funcionalidades!!!!!
+        //deberia ser o que los supervivientes hayan ganado o que hayan muerto
         while(true){
             //turno de todos los supervivientes
             realizarTurnoSupervivientes();
