@@ -26,12 +26,15 @@ public class Juego {
     public void mostrarEstadisticas(){}
 
     public void mostrarMenuSuperviviente(){
+        System.out.println("######ACCIONES CON COSTE######");
         System.out.println("1: Moverse");
         System.out.println("2: Buscar");
         System.out.println("3: Atacar");
         System.out.println("4: Elegir arma");
         System.out.println("5: No hacer nada");
-        System.out.println("6: Consultar equipo(no cuesta acciones:D)");
+        System.out.println("######ACCIONES SIN COSTE######");
+        System.out.println("6: Consultar equipo");
+        System.out.println("7: Consultar armas equipadas");
     }
 
     public void iniciar(){
@@ -93,7 +96,8 @@ public class Juego {
                     case "3":   superviviente.restarAcciones(); // aqui falta la accion buscar
                                 break;
 
-                    case "4":   superviviente.restarAcciones(); // aqui falta la accion elegir arma
+                    case "4":   superviviente.equiparArma();
+                                superviviente.restarAcciones(); // aqui falta la accion elegir arma
                                 break;
 
                     case "5":   superviviente.noHacerNada();
@@ -101,6 +105,9 @@ public class Juego {
                                 break;
 
                     case "6":   superviviente.consultarEquipo();
+                                break;
+
+                    case "7":   superviviente.armasEquipadas();
                                 break;
 
                     default:
