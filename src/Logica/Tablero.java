@@ -85,7 +85,7 @@ public class Tablero {
                         if (!objetosEnCasilla.isEmpty()){
                             String temp = objetosEnCasilla.get(0).trim();objetosEnCasilla.clear();
                             objetosEnCasilla.add(temp);
-                            objetosEnCasilla.add(" "+superviviente.toString()+"");
+                            objetosEnCasilla.add("  "+superviviente.toString()+"");
                         }else{objetosEnCasilla.add("  "+superviviente.toString()+"  ");}
 
                         cantidadSupervivientes++; // Contar supervivientes en la casilla
