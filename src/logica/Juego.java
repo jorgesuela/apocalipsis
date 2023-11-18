@@ -79,9 +79,9 @@ public class Juego {
 
             contadorTurnos++;
             System.out.println(" ");
-            System.out.println("---------------------------------------");
+            System.out.println("----------------------------------------");
             System.out.println("EL TURNO " + contadorTurnos + " HA FINALIZADO.");
-            System.out.println("---------------------------------------");
+            System.out.println("----------------------------------------");
             System.out.println(" ");
             System.out.println(" ");
             System.out.println(" ");
