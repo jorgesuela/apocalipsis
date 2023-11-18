@@ -1,14 +1,17 @@
 package Activable;
 
-import logica.Casilla;
+import Logica.Casilla;
 
-public class Normal extends Zombi{
-    public Normal(Casilla posicion, int aguante, int nbActivaciones) {
-        super(posicion, aguante, nbActivaciones);
+public abstract class Normal extends Zombi{
+
+
+    public Normal(Casilla pos) {
+        super(pos);
     }
 
-    @Override
-    public void reaccionarAntesAtaque() {
+    public void reaccionarAntesAtaque(){
 
-    }
+    };
+
+
 }

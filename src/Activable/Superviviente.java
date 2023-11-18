@@ -1,8 +1,10 @@
 package Activable;
 
-import Equipo.*;
-import logica.Casilla;
-import logica.Tablero;
+import Equipo.Arma;
+import Equipo.Equipo;
+import Equipo.Suministro;
+import Logica.Casilla;
+import Logica.Tablero;
 
 import java.util.*;
 
@@ -87,6 +89,11 @@ public class Superviviente extends Activable {
         this.nbAcciones = 5;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
     public void moverse(Tablero tablero, ArrayList<Zombi> listaZombis) {
         Scanner scanner = new Scanner(System.in);
 
@@ -106,7 +113,7 @@ public class Superviviente extends Activable {
         String input;
         while (true) {
             System.out.println("Elige una direccion: up, down, left, right");
-            input = scanner.nextLine().toLowerCase();
+            input = scanner.nextLine().toLowerCase().trim();
 
             if (moverEnDireccion(tablero, input)) {
                 System.out.println("El superviviente avanzo a la casilla" + this.getPosicion().toString());
@@ -296,6 +303,7 @@ public class Superviviente extends Activable {
 
     }
 
+    /*
     public static Superviviente crearSuperviviente(Tablero tablero) {
         Casilla posicionInicial = tablero.getCasilla(0, 0);
         Scanner scanner = new Scanner(System.in);
@@ -305,17 +313,17 @@ public class Superviviente extends Activable {
 
         System.out.println("Elige cual quieres que sea tu posicion inicial:");
         System.out.println("1: Arriba izquierda (0,0)");
-        System.out.println("2: Abajo izquierda (0," + (tablero.getTamaño() - 1) + ")");
+        System.out.println("2: Abajo izquierda (0," + (tablero.getTamano() - 1) + ")");
         int opcion = scanner.nextInt();
 
         switch (opcion) {
             case 1 -> posicionInicial = tablero.getCasilla(0, 0);
-            case 2 -> posicionInicial = tablero.getCasilla(tablero.getTamaño() - 1, 0);
+            case 2 -> posicionInicial = tablero.getCasilla(tablero.getTamano() - 1, 0);
         }
 
         // Crear y devolver el superviviente
         return new Superviviente(posicionInicial, nombre);
-    }
+    }*/
 
 }
 

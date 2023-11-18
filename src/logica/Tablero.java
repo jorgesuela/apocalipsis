@@ -1,7 +1,8 @@
-package logica;
+package Logica;
 
 import Activable.Superviviente;
 import Activable.Zombi;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +30,7 @@ public class Tablero {
         return null; // Devuelve null si las coordenadas están fuera de los límites del tablero
     }
 
-    public int getTamaño(){
+    public int getTamano(){
         return this.tamaño;
     }
 
@@ -49,7 +50,7 @@ public class Tablero {
         // Imprimir números en la parte superior
         System.out.print("  ");
         for (int col = 0; col < tamaño; col++) {
-            System.out.print(col + "  ");
+            System.out.print(col + "    ");
         }
         System.out.println();
 
@@ -64,37 +65,43 @@ public class Tablero {
                 int cantidadSupervivientes = 0;
 
                 // matrizCasillas está mal, hay que pensar cómo hacer para comparar las casillas
+                int counter = 1;
                 for (Zombi zombi : listaZombis) {
                     if (zombi.getPosicion().equals(casillas[fila][columna])) {
+                        objetosEnCasilla.add("Z"+counter+"  ");
                         cantidadZombis++; // Contar zombis en la casilla
                     }
+                    counter++;
                 }
 
                 for (Superviviente superviviente : listaSupervivientes) {
                     if (superviviente.getPosicion().equals(casillas[fila][columna])) {
+                        objetosEnCasilla.add(superviviente.toString()+"  ");
                         cantidadSupervivientes++; // Contar supervivientes en la casilla
                     }
                 }
 
                 // Verificar si la casilla es la casilla objetivo
                 if (casillas[fila][columna].equals(casillaObjetivo)) {
-                    objetosEnCasilla.add("EXIT");
+                    objetosEnCasilla.add("EXIT ");
                 }
 
-                if (cantidadZombis > 0) {
-                    objetosEnCasilla.add("Z" + cantidadZombis); // Agregar número de zombis
+                if (cantidadZombis > 1) {
+                    objetosEnCasilla.clear();
+                    objetosEnCasilla.add("Z*" + cantidadZombis+" "); // Agregar número de zombis
                 }
                 if (cantidadSupervivientes > 0) {
                     // Modificar para agregar etiqueta "S" y la cantidad o la inicial en mayúscula
                     if (cantidadSupervivientes > 1) {
-                        objetosEnCasilla.add("S" + cantidadSupervivientes);
-                    } else {
+                        objetosEnCasilla.clear();
+                        objetosEnCasilla.add("S*" + cantidadSupervivientes+" ");
+                    } /*else {
                         objetosEnCasilla.add("S" + obtenerInicialMayuscula(listaSupervivientes, fila, columna));
-                    }
+                    }*/
                 }
 
                 if (objetosEnCasilla.isEmpty()) {
-                    System.out.print("__ "); // Casilla vacía
+                    System.out.print("____ "); // Casilla vacía
                 } else {
                     // Si hay objetos en la casilla, mostrarlos todos
                     for (String objeto : objetosEnCasilla) {
@@ -103,8 +110,12 @@ public class Tablero {
                     System.out.print(" ");
                 }
             }
-            System.out.println();
+            System.out.println();System.out.println();
         }
+
+
+
+
     }
 
     // Método para obtener la inicial en mayúscula del nombre del superviviente
@@ -119,11 +130,8 @@ public class Tablero {
     }
 
     public Casilla casillaObjetivo(int tamaño) {
-        Random random = new Random();
-        int fila = random.nextInt(tamaño);  // Fila al azar
-        int columna = tamaño - 1;  // Columna más a la derecha
-
-        return getCasilla(fila, columna);
+        int oposito = tamaño-1;
+        return getCasilla(oposito,oposito);
     }
 
 

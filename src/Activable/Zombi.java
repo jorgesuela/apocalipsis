@@ -1,38 +1,37 @@
 package Activable;
 
-import logica.Casilla;
-import logica.Tablero;
+import Logica.Casilla;
+import Logica.Tablero;
 
 import java.util.ArrayList;
 
 public abstract class Zombi extends Activable {
-    protected int aguante;
-    protected int nbActivaciones;
-
-    public Zombi(Casilla posicion, int aguante, int nbActivaciones){
-        super(posicion);
-        this.aguante = aguante;
-        this.nbActivaciones = nbActivaciones;
+    public Zombi(Casilla pos) {
+        super(pos);
     }
+    //protected int aguante;
+    //protected int nbActivaciones;
 
+    /*public Zombi(Casilla posicion, int aguante, int nbActivaciones){
+        super(posicion);
+        //this.aguante = aguante;
+        this.nbActivaciones = nbActivaciones;
+    }*/
+
+
+    public abstract int getAguante();
 
     public abstract void reaccionarAntesAtaque();
 
-    public int getAguante() {
-        return aguante;
-    }
+    public abstract int getNbActivaciones();
 
-    public int getNbActivaciones() {
-        return nbActivaciones;
-    }
-
-    public void setAguante(int aguante) {
+    /*public void setAguante(int aguante) {
         this.aguante = aguante;
-    }
+    }*/
 
-    public void setNbActivaciones(int nbActivaciones) {
+    /*public void setNbActivaciones(int nbActivaciones) {
         this.nbActivaciones = nbActivaciones;
-    }
+    }*/
 
     public void moverHaciaSupervivienteMasCercano(Tablero tablero, ArrayList<Superviviente> supervivientes, Superviviente supervivienteMasCercano) {
         if (supervivienteMasCercano != null) {

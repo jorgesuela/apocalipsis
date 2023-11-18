@@ -1,12 +1,11 @@
-
-import logica.Juego;
+import Activable.CorredorBershker;
+import Logica.Casilla;
+import Logica.Juego;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        Juego juego = new Juego();
-        juego.iniciar();
+        new Juego().iniciar();
     }
 }
-

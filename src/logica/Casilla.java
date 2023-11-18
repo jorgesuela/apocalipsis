@@ -1,4 +1,4 @@
-package logica;
+package Logica;
 
 public class Casilla {
     private Integer coordx;

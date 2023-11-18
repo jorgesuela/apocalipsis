@@ -1,10 +1,10 @@
 package Activable;
 
-import logica.Casilla;
-import logica.Tablero;
+import Logica.Casilla;
+import Logica.Tablero;
 
 public abstract class Activable {
-    private Casilla posicion;
+    protected Casilla posicion;
 
     public Activable(Casilla pos){
         this.posicion = pos;
@@ -56,4 +56,6 @@ public abstract class Activable {
     public void activarse(){
 
     }
+
+
 }

@@ -1,11 +1,15 @@
 package Activable;
 
-import logica.Casilla;
+import Logica.Casilla;
 
-public class Toxico extends Zombi{
-    public Toxico(Casilla posicion, int aguante, int nbActivaciones) {
-        super(posicion, aguante, nbActivaciones);
+public abstract class Toxico extends Zombi{
+
+    public Toxico(Casilla pos) {
+        super(pos);
     }
+
+
+
 
     @Override
     public void reaccionarAntesAtaque() {

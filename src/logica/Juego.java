@@ -1,16 +1,16 @@
-package logica;
+package Logica;
 
-import Activable.Superviviente;
-import Activable.Toxico;
-import Activable.Zombi;
+import Activable.*;
+
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Juego {
     private ArrayList<Superviviente> supervivientes;
-    private final ArrayList<Zombi> zombis;
+    private ArrayList<Zombi> zombis;
     private Casilla objectivo;
-    private Tablero tablero;
+    public Tablero tablero;
 
     public Juego() {
         this.supervivientes = new ArrayList<>();
@@ -18,6 +18,10 @@ public class Juego {
     }
 
     public void mostrarEstadisticas(){}
+
+    public Tablero getTablero() {
+        return tablero;
+    }
 
     public void mostrarMenuSuperviviente(){
         System.out.println("######ACCIONES CON COSTE######");
@@ -34,6 +38,10 @@ public class Juego {
         System.out.println("10: reiniciar la partida");
     }
 
+    public void setTablero(Tablero tablero) {
+        this.tablero = tablero;
+    }
+
     public void iniciar(){
         int contadorTurnos = 0;
         System.out.println("COMENZANDO EL JUEGO...");
@@ -44,15 +52,19 @@ public class Juego {
         // crear el tablero en base al numero de supervivientes
         crearTablero(numSupervivientes);
 
-        // cual sera la casilla objetivo?
-        objectivo = tablero.casillaObjetivo(tablero.getTamaño());
-
         // aqui creamos los supervivientes iniciales y los metemos al tablero
         this.supervivientes = crearSupervivientes(numSupervivientes);
 
-        // falta meter los zombies iniciales!!!
-        Zombi zombi1 = new Toxico(tablero.getCasilla(2,3), 2, 1);
-        this.zombis.add(zombi1);
+        // cual sera la casilla objetivo?
+        objectivo = tablero.casillaObjetivo(tablero.getTamano());
+
+
+        //TODO:  falta meter los zombies iniciales!!!
+        //Zombi zombi1 = new CaminanteToxico(tablero.getCasilla(4, tablero.getTamano()-1));
+        //this.zombis.add(zombi1);
+        FactoryZombies fz = new FactoryZombies();
+        this.zombis = fz.createZombis(supervivientes.size());
+
 
         // aqui deberia haber un menu despues de cada turno que te permitiera elegir
         // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
@@ -138,7 +150,7 @@ public class Juego {
                     System.out.println("Por favor, ingresa un número válido del 1 al 4.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Por favor, ingresa un número entero.");
+                System.out.println("Por favor, ingresa un número entero del 1 al 4.");
             }
         }
     }
@@ -156,7 +168,7 @@ public class Juego {
         ArrayList<Superviviente> supervivientes = new ArrayList<>();
         for (int i = 1; i <= numSupervivientes; i++) {
             //hay que crear el metodo para crear supervivientes por teclado!!!
-            Superviviente newSuperviviente = Superviviente.crearSuperviviente(tablero);
+            Superviviente newSuperviviente = new Superviviente(tablero.getCasilla(0,0), "S"+i);
             supervivientes.add(newSuperviviente);
         }
         return supervivientes;
@@ -181,5 +193,73 @@ public class Juego {
     }
 
     public void generarZombis(){}
+
+
+
+class FactoryZombies {
+    public ArrayList<Zombi> createZombis(int numberSupervivientes){
+        ArrayList<Zombi> zombis = new ArrayList<Zombi>();
+        int nbZombies = numberSupervivientes * 3;
+        for (int i =0 ; i< nbZombies ; i++){zombis.add(createZombi());}
+        return zombis;
+    }
+
+    private Zombi createZombi() {
+        int tamanoTablero = tablero.getTamano();
+
+
+        int coordX = new Random().nextInt(tamanoTablero-1);
+        int coordY = new Random().nextInt(tamanoTablero-1);
+
+        if(coordX==0){coordX++;}
+        if(coordY==0){coordY++;}
+
+        int i = new Random().nextInt(100);
+        int j = new Random().nextInt(1,3);
+
+        if (i<=60){//Caminante
+            switch (j){
+                case 1 : return new CaminanteToxico(tablero.getCasilla(coordX, coordY));
+                case 2 : return new CaminanteNormal(tablero.getCasilla(coordX, coordY));
+                case 3 : return new CaminanteBershker(tablero.getCasilla(coordX, coordY));
+            }
+        }else if (i<=90){//Corredor
+            switch (j){
+                case 1 : return new CorredorNormal(tablero.getCasilla(coordX, coordY));
+                case 2 : return new CorredorToxico(tablero.getCasilla(coordX, coordY));
+                case 3 : return new CorredorBershker(tablero.getCasilla(coordX, coordY));
+            }
+        }else{//Abominacion
+            switch (j){
+                case 1 : return new AbominacionNormal(tablero.getCasilla(coordX, coordY));
+                case 2 : return new AbominacionBershker(tablero.getCasilla(coordX, coordY));
+                case 3 : return new AbominacionToxico(tablero.getCasilla(coordX, coordY));
+            }
+        }
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
