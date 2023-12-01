@@ -113,12 +113,20 @@ public class Arma extends Equipo {
         return new Arma(nombreArma, potencia, alcance, valorExito, numDados);
     }
 
-    public Boolean lanzarDado(){
+    public int lanzarDado(){
+        int nExitos = 0;
         Random random = new Random();
-        int min = 1;
-        int max = 6;
-        int randomDados = random.nextInt(max - min + 1) + min;
-        return randomDados >= this.valorExito; // true si acertó | false si falló
+        for (int i = 0; i < this.numDados; i++) {
+            int min = 1;
+            int max = 6;
+            int randomDados = random.nextInt(max - min + 1) + min;
+            if (randomDados >= this.valorExito) {
+                System.out.println("dado numero " + i + " = Exito");
+                nExitos++;
+            }
+            else System.out.println("dado numero " + i + " = Fallo");
+        }
+        return nExitos;
     }
 
 

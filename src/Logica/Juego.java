@@ -3,6 +3,7 @@ package Logica;
 import Activable.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -121,7 +122,10 @@ public class Juego {
                     case "0" -> this.finalizar();
                     case "1" -> superviviente.moverse(tablero, zombis);
                     case "2" -> superviviente.buscarEquipo();
-                    case "3" -> superviviente.restarAcciones(1); //falta implementar atacar()
+                    case "3" -> {
+                        List<Zombi> zombisEliminados = superviviente.atacar(tablero, zombis);
+                        zombis.removeAll(zombisEliminados); // Eliminar de lista zombis los que hayan muerto
+                    }
                     case "4" -> superviviente.equiparArma();
                     case "5" -> superviviente.noHacerNada();
                     case "6" -> superviviente.consultarEquipo();

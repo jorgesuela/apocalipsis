@@ -7,6 +7,7 @@ import Logica.Casilla;
 import Logica.Tablero;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Superviviente extends Activable {
     private String nombre;
@@ -151,6 +152,7 @@ public class Superviviente extends Activable {
         System.out.println("El superviviente no hizo nada");
     }
 
+    // este metodo es para escoger un arma de las que tiene en la bolsa el superviviente
     public Arma elegirArma(){
         Scanner scanner = new Scanner(System.in);
 
@@ -301,6 +303,102 @@ public class Superviviente extends Activable {
         }
 
 
+    }
+
+    public Casilla seleccionarCasillaAtaque(Tablero tablero, Arma armaElegida) {
+        Scanner scanner = new Scanner(System.in);
+        while(true) {
+            System.out.println("Ingrese coordenada X de ataque:");
+            int coordX = scanner.nextInt();
+            System.out.println("Ingrese coordenada Y de ataque:");
+            int coordY = scanner.nextInt();
+            if (tablero.getCasilla(coordX, coordY) != null) {
+                if (calcularDistanciaCasillas(this.posicion, (tablero.getCasilla(coordX, coordY))) <= armaElegida.getAlcance()){
+                    return tablero.getCasilla(coordX, coordY);
+                }
+                else{
+                    System.out.println("Casilla a atacar está fuera del alcance de tu arma");
+                }
+            }
+            else{
+                System.out.println("Seleccione una casilla valida del tablero");
+            }
+        }
+
+    }
+
+    // Método para calcular la distancia entre dos casillas
+    public static int calcularDistanciaCasillas(Casilla casilla1, Casilla casilla2) {
+        return (int) Math.round(Math.sqrt(Math.pow((casilla2.getCoordx() - casilla1.getCoordx()), 2) + Math.pow((casilla2.getCoordy() - casilla1.getCoordy()), 2)));
+    }
+
+    // este metodo es para escoger un arma de las que tiene un superviviente equipada como activa
+    public Arma elegirArmaEquipada(){
+        Scanner scanner = new Scanner(System.in);
+
+        this.restarAcciones(1);
+
+        // mostrar la bolsa del superviviente
+        this.armasEquipadas();
+        while(true) {
+            System.out.println("Seleccione 1 arma de las activas: ");
+            int seleccion = scanner.nextInt();
+
+            // Validar la entrada del usuario
+            if (seleccion >= 1 && seleccion <= armasActivas.size() && armasActivas.get(seleccion - 1) != null && armasActivas.get(seleccion - 1) != null) {
+                return armasActivas.get(seleccion - 1);
+            } else {
+                System.out.println("Selección no válida. Inténtalo de nuevo.");
+            }
+        }
+    }
+
+    // este método obligatoriamente tiene que devolver una lista de los zombies eliminados para
+    // poder sacarlos de la lista en la clase juego(asi evitamos el uso de var globales)
+    public List<Zombi> atacar(Tablero tablero, ArrayList<Zombi> listaZombis) {
+        // restar acciones
+        this.restarAcciones(1);
+        // Inicializar la lista de zombis eliminados
+        List<Zombi> zombisEliminados = new ArrayList<>();
+
+        // Con qué arma quieres atacar
+        Arma armaElegida = this.elegirArmaEquipada();
+
+        // Qué casilla deseas atacar, y comprobar si el alcance del arma es suficiente
+        Casilla casillaElegida = seleccionarCasillaAtaque(tablero, armaElegida);
+
+        // Comprobar si hay zombi en casilla
+        int numZombisEnCasilla = tablero.cuantosZombi(listaZombis, casillaElegida.getCoordx(), casillaElegida.getCoordy());
+
+        if (numZombisEnCasilla == 0) {
+            System.out.println("Ataque fallido, no hay zombies en la casilla " + casillaElegida.toString());
+            return zombisEliminados; // Devolver lista vacía si no hay zombies
+        }
+        else{
+            int nExitosArma = armaElegida.lanzarDado();
+
+            // Filtrar la lista de zombis: solo zombies de la lista que se encuentran en la casilla marcada para ataque
+            // Además, ordena la lista de zombis por aguante de manera descendente
+            List<Zombi> zombisEnCasillaMarcada = listaZombis.stream()
+                    .filter(zombi -> zombi.getPosicion() == casillaElegida).sorted((z1, z2) ->
+                            Integer.compare(z2.getAguante(), z1.getAguante())).toList();
+
+
+            // El orden de eliminar zombis será siempre de los más fuertes que se puedan eliminar
+            // con éxito a los menos fuertes(por eso el orden descendente de la lista).
+            // Ejemplo: si tenemos 2 disparos exitosos con un arma de potencia 2, y hay 4 zombies, de los
+            // cuales 2 son de aguante 1, y 2 son de aguante 2, se debe dar prioridad a eliminar a los de aguante 2.
+            for (int i = 0; i < zombisEnCasillaMarcada.size(); i++) {
+                if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
+                if (armaElegida.getPotencia() >= zombisEnCasillaMarcada.get(i).getAguante()) {
+                    zombisEliminados.add(zombisEnCasillaMarcada.get(i));
+                    listaZombis.remove(zombisEnCasillaMarcada.get(i));
+                    nExitosArma--; //restamos un tiro exitoso
+                }
+            }
+        }
+        System.out.println("Ataque realizado, se han elimimado " + zombisEliminados.size() + " zombie/s.");
+        return zombisEliminados;
     }
 
     /*
