@@ -19,5 +19,3 @@ public class AbominacionBershker extends Bershker implements Abominacion {
         return ACTIVACIONES;
     }
 }
-
-a
