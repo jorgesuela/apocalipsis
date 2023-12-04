@@ -20,8 +20,8 @@ public class Superviviente extends Activable {
 
     public Superviviente(Casilla posicion, String nombre){
         super(posicion);
-        this.nombre = nombre;
         this.vivo = true;
+        this.nombre = nombre;
         this.nbAcciones = 5;
         this.equipo = new ArrayList<>();
         this.armasActivas = new ArrayList<>();
@@ -383,16 +383,14 @@ public class Superviviente extends Activable {
                     .filter(zombi -> zombi.getPosicion() == casillaElegida).sorted((z1, z2) ->
                             Integer.compare(z2.getAguante(), z1.getAguante())).toList();
 
-
             // El orden de eliminar zombis será siempre de los más fuertes que se puedan eliminar
             // con éxito a los menos fuertes(por eso el orden descendente de la lista).
-            // Ejemplo: si tenemos 2 disparos exitosos con un arma de potencia 2, y hay 4 zombies, de los
-            // cuales 2 son de aguante 1, y 2 son de aguante 2, se debe dar prioridad a eliminar a los de aguante 2.
+            // OJO: EN ESTE APARTADO HABRÁ QUE REACCIONAR AL ATAQUE DE TODOS LOS ZOMBIES QUE SE HAYAN INTENTADO ELIMINAR
             for (int i = 0; i < zombisEnCasillaMarcada.size(); i++) {
                 if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
                 if (armaElegida.getPotencia() >= zombisEnCasillaMarcada.get(i).getAguante()) {
                     zombisEliminados.add(zombisEnCasillaMarcada.get(i));
-                    listaZombis.remove(zombisEnCasillaMarcada.get(i));
+                    this.setKillScore(this.killScore + 1); //sumamos una kill al superviviente
                     nExitosArma--; //restamos un tiro exitoso
                 }
             }
