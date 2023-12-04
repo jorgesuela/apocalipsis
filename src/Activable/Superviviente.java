@@ -5,9 +5,7 @@ import Equipo.Equipo;
 import Equipo.Suministro;
 import Logica.Casilla;
 import Logica.Tablero;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Superviviente extends Activable {
     private String nombre;

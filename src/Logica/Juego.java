@@ -44,7 +44,7 @@ public class Juego {
     }
 
     public void iniciar(){
-        int contadorTurnos = 0;
+        int contadorTurnos = 1;
         System.out.println("COMENZANDO EL JUEGO...");
 
         // cuantos supervivientes?
@@ -59,24 +59,18 @@ public class Juego {
         // cual sera la casilla objetivo?
         objectivo = tablero.casillaObjetivo(tablero.getTamano());
 
-
-        //TODO:  falta meter los zombies iniciales!!!
-        //Zombi zombi1 = new CaminanteToxico(tablero.getCasilla(4, tablero.getTamano()-1));
-        //this.zombis.add(zombi1);
-        FactoryZombies fz = new FactoryZombies();
-        this.zombis = fz.createZombis(supervivientes.size());
-
-
         // aqui deberia haber un menu despues de cada turno que te permitiera elegir
         // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
 
         //esta condicion while true habra que cambiarla, es solo para probar funcionalidades!!!!!
         //deberia ser o que los supervivientes hayan ganado o que hayan muerto
         while(true){
+            //meter zombis al tablero por cada turno que pase
+            zombis.addAll(this.crearTandaZombis(supervivientes.size(), contadorTurnos));
             //turno de todos los supervivientes
             realizarTurnoSupervivientes();
             //turno de todos los zombis
-            realzarActivacionesZombis();
+            realizarActivacionesZombis();
 
             contadorTurnos++;
             System.out.println(" ");
@@ -178,7 +172,7 @@ public class Juego {
         return supervivientes;
     }
 
-    public void realzarActivacionesZombis() {
+    public void realizarActivacionesZombis() {
         for (Zombi zombi : zombis) {
             for (int i = 1; i <= zombi.getNbActivaciones(); i++) {
                 // Obtener el superviviente más cercano
@@ -200,11 +194,18 @@ public class Juego {
 
 
 
-class FactoryZombies {
-    public ArrayList<Zombi> createZombis(int numberSupervivientes){
-        ArrayList<Zombi> zombis = new ArrayList<Zombi>();
-        int nbZombies = numberSupervivientes * 3;
-        for (int i =0 ; i< nbZombies ; i++){zombis.add(createZombi());}
+
+    public ArrayList<Zombi> crearTandaZombis(int numberSupervivientes, int contadorTurnos){
+        ArrayList<Zombi> zombis = new ArrayList<>();
+        int nbZombies;
+        //si es inicio de partida -> 3 zombis x superviviente
+        if (contadorTurnos == 1) nbZombies = numberSupervivientes * 3;
+        //si no es inicio de partida -> 1 zombi x superviviente
+        else nbZombies = numberSupervivientes;
+
+        for (int i =0 ; i< nbZombies ; i++){
+            zombis.add(createZombi());
+        }
         return zombis;
     }
 
@@ -242,28 +243,5 @@ class FactoryZombies {
         }
         return null;
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
