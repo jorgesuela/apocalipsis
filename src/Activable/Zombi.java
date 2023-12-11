@@ -84,4 +84,16 @@ public abstract class Zombi extends Activable {
                 Math.pow(casilla1.getCoordy() - casilla2.getCoordy(), 2));
     }
 
+    public void morder(Superviviente supervivienteMasCercano) {
+        if (supervivienteMasCercano.getNbHeridas() < 2) {
+            supervivienteMasCercano.setNbHeridas(supervivienteMasCercano.getNbHeridas() + 1);
+            System.out.println("superviviente " + supervivienteMasCercano.getNombre() + " fue herido. Heridas = " + supervivienteMasCercano.getNbHeridas());
+        }
+        else{
+            System.out.println("superviviente " + supervivienteMasCercano.getNombre() + " ha muerto.");
+            supervivienteMasCercano.setMuerto();
+        }
+
+
+    }
 }
