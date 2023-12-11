@@ -18,10 +18,14 @@ public class Juego {
         this.zombis = new ArrayList<>();
     }
 
-    public void mostrarEstadisticas(){}
-
-    public Tablero getTablero() {
-        return tablero;
+    public void mostrarEstadisticas(){
+        System.out.println("############ESTADISTICAS DE LA PARTIDA##########");
+        for (Superviviente superviviente: supervivientes){
+            System.out.println(superviviente.getNombre()+":");
+            if (superviviente.isVivo()) System.out.println("- ha sobrevivido.");
+            else System.out.println("- no ha sobrevivido.");
+            System.out.println("- ha eliminado a " + superviviente.getKillScore() + " zombis.");
+        }
     }
 
     public void mostrarMenuSuperviviente(){
@@ -85,6 +89,7 @@ public class Juego {
         if (Superviviente.supervivientesVivos(supervivientes).size() == 0){
             this.derrota();
         }
+        this.mostrarEstadisticas();
 
 
     }
@@ -93,6 +98,8 @@ public class Juego {
         System.out.println("###############################################");
         System.out.println("HAS PERDIDO, LOS SUPERVIVIENTES HAN CAIDO :(");
         System.out.println("###############################################");
+        System.out.println(" ");
+
     }
 
     public void finalizar() {

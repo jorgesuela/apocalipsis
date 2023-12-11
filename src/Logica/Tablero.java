@@ -130,17 +130,6 @@ public class Tablero {
 
     }
 
-    // Método para obtener la inicial en mayúscula del nombre del superviviente
-    private String obtenerInicialMayuscula(ArrayList<Superviviente> listaSupervivientes, int fila, int columna) {
-        for (Superviviente superviviente : listaSupervivientes) {
-            if (superviviente.getPosicion().equals(casillas[fila][columna])) {
-                String nombre = superviviente.getNombre();
-                return String.valueOf(nombre.charAt(0)).toUpperCase();
-            }
-        }
-        return "";
-    }
-
     public Casilla casillaObjetivo(int tamaño) {
         int oposito = tamaño-1;
         return getCasilla(oposito,oposito);

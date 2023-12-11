@@ -121,10 +121,10 @@ public class Arma extends Equipo {
             int max = 6;
             int randomDados = random.nextInt(max - min + 1) + min;
             if (randomDados >= this.valorExito) {
-                System.out.println("dado numero " + i + " = Exito");
+                System.out.println("dado numero " + (i+1) + " = Exito");
                 nExitos++;
             }
-            else System.out.println("dado numero " + i + " = Fallo");
+            else System.out.println("dado numero " + (i+1) + " = Fallo");
         }
         return nExitos;
     }
