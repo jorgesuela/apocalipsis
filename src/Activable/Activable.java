@@ -5,8 +5,10 @@ import Logica.Tablero;
 
 public abstract class Activable {
     protected Casilla posicion;
+    protected Boolean vivo;
 
     public Activable(Casilla pos){
+        this.vivo = true;
         this.posicion = pos;
     }
 
@@ -17,6 +19,14 @@ public abstract class Activable {
 
     public void setPosicion(Casilla posicion) {
         this.posicion = posicion;
+    }
+
+    public boolean isVivo() {
+        return this.vivo;
+    }
+
+    protected void setMuerto(){
+        this.vivo = false;
     }
 
     public void atacar(Activable atacado){
@@ -56,6 +66,4 @@ public abstract class Activable {
     public void activarse(){
 
     }
-
-
 }
