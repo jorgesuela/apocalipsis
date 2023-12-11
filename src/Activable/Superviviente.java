@@ -9,7 +9,6 @@ import java.util.*;
 
 public class Superviviente extends Activable {
     private String nombre;
-    private Boolean vivo;
     private Integer nbAcciones;
     private final ArrayList<Equipo> equipo;
     private ArrayList<Arma> armasActivas;
@@ -18,7 +17,6 @@ public class Superviviente extends Activable {
 
     public Superviviente(Casilla posicion, String nombre){
         super(posicion);
-        this.vivo = true;
         this.nombre = nombre;
         this.nbAcciones = 5;
         this.equipo = new ArrayList<>();
@@ -33,14 +31,6 @@ public class Superviviente extends Activable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Boolean getVivo() {
-        return vivo;
-    }
-
-    public void setVivo(Boolean vivo) {
-        this.vivo = vivo;
     }
 
     public Integer getNbAcciones() {
@@ -397,27 +387,18 @@ public class Superviviente extends Activable {
         return zombisEliminados;
     }
 
-    /*
-    public static Superviviente crearSuperviviente(Tablero tablero) {
-        Casilla posicionInicial = tablero.getCasilla(0, 0);
-        Scanner scanner = new Scanner(System.in);
+    // util para ir quitando de la lista del juego de supervivientes los que esten muertos
+    public static ArrayList<Superviviente> supervivientesVivos(ArrayList<Superviviente> supervivientes) {
+        ArrayList<Superviviente> supervivientesVivos = new ArrayList<>();
 
-        System.out.println("Ingrese el nombre del superviviente:");
-        String nombre = scanner.nextLine();
-
-        System.out.println("Elige cual quieres que sea tu posicion inicial:");
-        System.out.println("1: Arriba izquierda (0,0)");
-        System.out.println("2: Abajo izquierda (0," + (tablero.getTamano() - 1) + ")");
-        int opcion = scanner.nextInt();
-
-        switch (opcion) {
-            case 1 -> posicionInicial = tablero.getCasilla(0, 0);
-            case 2 -> posicionInicial = tablero.getCasilla(tablero.getTamano() - 1, 0);
+        for (Superviviente superviviente : supervivientes) {
+            if (superviviente.isVivo()) {
+                supervivientesVivos.add(superviviente);
+            }
         }
 
-        // Crear y devolver el superviviente
-        return new Superviviente(posicionInicial, nombre);
-    }*/
+        return supervivientesVivos;
+    }
 
 }
 
