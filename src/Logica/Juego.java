@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Juego {
     private ArrayList<Superviviente> supervivientes;
     private ArrayList<Zombi> zombis;
-    private Casilla objectivo;
+    private Casilla objetivo;
     public Tablero tablero;
 
     public Juego() {
@@ -57,14 +57,14 @@ public class Juego {
         this.supervivientes = crearSupervivientes(numSupervivientes);
 
         // cual sera la casilla objetivo?
-        objectivo = tablero.casillaObjetivo(tablero.getTamano());
+        objetivo = tablero.casillaObjetivo(tablero.getTamano());
 
         // aqui deberia haber un menu despues de cada turno que te permitiera elegir
         // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
 
         //esta condicion while true habra que cambiarla, es solo para probar funcionalidades!!!!!
         //deberia ser o que los supervivientes hayan ganado o que hayan muerto
-        while(true){
+        while(Superviviente.supervivientesVivos(supervivientes).size() != 0){
             //meter zombis al tablero por cada turno que pase
             zombis.addAll(this.crearTandaZombis(supervivientes.size(), contadorTurnos));
             //turno de todos los supervivientes
@@ -100,11 +100,12 @@ public class Juego {
     }
 
     public void realizarTurnoSupervivientes(){
-        for(Superviviente superviviente: supervivientes){
+        ArrayList<Superviviente> supervivientesVivos = Superviviente.supervivientesVivos(supervivientes);
+        for(Superviviente superviviente: supervivientesVivos){
             // mostrar el tablero antes de tomar acciones
             while(superviviente.getNbAcciones() > 0) {
                 // mostrar tablero antes de acciones
-                tablero.printTablero(zombis, supervivientes, objectivo);
+                tablero.printTablero(zombis, supervivientesVivos, objetivo);
                 System.out.println("Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
                 System.out.println("Te quedan " + superviviente.getNbAcciones() + " acciones.");
                 mostrarMenuSuperviviente();
@@ -130,7 +131,7 @@ public class Juego {
 
             }
             //mostrar tablero al acabar acciones de superviviente
-            tablero.printTablero(zombis, supervivientes, objectivo);
+            tablero.printTablero(zombis, Superviviente.supervivientesVivos(supervivientes), objetivo);
             //después del turno de cada superviviente, se reestablecen sus acciones a 5
             superviviente.resetearAcciones();
         }
@@ -175,13 +176,16 @@ public class Juego {
     public void realizarActivacionesZombis() {
         for (Zombi zombi : zombis) {
             for (int i = 1; i <= zombi.getNbActivaciones(); i++) {
+                // consigue la lista de supervivientes vivos en caso de que un zombi
+                // de 2 activaciones mate a 1 superviviente en su primera accion
+                ArrayList<Superviviente> supervivientesVivos = Superviviente.supervivientesVivos(supervivientes);
                 // Obtener el superviviente más cercano
-                Superviviente supervivienteMasCercano = zombi.encontrarSupervivienteMasCercano(supervivientes);
+                Superviviente supervivienteMasCercano = zombi.encontrarSupervivienteMasCercano(supervivientesVivos);
 
                 // Verificar si el zombi está en la misma casilla que el superviviente
                 if (supervivienteMasCercano != null && zombi.getPosicion().equals(supervivienteMasCercano.getPosicion())) {
                     // Si están en la misma casilla, morder al superviviente
-                    // zombi.morder(supervivienteMasCercano);
+                     zombi.morder(supervivienteMasCercano);
                 } else {
                     // Si no están en la misma casilla, mover hacia el superviviente más cercano
                     zombi.moverHaciaSupervivienteMasCercano(tablero, supervivientes, supervivienteMasCercano);
@@ -189,11 +193,6 @@ public class Juego {
             }
         }
     }
-
-    public void generarZombis(){}
-
-
-
 
     public ArrayList<Zombi> crearTandaZombis(int numberSupervivientes, int contadorTurnos){
         ArrayList<Zombi> zombis = new ArrayList<>();
