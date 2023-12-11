@@ -82,8 +82,17 @@ public class Juego {
             System.out.println(" ");
 
         }
+        if (Superviviente.supervivientesVivos(supervivientes).size() == 0){
+            this.derrota();
+        }
 
 
+    }
+
+    public void derrota(){
+        System.out.println("###############################################");
+        System.out.println("HAS PERDIDO, LOS SUPERVIVIENTES HAN CAIDO :(");
+        System.out.println("###############################################");
     }
 
     public void finalizar() {
@@ -105,7 +114,9 @@ public class Juego {
             // mostrar el tablero antes de tomar acciones
             while(superviviente.getNbAcciones() > 0) {
                 // mostrar tablero antes de acciones
+                System.out.println(" ");
                 tablero.printTablero(zombis, supervivientesVivos, objetivo);
+                System.out.println(" ");
                 System.out.println("Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
                 System.out.println("Te quedan " + superviviente.getNbAcciones() + " acciones.");
                 mostrarMenuSuperviviente();
@@ -131,7 +142,9 @@ public class Juego {
 
             }
             //mostrar tablero al acabar acciones de superviviente
+            System.out.println(" ");
             tablero.printTablero(zombis, Superviviente.supervivientesVivos(supervivientes), objetivo);
+            System.out.println(" ");
             //después del turno de cada superviviente, se reestablecen sus acciones a 5
             superviviente.resetearAcciones();
         }
@@ -174,10 +187,14 @@ public class Juego {
     }
 
     public void realizarActivacionesZombis() {
+        System.out.println("###########################################");
+        System.out.println("Los zombis se han activado!!!");
+        System.out.println("###########################################");
+        System.out.println(" ");
         for (Zombi zombi : zombis) {
             for (int i = 1; i <= zombi.getNbActivaciones(); i++) {
                 // consigue la lista de supervivientes vivos en caso de que un zombi
-                // de 2 activaciones mate a 1 superviviente en su primera accion
+                // de 2 activaciones mate a 1 superviviente en su primera acción
                 ArrayList<Superviviente> supervivientesVivos = Superviviente.supervivientesVivos(supervivientes);
                 // Obtener el superviviente más cercano
                 Superviviente supervivienteMasCercano = zombi.encontrarSupervivienteMasCercano(supervivientesVivos);
@@ -192,6 +209,10 @@ public class Juego {
                 }
             }
         }
+        System.out.println(" ");
+        System.out.println(" ");
+        tablero.printTablero(zombis, Superviviente.supervivientesVivos(supervivientes), objetivo);
+        System.out.println(" ");
     }
 
     public ArrayList<Zombi> crearTandaZombis(int numberSupervivientes, int contadorTurnos){
