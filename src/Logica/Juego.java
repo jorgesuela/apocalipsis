@@ -266,18 +266,18 @@ public class Juego {
             switch (j){
                 case 1 : return new CaminanteToxico(tablero.getCasilla(coordX, coordY));
                 case 2 : return new CaminanteNormal(tablero.getCasilla(coordX, coordY));
-                case 3 : return new CaminanteBershker(tablero.getCasilla(coordX, coordY));
+                case 3 : return new CaminanteBerserker(tablero.getCasilla(coordX, coordY));
             }
         }else if (i<=90){//Corredor
             switch (j){
                 case 1 : return new CorredorNormal(tablero.getCasilla(coordX, coordY));
                 case 2 : return new CorredorToxico(tablero.getCasilla(coordX, coordY));
-                case 3 : return new CorredorBershker(tablero.getCasilla(coordX, coordY));
+                case 3 : return new CorredorBerserker(tablero.getCasilla(coordX, coordY));
             }
         }else{//Abominacion
             switch (j){
                 case 1 : return new AbominacionNormal(tablero.getCasilla(coordX, coordY));
-                case 2 : return new AbominacionBershker(tablero.getCasilla(coordX, coordY));
+                case 2 : return new AbominacionBerserker(tablero.getCasilla(coordX, coordY));
                 case 3 : return new AbominacionToxico(tablero.getCasilla(coordX, coordY));
             }
         }

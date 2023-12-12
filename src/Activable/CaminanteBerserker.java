@@ -1,12 +1,11 @@
 package Activable;
 
-import Activable.Bershker;
 import Activable.Interfaces.Caminante;
 import Logica.Casilla;
 
-public class CaminanteBershker extends Bershker implements Caminante {
+public class CaminanteBerserker extends Berserker implements Caminante {
 
-    public CaminanteBershker(Casilla pos) {
+    public CaminanteBerserker(Casilla pos) {
         super(pos);
     }
 

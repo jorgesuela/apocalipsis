@@ -3,9 +3,9 @@ package Activable;
 import Activable.Interfaces.Corredor;
 import Logica.Casilla;
 
-public class CorredorBershker extends Bershker implements Corredor {
+public class CorredorBerserker extends Berserker implements Corredor {
 
-    public CorredorBershker(Casilla pos) {
+    public CorredorBerserker(Casilla pos) {
         super(pos);
     }
     @Override

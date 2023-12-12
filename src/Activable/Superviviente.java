@@ -6,7 +6,6 @@ import Equipo.Suministro;
 import Logica.Casilla;
 import Logica.Tablero;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Superviviente extends Activable {
     private final String nombre;
@@ -395,6 +394,8 @@ public class Superviviente extends Activable {
             // OJO: EN ESTE APARTADO HABRÁ QUE REACCIONAR AL ATAQUE DE TODOS LOS ZOMBIES QUE SE HAYAN INTENTADO ELIMINAR
             for (Zombi zombi : zombisEnCasillaMarcada) {
                 if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
+                // si es berserker no se le puede matar con ataques a distancia
+                if (zombi instanceof Berserker && armaElegida.getAlcance()!= 0) continue;
                 if (armaElegida.getPotencia() >= zombi.getAguante()) {
                     zombisEliminados.add(zombi);
                     this.setKillScore(this.killScore + 1); //sumamos una kill al superviviente

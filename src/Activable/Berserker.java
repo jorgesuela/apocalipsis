@@ -2,8 +2,8 @@ package Activable;
 
 import Logica.Casilla;
 
-public abstract class Bershker extends Zombi {
-    public Bershker(Casilla pos) {
+public abstract class Berserker extends Zombi {
+    public Berserker(Casilla pos) {
         super(pos);
     }
 

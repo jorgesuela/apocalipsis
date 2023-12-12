@@ -3,9 +3,9 @@ package Activable;
 import Activable.Interfaces.Abominacion;
 import Logica.Casilla;
 
-public class AbominacionBershker extends Bershker implements Abominacion {
+public class AbominacionBerserker extends Berserker implements Abominacion {
 
-    public AbominacionBershker(Casilla pos) {
+    public AbominacionBerserker(Casilla pos) {
         super(pos);
     }
 
