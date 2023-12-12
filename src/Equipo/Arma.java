@@ -107,17 +107,12 @@ public class Arma extends Equipo {
     private static String construirNombreArma(int potencia, int alcance, int valorExito, int numDados) {
         StringBuilder nombre = new StringBuilder();
 
-        nombre.append(obtenerDescripcion(potencia, "mala", "estandar", "potente"));
-        nombre.append(obtenerDescripcion(alcance, ", cuerpo a cuerpo", ", de corto alcance", ", de medio alcance", ", de largo alcance"));
-        nombre.append(obtenerDescripcion(valorExito, ", exito con 4", ", exito con 5"));
-        nombre.append(obtenerDescripcion(numDados, " y de disparo unico", " y de disparo doble", " y de disparo triple"));
+        nombre.append(new String[]{" mala", " estandar", " potente"}[potencia - 1]);
+        nombre.append(new String[]{", cuerpo a cuerpo", ", de corto alcance", ", de medio alcance", ", de largo alcance"}[alcance]);
+        nombre.append(new String[]{", exito con 4", ", exito con 5"}[valorExito - 4]);
+        nombre.append(new String[]{" y de disparo unico", " y de disparo doble", " y de disparo triple"}[numDados - 1]);
 
         return nombre.toString();
-    }
-
-    private static String obtenerDescripcion(int valor, String... descripciones) {
-        int index = Math.min(valor - 1, descripciones.length - 1);
-        return descripciones[index];
     }
 
     public int lanzarDado(){
