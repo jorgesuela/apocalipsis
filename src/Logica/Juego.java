@@ -17,30 +17,30 @@ public class Juego {
         this.zombis = new ArrayList<>();
     }
 
+    private int obtenerEntradaUsuario() {
+        Scanner scanner = new Scanner(System.in);
+        return Integer.parseInt(scanner.nextLine());
+    }
+
+    private void imprimirInformacionSuperviviente(Superviviente superviviente) {
+        System.out.println(superviviente.getNombre() + ":");
+        if (superviviente.aSalvo()) System.out.println("- ha llegado al refugio.");
+        else System.out.println("- no ha sobrevivido.");
+        System.out.println("- numero de heridas = " + superviviente.getNbHeridas());
+        System.out.println("- ha eliminado a " + superviviente.getKillScore() + " zombis.");
+        System.out.println("- equipo:");
+        for (int i = 0; i < superviviente.getEquipo().size(); i++) {
+            System.out.println("   " + (i + 1) + ") " + superviviente.getEquipo().get(i).getNombre());
+        }
+        System.out.println("- armas activas:");
+        for (int i = 0; i < superviviente.getArmasActivas().size(); i++) {
+            System.out.println("   " + (i + 1) + ") " + superviviente.getArmasActivas().get(i).getNombre());
+        }
+    }
+
     public void mostrarResultadosDelJuego(){
-        if(Superviviente.supervivientesVivos(supervivientes).size() != supervivientes.size()){
-            System.out.println("HAS PERDIDO, NO HAS LOGRADO RESCATAR A TODOS LOS SUPERVIVIENTES!!!");
-            System.out.println(" ");
-        }
-        else{
-            System.out.println("HAS GANADO, TODOS LOS SUPERVIVIENTES HAN LOGRADO SOBREVIVIR!!!");
-            System.out.println(" ");
-        }
-        System.out.println("############ESTADISTICAS DE LA PARTIDA##########");
-        for (Superviviente superviviente: supervivientes){
-            System.out.println(superviviente.getNombre()+":");
-            if (superviviente.aSalvo()) System.out.println("- ha llegado al refugio.");
-            else System.out.println("- no ha sobrevivido.");
-            System.out.println("- numero de heridas = " + superviviente.getNbHeridas());
-            System.out.println("- ha eliminado a " + superviviente.getKillScore() + " zombis.");
-            System.out.println("- equipo:");
-            for (int i= 0; i < superviviente.getEquipo().size(); i++){
-                System.out.println("   " + (i+1) + ") " + superviviente.getEquipo().get(i).getNombre());
-            }
-            System.out.println("- armas activas:");
-            for (int i= 0; i < superviviente.getArmasActivas().size(); i++){
-                System.out.println("   " + (i+1) + ") " + superviviente.getArmasActivas().get(i).getNombre());
-            }
+        for (Superviviente superviviente : supervivientes) {
+            imprimirInformacionSuperviviente(superviviente);
         }
     }
 
@@ -59,48 +59,38 @@ public class Juego {
         System.out.println("10: reiniciar la partida");
     }
 
-    @SuppressWarnings("InfiniteLoopStatement")
-    public void iniciar(){
+    private void ejecutarTurno(int contadorTurnos) {
+        zombis.addAll(crearTandaZombis(supervivientes.size(), contadorTurnos));
+        realizarTurnoSupervivientes();
+        realizarActivacionesZombis();
+    }
+
+    private void mostrarFinDeTurno(int contadorTurnos) {
+        System.out.println(" ");
+        System.out.println("----------------------------------------");
+        System.out.println("EL TURNO " + contadorTurnos + " HA FINALIZADO.");
+        System.out.println("----------------------------------------");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+    }
+
+    public void iniciar() {
         int contadorTurnos = 1;
         System.out.println("COMENZANDO EL JUEGO...");
 
-        // cuantos supervivientes?
         int numSupervivientes = seleccionarNumSupervivientes();
-
-        // crear el tablero en base al numero de supervivientes
         crearTablero(numSupervivientes);
-
-        // aqui creamos los supervivientes iniciales y los metemos al tablero
-        this.supervivientes = crearSupervivientes(numSupervivientes);
-
-        // cual sera la casilla objetivo?
+        supervivientes = crearSupervivientes(numSupervivientes);
         objetivo = tablero.casillaObjetivo(tablero.getTamano());
 
-        // aquí debería haber un menu después de cada turno que te permitiera elegir
-        // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
-
-        //bucle principal del juego, solo terminar cuando supervivientes muertos o a salvo
-        while(true){
-            if (!(this.continuarElJuego())){
-                this.finalizar();
-            }
-            //meter zombis al tablero por cada turno que pase
-            zombis.addAll(this.crearTandaZombis(supervivientes.size(), contadorTurnos));
-            //turno de todos los supervivientes
-            realizarTurnoSupervivientes();
-            //turno de todos los zombis
-            realizarActivacionesZombis();
-
+        while (continuarElJuego()) {
+            ejecutarTurno(contadorTurnos);
             contadorTurnos++;
-            System.out.println(" ");
-            System.out.println("----------------------------------------");
-            System.out.println("EL TURNO " + contadorTurnos + " HA FINALIZADO.");
-            System.out.println("----------------------------------------");
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println(" ");
-
+            mostrarFinDeTurno(contadorTurnos);
         }
+
+        finalizar();
     }
 
     public void finalizar() {
@@ -137,23 +127,22 @@ public class Juego {
                 System.out.println("Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
                 System.out.println("Te quedan " + superviviente.getNbAcciones() + " acciones.");
                 mostrarMenuSuperviviente();
-                // Leer la entrada del usuario como una cadena
-                Scanner scanner = new Scanner(System.in);
-                String entrada = scanner.nextLine();
 
+                // Leer la entrada del usuario como una cadena
+                int entrada = obtenerEntradaUsuario();
                 switch (entrada) {
-                    case "1" -> superviviente.moverse(tablero, zombis);
-                    case "2" -> superviviente.buscarEquipo();
-                    case "3" -> {
+                    case 1 -> superviviente.moverse(tablero, zombis);
+                    case 2 -> superviviente.buscarEquipo();
+                    case 3 -> {
                         List<Zombi> zombisEliminados = superviviente.atacar(tablero, zombis);
                         zombis.removeAll(zombisEliminados); // Eliminar de lista zombis los que hayan muerto
                     }
-                    case "4" -> superviviente.equiparArma();
-                    case "5" -> superviviente.noHacerNada();
-                    case "6" -> superviviente.consultarEquipo();
-                    case "7" -> superviviente.armasEquipadas();
-                    case "9" -> this.finalizar();
-                    case "10" -> this.reiniciar();
+                    case 4 -> superviviente.equiparArma();
+                    case 5 -> superviviente.noHacerNada();
+                    case 6 -> superviviente.consultarEquipo();
+                    case 7 -> superviviente.armasEquipadas();
+                    case 9 -> this.finalizar();
+                    case 10 -> this.reiniciar();
                     default -> System.out.println("Por favor, selecciona una accion valida");
                 }
                 // después de cada acción se comprueba si el superviviente ha logrado llegar al objetivo con el suministro
@@ -169,14 +158,13 @@ public class Juego {
         }
     }
     public int seleccionarNumSupervivientes() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
                 System.out.println("Selecciona el numero de supervivientes(de 1 a 4)");
-                int numero = Integer.parseInt(scanner.nextLine());
+                int entrada = obtenerEntradaUsuario();
 
-                if (numero >= 1 && numero <= 4) {
-                    return numero;
+                if (entrada >= 1 && entrada <= 4) {
+                    return entrada;
                 } else {
                     System.out.println("Por favor, ingresa un número válido del 1 al 4.");
                 }
