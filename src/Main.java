@@ -1,5 +1,3 @@
-import Activable.CorredorBershker;
-import Logica.Casilla;
 import Logica.Juego;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,

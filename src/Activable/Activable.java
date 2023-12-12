@@ -29,10 +29,6 @@ public abstract class Activable {
         this.vivo = false;
     }
 
-    public void atacar(Activable atacado){
-
-    }
-
     protected boolean moverEnDireccion(Tablero tablero, String direccion) {
         int nuevaCoordX = this.getPosicion().getCoordx();
         int nuevaCoordY = this.getPosicion().getCoordy();
@@ -61,9 +57,5 @@ public abstract class Activable {
 
         this.setPosicion(tablero.getCasilla(nuevaCoordX, nuevaCoordY));
         return true;
-    }
-
-    public void activarse(){
-
     }
 }

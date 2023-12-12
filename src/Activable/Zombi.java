@@ -2,23 +2,12 @@ package Activable;
 
 import Logica.Casilla;
 import Logica.Tablero;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Zombi extends Activable {
     public Zombi(Casilla pos) {
         super(pos);
     }
-    //protected int aguante;
-    //protected int nbActivaciones;
-
-    /*public Zombi(Casilla posicion, int aguante, int nbActivaciones){
-        super(posicion);
-        //this.aguante = aguante;
-        this.nbActivaciones = nbActivaciones;
-    }*/
-
 
     public abstract int getAguante();
 
@@ -26,15 +15,7 @@ public abstract class Zombi extends Activable {
 
     public abstract int getNbActivaciones();
 
-    /*public void setAguante(int aguante) {
-        this.aguante = aguante;
-    }*/
-
-    /*public void setNbActivaciones(int nbActivaciones) {
-        this.nbActivaciones = nbActivaciones;
-    }*/
-
-    public void moverHaciaSupervivienteMasCercano(Tablero tablero, ArrayList<Superviviente> supervivientes, Superviviente supervivienteMasCercano) {
+    public void moverHaciaSupervivienteMasCercano(Tablero tablero, Superviviente supervivienteMasCercano) {
         if (supervivienteMasCercano != null) {
             // Calcular la dirección hacia el superviviente más cercano
             String direccion = calcularDireccionHaciaSuperviviente(supervivienteMasCercano);

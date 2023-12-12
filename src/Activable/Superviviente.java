@@ -8,10 +8,10 @@ import Logica.Tablero;
 import java.util.*;
 
 public class Superviviente extends Activable {
-    private String nombre;
+    private final String nombre;
     private Integer nbAcciones;
     private final ArrayList<Equipo> equipo;
-    private ArrayList<Arma> armasActivas;
+    private final ArrayList<Arma> armasActivas;
     private Integer killScore;
     private Integer nbHeridas;
     private Boolean estaASalvo;
@@ -31,10 +31,6 @@ public class Superviviente extends Activable {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public Integer getNbAcciones() {
         return nbAcciones;
     }
@@ -47,10 +43,6 @@ public class Superviviente extends Activable {
 
     public ArrayList<Arma> getArmasActivas() {
         return armasActivas;
-    }
-
-    public void setArmasActivas(ArrayList<Arma> armasActivas) {
-        this.armasActivas = armasActivas;
     }
 
     public ArrayList<Equipo> getEquipo() {
@@ -363,7 +355,7 @@ public class Superviviente extends Activable {
         int numZombisEnCasilla = tablero.cuantosZombi(listaZombis, casillaElegida.getCoordx(), casillaElegida.getCoordy());
 
         if (numZombisEnCasilla == 0) {
-            System.out.println("Ataque fallido, no hay zombies en la casilla " + casillaElegida.toString());
+            System.out.println("Ataque fallido, no hay zombies en la casilla " + casillaElegida);
             return zombisEliminados; // Devolver lista vacía si no hay zombies
         }
         else{
@@ -378,10 +370,10 @@ public class Superviviente extends Activable {
             // El orden de eliminar zombis será siempre de los más fuertes que se puedan eliminar
             // con éxito a los menos fuertes(por eso el orden descendente de la lista).
             // OJO: EN ESTE APARTADO HABRÁ QUE REACCIONAR AL ATAQUE DE TODOS LOS ZOMBIES QUE SE HAYAN INTENTADO ELIMINAR
-            for (int i = 0; i < zombisEnCasillaMarcada.size(); i++) {
+            for (Zombi zombi : zombisEnCasillaMarcada) {
                 if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
-                if (armaElegida.getPotencia() >= zombisEnCasillaMarcada.get(i).getAguante()) {
-                    zombisEliminados.add(zombisEnCasillaMarcada.get(i));
+                if (armaElegida.getPotencia() >= zombi.getAguante()) {
+                    zombisEliminados.add(zombi);
                     this.setKillScore(this.killScore + 1); //sumamos una kill al superviviente
                     nExitosArma--; //restamos un tiro exitoso
                 }
@@ -419,7 +411,6 @@ public class Superviviente extends Activable {
         Equipo suministro = this.haySuministroEnEquipo();
         if (this.posicion == tablero.casillaObjetivo(tablero.getTamano())){
             if (suministro != null) {
-                this.equipo.remove(suministro);
                 System.out.println(this.getNombre() + " entrego " + suministro.getNombre() + " y entro al refugio :D!");
                 this.estaASalvo = true;
             }

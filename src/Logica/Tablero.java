@@ -2,10 +2,8 @@ package Logica;
 
 import Activable.Superviviente;
 import Activable.Zombi;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Tablero {
     private final Casilla[][] casillas;
@@ -85,8 +83,8 @@ public class Tablero {
                         if (!objetosEnCasilla.isEmpty()){
                             String temp = objetosEnCasilla.get(0).trim();objetosEnCasilla.clear();
                             objetosEnCasilla.add(temp);
-                            objetosEnCasilla.add("  "+superviviente.toString()+"");
-                        }else{objetosEnCasilla.add("  "+superviviente.toString()+"  ");}
+                            objetosEnCasilla.add("  " + superviviente + "");
+                        }else{objetosEnCasilla.add("  " + superviviente + "  ");}
 
                         cantidadSupervivientes++; // Contar supervivientes en la casilla
                     }

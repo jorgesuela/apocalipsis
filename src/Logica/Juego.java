@@ -1,17 +1,14 @@
 package Logica;
 
 import Activable.*;
-import Equipo.Equipo;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Juego {
     private ArrayList<Superviviente> supervivientes;
-    private ArrayList<Zombi> zombis;
+    private final ArrayList<Zombi> zombis;
     private Casilla objetivo;
     public Tablero tablero;
 
@@ -60,10 +57,6 @@ public class Juego {
         System.out.println("######OPCIONES DE PARTIDA######");
         System.out.println("9: finalizar la partida");
         System.out.println("10: reiniciar la partida");
-    }
-
-    public void setTablero(Tablero tablero) {
-        this.tablero = tablero;
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -232,7 +225,7 @@ public class Juego {
                      zombi.morder(supervivienteMasCercano);
                 } else {
                     // Si no están en la misma casilla, mover hacia el superviviente más cercano
-                    zombi.moverHaciaSupervivienteMasCercano(tablero, supervivientes, supervivienteMasCercano);
+                    zombi.moverHaciaSupervivienteMasCercano(tablero, supervivienteMasCercano);
                 }
             }
         }
