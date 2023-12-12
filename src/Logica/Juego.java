@@ -1,6 +1,7 @@
 package Logica;
 
 import Activable.*;
+import Equipo.Equipo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,16 @@ public class Juego {
             System.out.println(superviviente.getNombre()+":");
             if (superviviente.aSalvo()) System.out.println("- ha llegado al refugio.");
             else System.out.println("- no ha sobrevivido.");
+            System.out.println("- numero de heridas = " + superviviente.getNbHeridas());
             System.out.println("- ha eliminado a " + superviviente.getKillScore() + " zombis.");
+            System.out.println("- equipo:");
+            for (int i= 0; i < superviviente.getEquipo().size(); i++){
+                System.out.println("   " + (i+1) + ") " + superviviente.getEquipo().get(i).getNombre());
+            }
+            System.out.println("- armas activas:");
+            for (int i= 0; i < superviviente.getArmasActivas().size(); i++){
+                System.out.println("   " + (i+1) + ") " + superviviente.getArmasActivas().get(i).getNombre());
+            }
         }
     }
 
