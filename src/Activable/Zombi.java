@@ -4,6 +4,7 @@ import Logica.Casilla;
 import Logica.Tablero;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Zombi extends Activable {
     public Zombi(Casilla pos) {
@@ -62,7 +63,7 @@ public abstract class Zombi extends Activable {
     }
 
     // Método para encontrar al superviviente más cercano
-    public Superviviente encontrarSupervivienteMasCercano(ArrayList<Superviviente> supervivientes) {
+    public Superviviente encontrarSupervivienteMasCercano(List<Superviviente> supervivientes) {
         double distanciaMinima = Double.MAX_VALUE;
         Superviviente supervivienteMasCercano = null;
 
