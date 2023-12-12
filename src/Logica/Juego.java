@@ -17,6 +17,23 @@ public class Juego {
         this.zombis = new ArrayList<>();
     }
 
+    public int seleccionarNumSupervivientes() {
+        while (true) {
+            try {
+                System.out.println("Selecciona el numero de supervivientes(de 1 a 4)");
+                int entrada = obtenerEntradaUsuario();
+
+                if (entrada >= 1 && entrada <= 4) {
+                    return entrada;
+                } else {
+                    System.out.println("Por favor, ingresa un número válido del 1 al 4.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Por favor, ingresa un número entero del 1 al 4.");
+            }
+        }
+    }
+
     private int obtenerEntradaUsuario() {
         Scanner scanner = new Scanner(System.in);
         return Integer.parseInt(scanner.nextLine());
@@ -99,6 +116,16 @@ public class Juego {
         System.exit(0);  // Esto finaliza la ejecución del programa
     }
 
+    // para saber si el juego debe continuar o acabar
+    public boolean continuarElJuego() {
+        for (Superviviente superviviente : supervivientes) {
+            if (superviviente.isVivo() && !(superviviente.aSalvo())) {
+                return true; // Si algún superviviente no está muerto ni a salvo, el juego continua(true)
+            }
+        }
+        return false; // Si todos los supervivientes están muertos o a salvo, el juego termina(false)
+    }
+
     public void reiniciar() {
         System.out.println("Reiniciando la partida...");
         supervivientes.clear();  // Limpiar la lista de supervivientes
@@ -157,22 +184,6 @@ public class Juego {
             superviviente.resetearAcciones();
         }
     }
-    public int seleccionarNumSupervivientes() {
-        while (true) {
-            try {
-                System.out.println("Selecciona el numero de supervivientes(de 1 a 4)");
-                int entrada = obtenerEntradaUsuario();
-
-                if (entrada >= 1 && entrada <= 4) {
-                    return entrada;
-                } else {
-                    System.out.println("Por favor, ingresa un número válido del 1 al 4.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Por favor, ingresa un número entero del 1 al 4.");
-            }
-        }
-    }
 
     public void crearTablero(int numSupervivientes){
         switch (numSupervivientes) {
@@ -181,16 +192,6 @@ public class Juego {
             case 3 -> this.tablero = new Tablero(9);
             case 4 -> this.tablero = new Tablero(10);
         }
-    }
-
-    public ArrayList<Superviviente> crearSupervivientes(int numSupervivientes){
-        ArrayList<Superviviente> supervivientes = new ArrayList<>();
-        for (int i = 1; i <= numSupervivientes; i++) {
-            //hay que crear el metodo para crear supervivientes por teclado!!!
-            Superviviente newSuperviviente = new Superviviente(tablero.getCasilla(0,0), "S"+i);
-            supervivientes.add(newSuperviviente);
-        }
-        return supervivientes;
     }
 
     public void realizarActivacionesZombis() {
@@ -272,15 +273,14 @@ public class Juego {
         return null;
     }
 
-    // para saber si el juego debe continuar o acabar
-    public boolean continuarElJuego() {
-        for (Superviviente superviviente : supervivientes) {
-            if (superviviente.isVivo() && !(superviviente.aSalvo())) {
-                return true; // Si algún superviviente no está muerto ni a salvo, el juego continua(true)
-            }
+    public ArrayList<Superviviente> crearSupervivientes(int numSupervivientes){
+        ArrayList<Superviviente> supervivientes = new ArrayList<>();
+        for (int i = 1; i <= numSupervivientes; i++) {
+            //hay que crear el metodo para crear supervivientes por teclado!!!
+            Superviviente newSuperviviente = new Superviviente(tablero.getCasilla(0,0), "S"+i);
+            supervivientes.add(newSuperviviente);
         }
-        return false; // Si todos los supervivientes están muertos o a salvo, el juego termina(false)
+        return supervivientes;
     }
-
 
 }
