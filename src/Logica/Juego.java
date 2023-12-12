@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Juego {
     private ArrayList<Superviviente> supervivientes;
@@ -18,11 +19,19 @@ public class Juego {
         this.zombis = new ArrayList<>();
     }
 
-    public void mostrarEstadisticas(){
+    public void mostrarResultadosDelJuego(){
+        if(Superviviente.supervivientesVivos(supervivientes).size() != supervivientes.size()){
+            System.out.println("HAS PERDIDO, NO HAS LOGRADO RESCATAR A TODOS LOS SUPERVIVIENTES!!!");
+            System.out.println(" ");
+        }
+        else{
+            System.out.println("HAS GANADO, TODOS LOS SUPERVIVIENTES HAN LOGRADO SOBREVIVIR!!!");
+            System.out.println(" ");
+        }
         System.out.println("############ESTADISTICAS DE LA PARTIDA##########");
         for (Superviviente superviviente: supervivientes){
             System.out.println(superviviente.getNombre()+":");
-            if (superviviente.isVivo()) System.out.println("- ha sobrevivido.");
+            if (superviviente.aSalvo()) System.out.println("- ha llegado al refugio.");
             else System.out.println("- no ha sobrevivido.");
             System.out.println("- ha eliminado a " + superviviente.getKillScore() + " zombis.");
         }
@@ -39,7 +48,7 @@ public class Juego {
         System.out.println("6: Consultar equipo");
         System.out.println("7: Consultar armas equipadas");
         System.out.println("######OPCIONES DE PARTIDA######");
-        System.out.println("0: finalizar la partida");
+        System.out.println("9: finalizar la partida");
         System.out.println("10: reiniciar la partida");
     }
 
@@ -47,6 +56,7 @@ public class Juego {
         this.tablero = tablero;
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public void iniciar(){
         int contadorTurnos = 1;
         System.out.println("COMENZANDO EL JUEGO...");
@@ -63,12 +73,14 @@ public class Juego {
         // cual sera la casilla objetivo?
         objetivo = tablero.casillaObjetivo(tablero.getTamano());
 
-        // aqui deberia haber un menu despues de cada turno que te permitiera elegir
+        // aquí debería haber un menu después de cada turno que te permitiera elegir
         // entre avanzar al siguiente turno, reiniciar partida o finalizar partida
 
-        //esta condicion while true habra que cambiarla, es solo para probar funcionalidades!!!!!
-        //deberia ser o que los supervivientes hayan ganado o que hayan muerto
-        while(Superviviente.supervivientesVivos(supervivientes).size() != 0){
+        //bucle principal del juego, solo terminar cuando supervivientes muertos o a salvo
+        while(true){
+            if (!(this.continuarElJuego())){
+                this.finalizar();
+            }
             //meter zombis al tablero por cada turno que pase
             zombis.addAll(this.crearTandaZombis(supervivientes.size(), contadorTurnos));
             //turno de todos los supervivientes
@@ -86,25 +98,11 @@ public class Juego {
             System.out.println(" ");
 
         }
-        if (Superviviente.supervivientesVivos(supervivientes).size() == 0){
-            this.derrota();
-        }
-        this.mostrarEstadisticas();
-
-
-    }
-
-    public void derrota(){
-        System.out.println("###############################################");
-        System.out.println("HAS PERDIDO, LOS SUPERVIVIENTES HAN CAIDO :(");
-        System.out.println("###############################################");
-        System.out.println(" ");
-
     }
 
     public void finalizar() {
-        System.out.println("¡La partida ha finalizado!");
-        mostrarEstadisticas();
+        System.out.println("LA PARTIDA HA FINALIZADO!!!");
+        mostrarResultadosDelJuego();
         System.exit(0);  // Esto finaliza la ejecución del programa
     }
 
@@ -118,8 +116,17 @@ public class Juego {
     public void realizarTurnoSupervivientes(){
         ArrayList<Superviviente> supervivientesVivos = Superviviente.supervivientesVivos(supervivientes);
         for(Superviviente superviviente: supervivientesVivos){
-            // mostrar el tablero antes de tomar acciones
-            while(superviviente.getNbAcciones() > 0) {
+            // si el superviviente ya está a salvo, pasar al siguiente superviviente
+            if (superviviente.aSalvo()) {
+                continue;
+            }
+            // bucle hasta que superviviente sin acciones
+            while((superviviente.getNbAcciones() > 0)) {
+                // si el superviviente ya esta a salvo salir del bucle
+                if (superviviente.aSalvo()){
+                    superviviente.setNbAcciones(0);
+                    continue;
+                }
                 // mostrar tablero antes de acciones
                 System.out.println(" ");
                 tablero.printTablero(zombis, supervivientesVivos, objetivo);
@@ -132,7 +139,6 @@ public class Juego {
                 String entrada = scanner.nextLine();
 
                 switch (entrada) {
-                    case "0" -> this.finalizar();
                     case "1" -> superviviente.moverse(tablero, zombis);
                     case "2" -> superviviente.buscarEquipo();
                     case "3" -> {
@@ -143,9 +149,12 @@ public class Juego {
                     case "5" -> superviviente.noHacerNada();
                     case "6" -> superviviente.consultarEquipo();
                     case "7" -> superviviente.armasEquipadas();
+                    case "9" -> this.finalizar();
                     case "10" -> this.reiniciar();
                     default -> System.out.println("Por favor, selecciona una accion valida");
                 }
+                // después de cada acción se comprueba si el superviviente ha logrado llegar al objetivo con el suministro
+                superviviente.checkIfSupervivienteASalvo(tablero);
 
             }
             //mostrar tablero al acabar acciones de superviviente
@@ -200,11 +209,12 @@ public class Juego {
         System.out.println(" ");
         for (Zombi zombi : zombis) {
             for (int i = 1; i <= zombi.getNbActivaciones(); i++) {
-                // consigue la lista de supervivientes vivos en caso de que un zombi
-                // de 2 activaciones mate a 1 superviviente en su primera acción
-                ArrayList<Superviviente> supervivientesVivos = Superviviente.supervivientesVivos(supervivientes);
+                // los zombis solo iran a por supervivientes que no estén a salvo y que sigan vivos obviamente
+                List<Superviviente> supervivientesObjetivo= supervivientes.stream()
+                        .filter(superviviente -> !superviviente.aSalvo()).toList();
+
                 // Obtener el superviviente más cercano
-                Superviviente supervivienteMasCercano = zombi.encontrarSupervivienteMasCercano(supervivientesVivos);
+                Superviviente supervivienteMasCercano = zombi.encontrarSupervivienteMasCercano(supervivientesObjetivo);
 
                 // Verificar si el zombi está en la misma casilla que el superviviente
                 if (supervivienteMasCercano != null && zombi.getPosicion().equals(supervivienteMasCercano.getPosicion())) {
@@ -270,5 +280,16 @@ public class Juego {
         }
         return null;
     }
+
+    // para saber si el juego debe continuar o acabar
+    public boolean continuarElJuego() {
+        for (Superviviente superviviente : supervivientes) {
+            if (superviviente.isVivo() && !(superviviente.aSalvo())) {
+                return true; // Si algún superviviente no está muerto ni a salvo, el juego continua(true)
+            }
+        }
+        return false; // Si todos los supervivientes están muertos o a salvo, el juego termina(false)
+    }
+
 
 }
