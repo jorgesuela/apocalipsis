@@ -79,6 +79,7 @@ public class Superviviente extends Activable {
         return nombre;
     }
 
+    // sirve para desplazar 1 superviviente por el tablero
     public void moverse(Tablero tablero, ArrayList<Zombi> listaZombis) {
         Scanner scanner = new Scanner(System.in);
 
@@ -109,6 +110,7 @@ public class Superviviente extends Activable {
         }
     }
 
+    // muestra por pantalla el equipo disponible
     public void consultarEquipo(){
         int contador = 1;
         System.out.println("################# BOLSA DE " + this.nombre.toUpperCase(Locale.ROOT) + " #################");
@@ -120,6 +122,7 @@ public class Superviviente extends Activable {
         System.out.println("##################################################");
     }
 
+    // muestra por pantalla las armas equipadas
     public void armasEquipadas(){
         int contador = 1;
         System.out.println("############## ARMAS EQUIPADAS DE " + this.nombre.toUpperCase(Locale.ROOT) + " ##############");
@@ -131,6 +134,7 @@ public class Superviviente extends Activable {
         System.out.println("######################################################");
     }
 
+    // gasta 1 accion sin realizar ningun cambio
     public void noHacerNada(){
         this.restarAcciones(1);
         System.out.println("El superviviente no hizo nada");
@@ -173,8 +177,10 @@ public class Superviviente extends Activable {
         }
     }
 
-
+    // sirve para seleccionar como arma activa las armas
+    // que encuentres por el tablero y poder atacar con ellas
     public void equiparArma(){
+        // si vale null quiere decir que no hay armas validas para equipar
         Arma armaAEquipar = this.elegirArma();
         if (armaAEquipar == null){
             return;
@@ -188,6 +194,7 @@ public class Superviviente extends Activable {
         this.restarAcciones(1);
     }
 
+    // si ya tienes 2 armas activas y quieres sustituir 1 de ellas por otra nueva de tu equipo:
     public void cambiarArma(Arma armaNueva){
         while(true) {
             System.out.println("Ya tienes 2 armas equipadas");
@@ -221,6 +228,7 @@ public class Superviviente extends Activable {
 
     }
 
+    // si tienes el inventario lleno puedes deshacerte de algo que no necesites con este metodo
     public void soltarEquipo() {
         while (true) {
             System.out.println("¿Qué equipo quieres soltar?");
@@ -252,7 +260,7 @@ public class Superviviente extends Activable {
         }
     }
 
-
+    // sirve para buscar equipo por las casilla del tablero
     public void buscarEquipo(){
         Equipo equipoNuevo;
 
@@ -311,6 +319,7 @@ public class Superviviente extends Activable {
 
     }
 
+    // sirve para seleccionar la casilla de ataque y comprobar que esta es valida
     public Casilla seleccionarCasillaAtaque(Tablero tablero, Arma armaElegida) {
         Scanner scanner = new Scanner(System.in);
         while(true) {
@@ -319,6 +328,7 @@ public class Superviviente extends Activable {
             System.out.println("Ingrese coordenada Y de ataque:");
             int coordY = scanner.nextInt();
             if (tablero.getCasilla(coordX, coordY) != null) {
+                // sirve para comprobar que la casilla a atacar esta a rango
                 if (calcularDistanciaCasillas(this.posicion, (tablero.getCasilla(coordX, coordY))) <= armaElegida.getAlcance()){
                     return tablero.getCasilla(coordX, coordY);
                 }
@@ -394,7 +404,7 @@ public class Superviviente extends Activable {
             // OJO: EN ESTE APARTADO HABRÁ QUE REACCIONAR AL ATAQUE DE TODOS LOS ZOMBIES QUE SE HAYAN INTENTADO ELIMINAR
             for (Zombi zombi : zombisEnCasillaMarcada) {
                 if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
-                // si es berserker no se le puede matar con ataques a distancia
+                // SI ES BERSERKER no se le puede matar con ataques a distancia, pasamos al siguiente
                 if (zombi instanceof Berserker && armaElegida.getAlcance()!= 0) continue;
                 if (armaElegida.getPotencia() >= zombi.getAguante()) {
                     zombisEliminados.add(zombi);
