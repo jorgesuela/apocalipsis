@@ -62,55 +62,62 @@ public class Arma extends Equipo {
         int randomPotencia = random.nextInt(max - min + 1) + min;
         if (randomPotencia < 50) {
             potencia = 1;
-            nombreArma += " mala";
         } else if (randomPotencia < 90) {
             potencia = 2;
-            nombreArma += " estandar";
         } else {
             potencia = 3;
-            nombreArma += " potente";
         }
 
         // ALCANCE DE ARMA ENCONTRADA
         int randomAlcance = random.nextInt(max - min + 1) + min;
         if (randomAlcance < 20) {
             alcance = 0;
-            nombreArma += ", cuerpo a cuerpo";
         } else if (randomAlcance < 50) {
             alcance = 1;
-            nombreArma += ", de corto alcance";
         } else if (randomAlcance < 85) {
             alcance = 2;
-            nombreArma += ", de medio alcance";
         } else {
             alcance = 3;
-            nombreArma += ", de largo alcance";
         }
 
         // VALOR EXITO DE ARMA ENCONTRADA
         int randomExito = random.nextInt(max - min + 1) + min;
         if (randomExito < 40) {
             valorExito = 4;
-            nombreArma += ", exito con 4";
         } else {
             valorExito = 5;
-            nombreArma += ", exito con 5";
         }
 
         // NUMDADOS DE ARMA ENCONTRADA
         int randomDados = random.nextInt(max - min + 1) + min;
         if (randomDados < 30) {
             numDados = 1;
-            nombreArma += " y de disparo unico";
         } else if (randomDados < 85) {
             numDados = 2;
-            nombreArma += " y de disparo doble";
         } else {
             numDados = 3;
-            nombreArma += " y de disparo triple";
         }
 
+        nombreArma += construirNombreArma(potencia, alcance, valorExito, numDados);
+
         return new Arma(nombreArma, potencia, alcance, valorExito, numDados);
+    }
+
+    // pone nombre al arma dependiendo de sus caracteristicas
+    private static String construirNombreArma(int potencia, int alcance, int valorExito, int numDados) {
+        StringBuilder nombre = new StringBuilder();
+
+        nombre.append(obtenerDescripcion(potencia, "mala", "estandar", "potente"));
+        nombre.append(obtenerDescripcion(alcance, ", cuerpo a cuerpo", ", de corto alcance", ", de medio alcance", ", de largo alcance"));
+        nombre.append(obtenerDescripcion(valorExito, ", exito con 4", ", exito con 5"));
+        nombre.append(obtenerDescripcion(numDados, " y de disparo unico", " y de disparo doble", " y de disparo triple"));
+
+        return nombre.toString();
+    }
+
+    private static String obtenerDescripcion(int valor, String... descripciones) {
+        int index = Math.min(valor - 1, descripciones.length - 1);
+        return descripciones[index];
     }
 
     public int lanzarDado(){
