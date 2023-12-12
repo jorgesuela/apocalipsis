@@ -80,7 +80,7 @@ public class Tablero {
                 }
 
                 for (Superviviente superviviente : listaSupervivientes) {
-                    if (superviviente.getPosicion().equals(casillas[fila][columna])) {
+                    if (!superviviente.aSalvo() && superviviente.getPosicion().equals(casillas[fila][columna])) {
 
                         if (!objetosEnCasilla.isEmpty()){
                             String temp = objetosEnCasilla.get(0).trim();objetosEnCasilla.clear();
