@@ -6,6 +6,7 @@ import Equipo.Suministro;
 import Logica.Casilla;
 import Logica.Tablero;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Superviviente extends Activable {
     private final String nombre;
@@ -140,30 +141,52 @@ public class Superviviente extends Activable {
     public Arma elegirArma(){
         Scanner scanner = new Scanner(System.in);
 
-        this.restarAcciones(1);
-
         // mostrar la bolsa del superviviente
         this.consultarEquipo();
+
+        // Verificar si hay al menos un arma en el equipo
+        List<Arma> armasDisponibles = equipo.stream()
+                .filter(arma -> arma instanceof Arma)
+                .map(arma -> (Arma) arma).toList();
+        if (armasDisponibles.isEmpty()) {
+            System.out.println("No tienes armas en tu equipo.");
+            return null;  // Devolver null para indicar que no se puede seleccionar un arma
+        }
+
         while(true) {
             System.out.println("Seleccione 1 arma para equipar con el numero correspondiente: ");
             int seleccion = scanner.nextInt();
 
             // Validar la entrada del usuario
             if (seleccion >= 1 && seleccion <= equipo.size() && equipo.get(seleccion - 1) != null && equipo.get(seleccion - 1) instanceof Arma) {
-                return (Arma) equipo.get(seleccion - 1);
+                Arma armaSeleccionada = (Arma) equipo.get(seleccion - 1);
+
+                // Verificar si el arma ya está equipada
+                if (!armasActivas.contains(armaSeleccionada)) {
+                    return armaSeleccionada;
+                } else {
+                    System.out.println("Ya tienes equipada esa arma! Selecciona otra.");
+                    return null;
+                }
             } else {
                 System.out.println("Selección no válida. Inténtalo de nuevo.");
             }
         }
     }
 
+
     public void equiparArma(){
         Arma armaAEquipar = this.elegirArma();
+        if (armaAEquipar == null){
+            return;
+        }
         if (armasActivas.size() < 2){
             armasActivas.add(armaAEquipar);
             System.out.println("Se ha equipado el arma "+ armaAEquipar.getNombre());
         }
         else cambiarArma(armaAEquipar);
+
+        this.restarAcciones(1);
     }
 
     public void cambiarArma(Arma armaNueva){
