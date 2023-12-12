@@ -14,6 +14,7 @@ public class Superviviente extends Activable {
     private ArrayList<Arma> armasActivas;
     private Integer killScore;
     private Integer nbHeridas;
+    private Boolean estaASalvo;
 
     public Superviviente(Casilla posicion, String nombre){
         super(posicion);
@@ -23,6 +24,7 @@ public class Superviviente extends Activable {
         this.armasActivas = new ArrayList<>();
         this.killScore = 0;
         this.nbHeridas = 0;
+        this.estaASalvo = false;
     }
 
     public String getNombre() {
@@ -36,6 +38,8 @@ public class Superviviente extends Activable {
     public Integer getNbAcciones() {
         return nbAcciones;
     }
+
+    public Boolean aSalvo() {return this.estaASalvo; }
 
     public void setNbAcciones(Integer nbAcciones) {
         this.nbAcciones = nbAcciones;
@@ -398,6 +402,28 @@ public class Superviviente extends Activable {
         }
 
         return supervivientesVivos;
+    }
+
+    // método que comprueba si el superviviente lleva algún suministro y lo devuelve
+    public Equipo haySuministroEnEquipo() {
+        for (Equipo equipacion : equipo) {
+            if (equipacion instanceof Suministro) {
+                return equipacion; // Si hay al menos un suministro, devuelve true
+            }
+        }
+        return null;
+    }
+
+    // método que comprueba si el superviviente está en la casilla objetivo y tiene al menos 1 suministro
+    public void checkIfSupervivienteASalvo(Tablero tablero){
+        Equipo suministro = this.haySuministroEnEquipo();
+        if (this.posicion == tablero.casillaObjetivo(tablero.getTamano())){
+            if (suministro != null) {
+                this.equipo.remove(suministro);
+                System.out.println(this.getNombre() + " entrego " + suministro.getNombre() + " y entro al refugio :D!");
+                this.estaASalvo = true;
+            }
+        }
     }
 
 }
