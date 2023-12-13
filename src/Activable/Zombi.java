@@ -2,9 +2,11 @@ package Activable;
 
 import Logica.Casilla;
 import Logica.Tablero;
+
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class Zombi extends Activable {
+public abstract class Zombi extends Activable implements Serializable {
     public Zombi(Casilla pos) {
         super(pos);
     }

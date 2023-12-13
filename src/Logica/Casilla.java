@@ -1,6 +1,8 @@
 package Logica;
 
-public class Casilla {
+import java.io.Serializable;
+
+public class Casilla implements Serializable {
     private Integer coordx;
     private Integer coordy;
     private Boolean buscado;

@@ -3,7 +3,9 @@ package Activable;
 import Activable.Interfaces.Corredor;
 import Logica.Casilla;
 
-public class CorredorToxico extends Toxico implements Corredor {
+import java.io.Serializable;
+
+public class CorredorToxico extends Toxico implements Corredor, Serializable {
 
 
     public CorredorToxico(Casilla pos) {

@@ -2,7 +2,9 @@ package Activable;
 
 import Logica.Casilla;
 
-public abstract class Normal extends Zombi{
+import java.io.Serializable;
+
+public abstract class Normal extends Zombi implements Serializable {
 
 
     public Normal(Casilla pos) {

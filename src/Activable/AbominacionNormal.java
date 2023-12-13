@@ -3,7 +3,9 @@ package Activable;
 import Activable.Interfaces.Abominacion;
 import Logica.Casilla;
 
-public class AbominacionNormal extends Normal implements Abominacion {
+import java.io.Serializable;
+
+public class AbominacionNormal extends Normal implements Abominacion, Serializable {
 
 
     public AbominacionNormal(Casilla pos) {

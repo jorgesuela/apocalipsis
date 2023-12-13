@@ -4,7 +4,9 @@ import Activable.Interfaces.Caminante;
 import Activable.Toxico;
 import Logica.Casilla;
 
-public class CaminanteToxico extends Toxico implements Caminante {
+import java.io.Serializable;
+
+public class CaminanteToxico extends Toxico implements Caminante, Serializable {
 
     public CaminanteToxico(Casilla pos) {
         super(pos);

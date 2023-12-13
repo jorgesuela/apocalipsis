@@ -3,7 +3,9 @@ package Activable;
 import Activable.Interfaces.Corredor;
 import Logica.Casilla;
 
-public class CorredorNormal extends Normal implements Corredor {
+import java.io.Serializable;
+
+public class CorredorNormal extends Normal implements Corredor, Serializable {
 
     public CorredorNormal(Casilla pos) {
         super(pos);

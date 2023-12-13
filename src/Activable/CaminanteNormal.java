@@ -3,7 +3,9 @@ package Activable;
 import Activable.Interfaces.Caminante;
 import Logica.*;
 
-public class CaminanteNormal extends Normal implements Caminante {
+import java.io.Serializable;
+
+public class CaminanteNormal extends Normal implements Caminante, Serializable {
 
 
     public CaminanteNormal(Casilla pos) {

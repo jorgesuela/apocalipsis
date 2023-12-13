@@ -1,16 +1,19 @@
 package Logica;
 
 import Activable.*;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Juego {
+public class Juego implements Serializable {
     private ArrayList<Superviviente> supervivientes;
-    private final ArrayList<Zombi> zombis;
+    private ArrayList<Zombi> zombis;
     private Casilla objetivo;
     public Tablero tablero;
+    private int contadorTurnos = 1;
 
     public Juego() {
         this.supervivientes = new ArrayList<>();
@@ -74,6 +77,8 @@ public class Juego {
         System.out.println("######OPCIONES DE PARTIDA######");
         System.out.println("9: finalizar la partida");
         System.out.println("10: reiniciar la partida");
+        System.out.println("11: Guardar partida");
+        System.out.println("12: Cargar partida");
     }
 
     private void ejecutarTurno(int contadorTurnos) {
@@ -93,13 +98,31 @@ public class Juego {
     }
 
     public void iniciar() {
-        int contadorTurnos = 1;
-        System.out.println("COMENZANDO EL JUEGO...");
+        // Intenta cargar el estado del juego desde un archivo existente
+        Juego juegoGuardado = cargarEstado("estado_del_juego.ser");
+        if (juegoGuardado != null) {
+            System.out.println("HAY UNA PARTIDA GUARDADA, QUIERES CONTINUARLA?");
+            System.out.println("1) SI");
+            System.out.println("2) NO");
+            int entrada = obtenerEntradaUsuario();
+            switch (entrada) {
+                case 1 -> {
+                    this.supervivientes = juegoGuardado.supervivientes;
+                    this.zombis = juegoGuardado.zombis;
+                    this.objetivo = juegoGuardado.objetivo;
+                    this.tablero = juegoGuardado.tablero;
+                    this.contadorTurnos = juegoGuardado.contadorTurnos;
+                }
+                case 2 -> this.reiniciar();
+            }
+        } else {
+            int numSupervivientes = seleccionarNumSupervivientes();
+            crearTablero(numSupervivientes);
+            supervivientes = crearSupervivientes(numSupervivientes);
+            objetivo = tablero.casillaObjetivo(tablero.getTamano());
+        }
 
-        int numSupervivientes = seleccionarNumSupervivientes();
-        crearTablero(numSupervivientes);
-        supervivientes = crearSupervivientes(numSupervivientes);
-        objetivo = tablero.casillaObjetivo(tablero.getTamano());
+        System.out.println("COMENZANDO EL JUEGO...");
 
         while (continuarElJuego()) {
             ejecutarTurno(contadorTurnos);
@@ -109,6 +132,7 @@ public class Juego {
 
         finalizar();
     }
+
 
     public void finalizar() {
         System.out.println("LA PARTIDA HA FINALIZADO!!!");
@@ -130,6 +154,7 @@ public class Juego {
         System.out.println("Reiniciando la partida...");
         supervivientes.clear();  // Limpiar la lista de supervivientes
         zombis.clear();  // Limpiar la lista de zombis
+        this.borrarPartidaGuardada("estado_del_juego.ser");
         iniciar();  // Volver a iniciar el juego
     }
 
@@ -170,6 +195,8 @@ public class Juego {
                     case 7 -> superviviente.armasEquipadas();
                     case 9 -> this.finalizar();
                     case 10 -> this.reiniciar();
+                    case 11 -> this.guardarEstado("estado_del_juego.ser");
+                    case 12 -> cargarEstado("estado_del_juego.ser");
                     default -> System.out.println("Por favor, selecciona una accion valida");
                 }
                 // después de cada acción se comprueba si el superviviente ha logrado llegar al objetivo con el suministro
@@ -180,9 +207,10 @@ public class Juego {
             System.out.println(" ");
             tablero.printTablero(zombis, Superviviente.supervivientesVivos(supervivientes), objetivo);
             System.out.println(" ");
-            //después del turno de cada superviviente, se reestablecen sus acciones a 5
-            superviviente.resetearAcciones();
+
         }
+        //después del turno de los supervivientes, se reestablecen sus acciones a 5
+        for(Superviviente superviviente: supervivientesVivos) superviviente.resetearAcciones();
     }
 
     public void crearTablero(int numSupervivientes){
@@ -281,6 +309,41 @@ public class Juego {
             supervivientes.add(newSuperviviente);
         }
         return supervivientes;
+    }
+
+    public void guardarEstado(String nombreArchivo) {
+        try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(nombreArchivo))) {
+            salida.writeObject(this);
+            System.out.println("Estado del juego guardado exitosamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar el estado del juego: " + e.getMessage());
+        }
+    }
+
+    public static Juego cargarEstado(String nombreArchivo) {
+        try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(nombreArchivo))) {
+            Juego juego = (Juego) entrada.readObject();
+            System.out.println("Estado del juego cargado exitosamente.");
+            return juego;
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+    }
+
+    public void borrarPartidaGuardada(String nombreArchivo) {
+        File archivo = new File(nombreArchivo);
+
+        // Verificar si el archivo existe
+        if (archivo.exists()) {
+            //borrar el archivo
+            if (archivo.delete()) {
+                System.out.println("Partida guardada borrada exitosamente.");
+            } else {
+                System.out.println("Error al borrar la partida guardada.");
+            }
+        } else {
+            System.out.println("No hay una partida guardada para borrar.");
+        }
     }
 
 }

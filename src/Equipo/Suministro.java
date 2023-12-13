@@ -1,8 +1,9 @@
 package Equipo;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Suministro extends Equipo {
+public class Suministro extends Equipo implements Serializable {
     private final String valorEnergetico;
     private final String caducidad;
 

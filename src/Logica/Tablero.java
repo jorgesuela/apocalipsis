@@ -2,10 +2,12 @@ package Logica;
 
 import Activable.Superviviente;
 import Activable.Zombi;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tablero {
+public class Tablero implements Serializable {
     private final Casilla[][] casillas;
     private final int tamaño;
 

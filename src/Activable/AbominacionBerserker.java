@@ -3,7 +3,9 @@ package Activable;
 import Activable.Interfaces.Abominacion;
 import Logica.Casilla;
 
-public class AbominacionBerserker extends Berserker implements Abominacion {
+import java.io.Serializable;
+
+public class AbominacionBerserker extends Berserker implements Abominacion, Serializable {
 
     public AbominacionBerserker(Casilla pos) {
         super(pos);

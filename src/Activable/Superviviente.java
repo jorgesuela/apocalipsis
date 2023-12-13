@@ -5,9 +5,11 @@ import Equipo.Equipo;
 import Equipo.Suministro;
 import Logica.Casilla;
 import Logica.Tablero;
+
+import java.io.Serializable;
 import java.util.*;
 
-public class Superviviente extends Activable {
+public class Superviviente extends Activable implements Serializable {
     private final String nombre;
     private Integer nbAcciones;
     private final ArrayList<Equipo> equipo;

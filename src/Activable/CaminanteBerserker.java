@@ -3,7 +3,9 @@ package Activable;
 import Activable.Interfaces.Caminante;
 import Logica.Casilla;
 
-public class CaminanteBerserker extends Berserker implements Caminante {
+import java.io.Serializable;
+
+public class CaminanteBerserker extends Berserker implements Caminante, Serializable {
 
     public CaminanteBerserker(Casilla pos) {
         super(pos);

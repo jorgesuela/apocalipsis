@@ -3,7 +3,9 @@ package Activable;
 import Logica.Casilla;
 import Logica.Tablero;
 
-public abstract class Activable {
+import java.io.Serializable;
+
+public abstract class Activable implements Serializable {
     protected Casilla posicion;
     protected Boolean vivo;
 

@@ -2,7 +2,9 @@ package Activable;
 
 import Logica.Casilla;
 
-public abstract class Berserker extends Zombi {
+import java.io.Serializable;
+
+public abstract class Berserker extends Zombi implements Serializable {
     public Berserker(Casilla pos) {
         super(pos);
     }

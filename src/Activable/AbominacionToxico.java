@@ -3,7 +3,9 @@ package Activable;
 import Activable.Interfaces.Abominacion;
 import Logica.Casilla;
 
-public class AbominacionToxico extends Toxico implements Abominacion {
+import java.io.Serializable;
+
+public class AbominacionToxico extends Toxico implements Abominacion, Serializable {
 
     public AbominacionToxico(Casilla pos) {
         super(pos);
