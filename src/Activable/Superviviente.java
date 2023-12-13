@@ -21,7 +21,7 @@ public class Superviviente extends Activable implements Serializable {
     public Superviviente(Casilla posicion, String nombre){
         super(posicion);
         this.nombre = nombre;
-        this.nbAcciones = 5;
+        this.nbAcciones = 3;
         this.equipo = new ArrayList<>();
         this.armasActivas = new ArrayList<>();
         this.killScore = 0;
@@ -73,7 +73,7 @@ public class Superviviente extends Activable implements Serializable {
     }
 
     public void resetearAcciones(){
-        this.nbAcciones = 5;
+        this.nbAcciones = 3;
     }
 
     @Override
@@ -353,8 +353,6 @@ public class Superviviente extends Activable implements Serializable {
     // este metodo es para escoger un arma de las que tiene un superviviente equipada como activa
     public Arma elegirArmaEquipada(){
         Scanner scanner = new Scanner(System.in);
-
-        this.restarAcciones(1);
 
         // mostrar la bolsa del superviviente
         this.armasEquipadas();
