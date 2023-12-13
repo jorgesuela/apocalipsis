@@ -74,11 +74,8 @@ public class Juego implements Serializable {
         System.out.println("######ACCIONES SIN COSTE######");
         System.out.println("6: Consultar equipo");
         System.out.println("7: Consultar armas equipadas");
-        System.out.println("######OPCIONES DE PARTIDA######");
-        System.out.println("9: finalizar la partida");
-        System.out.println("10: reiniciar la partida");
-        System.out.println("11: Guardar partida");
-        System.out.println("12: Cargar partida");
+        System.out.println("10: Opciones de partida");
+
     }
 
     private void ejecutarTurno(int contadorTurnos) {
@@ -154,6 +151,7 @@ public class Juego implements Serializable {
         System.out.println("Reiniciando la partida...");
         supervivientes.clear();  // Limpiar la lista de supervivientes
         zombis.clear();  // Limpiar la lista de zombis
+        contadorTurnos = 1;
         this.borrarPartidaGuardada("estado_del_juego.ser");
         iniciar();  // Volver a iniciar el juego
     }
@@ -193,10 +191,7 @@ public class Juego implements Serializable {
                     case 5 -> superviviente.noHacerNada();
                     case 6 -> superviviente.consultarEquipo();
                     case 7 -> superviviente.armasEquipadas();
-                    case 9 -> this.finalizar();
-                    case 10 -> this.reiniciar();
-                    case 11 -> this.guardarEstado("estado_del_juego.ser");
-                    case 12 -> cargarEstado("estado_del_juego.ser");
+                    case 10 -> menuOpciones();
                     default -> System.out.println("Por favor, selecciona una accion valida");
                 }
                 // después de cada acción se comprueba si el superviviente ha logrado llegar al objetivo con el suministro
@@ -211,6 +206,32 @@ public class Juego implements Serializable {
         }
         //después del turno de los supervivientes, se reestablecen sus acciones a 5
         for(Superviviente superviviente: supervivientesVivos) superviviente.resetearAcciones();
+    }
+
+    public void menuOpciones(){
+        while(true) {
+            mostrarMenuOpciones();
+            int entrada = obtenerEntradaUsuario();
+            switch (entrada) {
+                case 0 -> {
+                    return;
+                }
+                case 1 -> this.finalizar();
+                case 2 -> this.reiniciar();
+                case 3 -> this.guardarEstado("estado_del_juego.ser");
+                case 4 -> cargarEstado("estado_del_juego.ser");
+                default -> System.out.println("Por favor, selecciona una accion valida");
+            }
+        }
+    }
+
+    public void mostrarMenuOpciones(){
+        System.out.println("#############OPCIONES#############");
+        System.out.println("0: Atras");
+        System.out.println("1: Finalizar partida");
+        System.out.println("2: Reinicar partida");
+        System.out.println("3: Guardar partida");
+        System.out.println("4: Cargar partida");
     }
 
     public void crearTablero(int numSupervivientes){
@@ -314,7 +335,7 @@ public class Juego implements Serializable {
     public void guardarEstado(String nombreArchivo) {
         try (ObjectOutputStream salida = new ObjectOutputStream(new FileOutputStream(nombreArchivo))) {
             salida.writeObject(this);
-            System.out.println("Estado del juego guardado exitosamente.");
+            System.out.println("SE HA GUARDADO LA PARTIDA CORRECTAMENTE.");
         } catch (IOException e) {
             System.out.println("Error al guardar el estado del juego: " + e.getMessage());
         }
@@ -322,9 +343,7 @@ public class Juego implements Serializable {
 
     public static Juego cargarEstado(String nombreArchivo) {
         try (ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(nombreArchivo))) {
-            Juego juego = (Juego) entrada.readObject();
-            System.out.println("Estado del juego cargado exitosamente.");
-            return juego;
+            return (Juego) entrada.readObject();
         } catch (IOException | ClassNotFoundException e) {
             return null;
         }
@@ -337,12 +356,10 @@ public class Juego implements Serializable {
         if (archivo.exists()) {
             //borrar el archivo
             if (archivo.delete()) {
-                System.out.println("Partida guardada borrada exitosamente.");
+                System.out.println("Se ha borrado la partida que estaba guardada.");
             } else {
                 System.out.println("Error al borrar la partida guardada.");
             }
-        } else {
-            System.out.println("No hay una partida guardada para borrar.");
         }
     }
 
