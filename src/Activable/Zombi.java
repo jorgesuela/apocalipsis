@@ -7,11 +7,13 @@ import java.io.Serializable;
 import java.util.List;
 
 public abstract class Zombi extends Activable implements Serializable {
+
     public Zombi(Casilla pos) {
         super(pos);
     }
 
     public abstract int getAguante();
+
 
     public void reaccionarAntesAtaque(Superviviente superviviente){
         if (superviviente.elegirArmaEquipada().getPotencia()==getAguante()){

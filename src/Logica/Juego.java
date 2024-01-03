@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Juego implements Serializable {
+
     private ArrayList<Superviviente> supervivientes;
     private ArrayList<Zombi> zombis;
     private Casilla objetivo;
@@ -19,6 +20,7 @@ public class Juego implements Serializable {
         this.supervivientes = new ArrayList<>();
         this.zombis = new ArrayList<>();
     }
+
 
     public int seleccionarNumSupervivientes() {
         while (true) {
@@ -64,7 +66,19 @@ public class Juego implements Serializable {
         }
     }
 
+    public void mostrarSuperviventesYZombis(){
+        int counter = 0;
+        System.out.println();
+        System.out.println(supervivientes.size()>1?"Superviviente :": "Supervivientes :");
+        for(Superviviente s: supervivientes){System.out.print(s.getNombre()+": heridas:"+s.getNbHeridas()+"\t");}
+        System.out.println(zombis.size()>1?"\nZombi : ":"\nZombis :");
+        for(Zombi z: zombis){System.out.print("Z"+(++counter)+": "+z.toString().replace("Activable.", "").replace("class", "")+"\t");}
+        System.out.println();System.out.println();
+
+    }
+
     public void mostrarMenuSuperviviente(){
+        mostrarSuperviventesYZombis();
         System.out.println("######ACCIONES CON COSTE######");
         System.out.println("1: Moverse");
         System.out.println("2: Buscar");

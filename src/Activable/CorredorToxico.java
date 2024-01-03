@@ -24,4 +24,6 @@ public class CorredorToxico extends Toxico implements Corredor, Serializable {
     public void reaccionarAntesAtaque(Superviviente superviviente) {
         super.reaccionarAntesAtaque(superviviente);
     }
+
+
 }

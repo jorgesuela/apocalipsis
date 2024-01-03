@@ -29,6 +29,14 @@ public class Superviviente extends Activable implements Serializable {
         this.estaASalvo = false;
     }
 
+    @Override
+    public String toString() {
+        return "Superviviente{" +
+                "nombre='" + nombre + '\'' +
+                ", nbHeridas=" + nbHeridas +
+                '}';
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -76,10 +84,6 @@ public class Superviviente extends Activable implements Serializable {
         this.nbAcciones = 3;
     }
 
-    @Override
-    public String toString() {
-        return nombre;
-    }
 
     // sirve para desplazar 1 superviviente por el tablero
     public void moverse(Tablero tablero, ArrayList<Zombi> listaZombis) {

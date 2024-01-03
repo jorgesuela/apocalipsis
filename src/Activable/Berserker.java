@@ -20,4 +20,8 @@ public abstract class Berserker extends Zombi implements Serializable {
             super.reaccionarAntesAtaque(superviviente);
         }
     }
+    @Override
+    public String toString() {
+        return this.getClass().toString();
+    }
 }

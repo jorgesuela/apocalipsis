@@ -85,8 +85,8 @@ public class Tablero implements Serializable {
                         if (!objetosEnCasilla.isEmpty()){
                             String temp = objetosEnCasilla.get(0).trim();objetosEnCasilla.clear();
                             objetosEnCasilla.add(temp);
-                            objetosEnCasilla.add("  " + superviviente + "");
-                        }else{objetosEnCasilla.add("  " + superviviente + "  ");}
+                            objetosEnCasilla.add("  " + superviviente.getNombre() + "");
+                        }else{objetosEnCasilla.add("  " + superviviente.getNombre() + "  ");}
 
                         cantidadSupervivientes++; // Contar supervivientes en la casilla
                     }
