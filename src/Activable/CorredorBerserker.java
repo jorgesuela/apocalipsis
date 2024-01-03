@@ -19,4 +19,8 @@ public class CorredorBerserker extends Berserker implements Corredor, Serializab
     public int getNbActivaciones() {
         return ACTIVACIONES;
     }
+    @Override
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        super.reaccionarAntesAtaque(superviviente);
+    }
 }

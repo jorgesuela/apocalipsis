@@ -22,7 +22,9 @@ public class CaminanteNormal extends Normal implements Caminante, Serializable {
     }
 
     @Override
-    public void reaccionarAntesAtaque() {
-        super.reaccionarAntesAtaque();
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        super.reaccionarAntesAtaque(superviviente);
     }
 }
+
+

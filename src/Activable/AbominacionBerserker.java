@@ -20,4 +20,8 @@ public class AbominacionBerserker extends Berserker implements Abominacion, Seri
     public int getNbActivaciones() {
         return ACTIVACIONES;
     }
+    @Override
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        super.reaccionarAntesAtaque(superviviente);
+    }
 }

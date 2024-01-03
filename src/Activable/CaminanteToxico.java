@@ -20,4 +20,8 @@ public class CaminanteToxico extends Toxico implements Caminante, Serializable {
     public int getNbActivaciones() {
         return ACTIVACIONES;
     }
+    @Override
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        super.reaccionarAntesAtaque(superviviente);
+    }
 }

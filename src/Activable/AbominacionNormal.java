@@ -21,4 +21,9 @@ public class AbominacionNormal extends Normal implements Abominacion, Serializab
     public int getNbActivaciones() {
         return ACTIVACIONES;
     }
+
+    @Override
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        super.reaccionarAntesAtaque(superviviente);
+    }
 }

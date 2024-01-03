@@ -13,7 +13,12 @@ public abstract class Zombi extends Activable implements Serializable {
 
     public abstract int getAguante();
 
-    public abstract void reaccionarAntesAtaque();
+    public void reaccionarAntesAtaque(Superviviente superviviente){
+        if (superviviente.elegirArmaEquipada().getPotencia()==getAguante()){
+            setMuerto();
+            System.out.println("Zombi eliminado");
+        }
+    };
 
     public abstract int getNbActivaciones();
 

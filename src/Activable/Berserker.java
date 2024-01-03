@@ -15,7 +15,9 @@ public abstract class Berserker extends Zombi implements Serializable {
     }*/
 
     @Override
-    public void reaccionarAntesAtaque() {
-
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        if (superviviente.elegirArmaEquipada().getAlcance()==0){
+            super.reaccionarAntesAtaque(superviviente);
+        }
     }
 }

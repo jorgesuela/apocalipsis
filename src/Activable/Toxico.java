@@ -14,7 +14,10 @@ public abstract class Toxico extends Zombi implements Serializable {
 
 
     @Override
-    public void reaccionarAntesAtaque() {
-
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        if(superviviente.getPosicion().equals(super.posicion)){
+            superviviente.setNbHeridas(+1);
+        }
+        super.reaccionarAntesAtaque(superviviente);
     }
 }

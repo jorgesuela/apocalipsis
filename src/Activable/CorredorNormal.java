@@ -16,8 +16,15 @@ public class CorredorNormal extends Normal implements Corredor, Serializable {
         return AGUANTE;
     }
 
+
+
     @Override
     public int getNbActivaciones() {
         return ACTIVACIONES;
+    }
+
+    @Override
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        super.reaccionarAntesAtaque(superviviente);
     }
 }

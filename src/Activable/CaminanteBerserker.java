@@ -20,4 +20,8 @@ public class CaminanteBerserker extends Berserker implements Caminante, Serializ
     public int getNbActivaciones() {
         return ACTIVACIONES;
     }
+    @Override
+    public void reaccionarAntesAtaque(Superviviente superviviente) {
+        super.reaccionarAntesAtaque(superviviente);
+    }
 }
