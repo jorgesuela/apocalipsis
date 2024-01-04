@@ -1,6 +1,7 @@
 package Logica;
 
 import Activable.*;
+import Graphics.MyInterfaceGrafica;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -9,12 +10,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Juego implements Serializable {
-
     private ArrayList<Superviviente> supervivientes;
     private ArrayList<Zombi> zombis;
     private Casilla objetivo;
     public Tablero tablero;
     private int contadorTurnos = 1;
+    MyInterfaceGrafica interfaceGrafica;
 
     public Juego() {
         this.supervivientes = new ArrayList<>();
@@ -78,6 +79,7 @@ public class Juego implements Serializable {
     }
 
     public void mostrarMenuSuperviviente(){
+        interfaceGrafica.repaintPanel();
         mostrarSuperviventesYZombis();
         System.out.println("######ACCIONES CON COSTE######");
         System.out.println("1: Moverse");
@@ -132,6 +134,10 @@ public class Juego implements Serializable {
             supervivientes = crearSupervivientes(numSupervivientes);
             objetivo = tablero.casillaObjetivo(tablero.getTamano());
         }
+
+        interfaceGrafica = new MyInterfaceGrafica(zombis, supervivientes, tablero.getTamano());
+        interfaceGrafica.showFrame();
+
 
         System.out.println("COMENZANDO EL JUEGO...");
 
