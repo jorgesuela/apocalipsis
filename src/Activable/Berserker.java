@@ -10,6 +10,11 @@ public abstract class Berserker extends Zombi implements Serializable {
     }
 
 
+    @Override
+    public String getImageName() {
+        return "/zombi_ab.png";
+    }
+
     /*public Bershker(Casilla posicion, int aguante, int nbActivaciones) {
         super(posicion, aguante, nbActivaciones);
     }*/

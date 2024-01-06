@@ -6,6 +6,10 @@ import java.io.Serializable;
 
 public abstract class Normal extends Zombi implements Serializable {
 
+    @Override
+    public String getImageName() {
+        return "/zombi.png";
+    }
 
     public Normal(Casilla pos) {
         super(pos);
