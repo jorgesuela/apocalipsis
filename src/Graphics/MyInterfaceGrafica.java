@@ -44,8 +44,7 @@ public class MyInterfaceGrafica {
                     }
                 }
                 supervivientes.forEach(s -> drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/ashabajo.png"));
-                zombis.forEach(z -> drawImage(g, z.getPosicion().getCoordy(), z.getPosicion().getCoordx(), 64, z.getImageName()));
-                drawImage(g, tamano-1, tamano-1, 64, "/exit.png");
+                zombis.forEach(z -> drawImage(g, z.getPosicion().getCoordy(), z.getPosicion().getCoordx(), 64, "/zombi.png"));
             }
         };
 

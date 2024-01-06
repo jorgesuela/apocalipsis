@@ -12,8 +12,6 @@ public abstract class Zombi extends Activable implements Serializable {
         super(pos);
     }
 
-
-    public abstract String getImageName();
     public abstract int getAguante();
 
 
