@@ -319,9 +319,9 @@ public class Superviviente extends Activable implements Serializable {
     public Casilla seleccionarCasillaAtaque(Tablero tablero, Arma armaElegida) {
         Scanner scanner = new Scanner(System.in);
         while(true) {
-            System.out.println("Ingrese coordenada X de ataque:");
-            int coordX = scanner.nextInt();
             System.out.println("Ingrese coordenada Y de ataque:");
+            int coordX = scanner.nextInt();
+            System.out.println("Ingrese coordenada X de ataque:");
             int coordY = scanner.nextInt();
             if (tablero.getCasilla(coordX, coordY) != null) {
                 // sirve para comprobar que la casilla a atacar esta a rango
