@@ -11,7 +11,10 @@ public abstract class Toxico extends Zombi implements Serializable {
     }
 
 
-
+    @Override
+    public String getImageName() {
+        return "/zombi_tox.png";
+    }
 
     @Override
     public void reaccionarAntesAtaque(Superviviente superviviente) {
