@@ -4,6 +4,8 @@ import Logica.Casilla;
 
 import java.io.Serializable;
 
+import Equipo.Arma;
+
 public abstract class Toxico extends Zombi implements Serializable {
 
     public Toxico(Casilla pos) {
@@ -17,7 +19,7 @@ public abstract class Toxico extends Zombi implements Serializable {
     }
 
     @Override
-    public void reaccionarAlAtaque(Superviviente superviviente) {
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
         if(superviviente.getPosicion().equals(super.posicion)){
             superviviente.setNbHeridas(superviviente.getNbHeridas() +1);
             this.setHeridasInfligidas(this.getHeridasInfligidas() + 1);
@@ -30,7 +32,7 @@ public abstract class Toxico extends Zombi implements Serializable {
                 System.out.println("superviviente " + superviviente.getNombre() + " ha muerto.");
             } 
         }
-        super.reaccionarAlAtaque(superviviente);
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 
     @Override

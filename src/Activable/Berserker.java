@@ -4,6 +4,8 @@ import Logica.Casilla;
 
 import java.io.Serializable;
 
+import Equipo.Arma;
+
 public abstract class Berserker extends Zombi implements Serializable {
     public Berserker(Casilla pos) {
         super(pos);
@@ -20,9 +22,9 @@ public abstract class Berserker extends Zombi implements Serializable {
     }*/
 
     @Override
-    public void reaccionarAlAtaque(Superviviente superviviente) {
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
         if (superviviente.elegirArmaEquipada().getAlcance()==0){
-            super.reaccionarAlAtaque(superviviente);
+            super.reaccionarAlAtaque(superviviente, armaElegida);
         }
     }
     @Override

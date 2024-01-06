@@ -1,6 +1,7 @@
 package Activable;
 
 import Activable.Interfaces.Caminante;
+import Equipo.Arma;
 import Logica.*;
 
 import java.io.Serializable;
@@ -22,8 +23,8 @@ public class CaminanteNormal extends Normal implements Caminante, Serializable {
     }
 
     @Override
-    public void reaccionarAntesAtaque(Superviviente superviviente) {
-        super.reaccionarAntesAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 }
 

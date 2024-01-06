@@ -1,3 +1,4 @@
+
 package Activable;
 
 import Equipo.Arma;
@@ -399,7 +400,7 @@ public class Superviviente extends Activable implements Serializable {
             // OJO: EN ESTE APARTADO HABRÁ QUE REACCIONAR AL ATAQUE DE TODOS LOS ZOMBIES QUE SE HAYAN INTENTADO ELIMINAR
             for (Zombi zombi : zombisEnCasillaMarcada) {
                 if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
-                zombi.reaccionarAlAtaque(this);
+                zombi.reaccionarAlAtaque(this, armaElegida);
                 contadorMuertos++;
                 nExitosArma--; //restamos un tiro exitoso
                 

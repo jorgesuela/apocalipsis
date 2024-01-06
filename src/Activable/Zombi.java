@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import Equipo.Arma;
+
 public abstract class Zombi extends Activable implements Serializable {
     private static int contadorInstancias = 0;
     protected int heridasInfligidas;
@@ -36,8 +38,8 @@ public abstract class Zombi extends Activable implements Serializable {
     }
 
 
-    public void reaccionarAlAtaque(Superviviente superviviente){
-        if (superviviente.elegirArmaEquipada().getPotencia()>=getAguante()){
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida){
+        if (armaElegida.getPotencia()>=getAguante()){
             this.setMuerto();
             superviviente.setKillScore(superviviente.getKillScore() + 1); //sumamos una kill al superviviente
             System.out.println("Zombi eliminado");

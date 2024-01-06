@@ -1,6 +1,7 @@
 package Activable;
 
 import Activable.Interfaces.Corredor;
+import Equipo.Arma;
 import Logica.Casilla;
 
 import java.io.Serializable;
@@ -20,7 +21,7 @@ public class CorredorBerserker extends Berserker implements Corredor, Serializab
         return ACTIVACIONES;
     }
     @Override
-    public void reaccionarAlAtaque(Superviviente superviviente) {
-        super.reaccionarAlAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 }

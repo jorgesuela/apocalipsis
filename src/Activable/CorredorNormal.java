@@ -1,6 +1,7 @@
 package Activable;
 
 import Activable.Interfaces.Corredor;
+import Equipo.Arma;
 import Logica.Casilla;
 
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class CorredorNormal extends Normal implements Corredor, Serializable {
     }
 
     @Override
-    public void reaccionarAntesAtaque(Superviviente superviviente) {
-        super.reaccionarAntesAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 }

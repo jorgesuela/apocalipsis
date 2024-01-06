@@ -1,6 +1,7 @@
 package Activable;
 
 import Activable.Interfaces.Caminante;
+import Equipo.Arma;
 import Activable.Toxico;
 import Logica.Casilla;
 
@@ -21,7 +22,7 @@ public class CaminanteToxico extends Toxico implements Caminante, Serializable {
         return ACTIVACIONES;
     }
     @Override
-    public void reaccionarAlAtaque(Superviviente superviviente) {
-        super.reaccionarAlAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 }

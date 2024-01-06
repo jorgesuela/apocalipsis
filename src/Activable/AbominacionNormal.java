@@ -1,6 +1,7 @@
 package Activable;
 
 import Activable.Interfaces.Abominacion;
+import Equipo.Arma;
 import Logica.Casilla;
 
 import java.io.Serializable;
@@ -23,7 +24,7 @@ public class AbominacionNormal extends Normal implements Abominacion, Serializab
     }
 
     @Override
-    public void reaccionarAntesAtaque(Superviviente superviviente) {
-        super.reaccionarAntesAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 }

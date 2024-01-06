@@ -1,6 +1,7 @@
 package Activable;
 
 import Activable.Interfaces.Abominacion;
+import Equipo.Arma;
 import Logica.Casilla;
 
 import java.io.Serializable;
@@ -21,7 +22,7 @@ public class AbominacionToxico extends Toxico implements Abominacion, Serializab
         return ACTIVACIONES;
     }
     @Override
-    public void reaccionarAlAtaque(Superviviente superviviente) {
-        super.reaccionarAlAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 }

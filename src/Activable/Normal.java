@@ -4,6 +4,8 @@ import Logica.Casilla;
 
 import java.io.Serializable;
 
+import Equipo.Arma;
+
 public abstract class Normal extends Zombi implements Serializable {
 
     @Override
@@ -15,8 +17,8 @@ public abstract class Normal extends Zombi implements Serializable {
         super(pos);
     }
 
-    public void reaccionarAntesAtaque(Superviviente superviviente){
-        super.reaccionarAlAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente, Arma armaElegida) {
+        super.reaccionarAlAtaque(superviviente, armaElegida);
     }
 
     @Override
