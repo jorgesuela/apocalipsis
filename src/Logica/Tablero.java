@@ -63,15 +63,12 @@ public class Tablero implements Serializable {
 
                 int cantidadZombis = 0;
                 int cantidadSupervivientes = 0;
-
-                // matrizCasillas está mal, hay que pensar cómo hacer para comparar las casillas
-                int counter = 1;
+                
                 for (Zombi zombi : listaZombis) {
                     if (zombi.getPosicion().equals(casillas[fila][columna])) {
-                        objetosEnCasilla.add("  Z"+counter+"  ");
+                        objetosEnCasilla.add("  "+zombi.getNombre()+"  ");
                         cantidadZombis++; // Contar zombis en la casilla
                     }
-                    counter++;
                 }
 
                 if (cantidadZombis > 1) {

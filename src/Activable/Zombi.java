@@ -4,27 +4,61 @@ import Logica.Casilla;
 import Logica.Tablero;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Zombi extends Activable implements Serializable {
+    private static int contadorInstancias = 0;
+    protected int heridasInfligidas;
+    protected String nombre;
 
     public Zombi(Casilla pos) {
         super(pos);
+        heridasInfligidas = 0;
+        contadorInstancias++;
+        this.nombre = "Z" + contadorInstancias;
     }
 
 
     public abstract String getImageName();
     public abstract int getAguante();
 
+    public String getNombre(){
+         return this.nombre;   
+    }
 
-    public void reaccionarAntesAtaque(Superviviente superviviente){
-        if (superviviente.elegirArmaEquipada().getPotencia()==getAguante()){
-            setMuerto();
+    public int getHeridasInfligidas(){
+        return this.heridasInfligidas;
+    }
+
+    public void setHeridasInfligidas(int heridasInfligidas){
+        this.heridasInfligidas = heridasInfligidas;
+    }
+
+
+    public void reaccionarAlAtaque(Superviviente superviviente){
+        if (superviviente.elegirArmaEquipada().getPotencia()>=getAguante()){
+            this.setMuerto();
+            superviviente.setKillScore(superviviente.getKillScore() + 1); //sumamos una kill al superviviente
             System.out.println("Zombi eliminado");
         }
-    };
+    }
 
     public abstract int getNbActivaciones();
+
+    // util para ir quitando de la lista del juego de supervivientes los que esten muertos
+    public static ArrayList<Zombi> zombisVivos(ArrayList<Zombi> zombis) {
+        ArrayList<Zombi> zombisVivos = new ArrayList<>();
+
+        for (Zombi zombi : zombis) {
+            if (zombi.isVivo()) {
+                zombisVivos.add(zombi);
+            }
+        }
+
+        return zombisVivos;
+    }
+
 
     public void moverHaciaSupervivienteMasCercano(Tablero tablero, Superviviente supervivienteMasCercano) {
         if (supervivienteMasCercano != null) {
@@ -78,13 +112,16 @@ public abstract class Zombi extends Activable implements Serializable {
     }
 
     public void morder(Superviviente supervivienteMasCercano) {
+        supervivienteMasCercano.setNbHeridas(supervivienteMasCercano.getNbHeridas() + 1);
         if (supervivienteMasCercano.getNbHeridas() < 2) {
-            supervivienteMasCercano.setNbHeridas(supervivienteMasCercano.getNbHeridas() + 1);
+            this.setHeridasInfligidas(this.getHeridasInfligidas() + 1);
             System.out.println("superviviente " + supervivienteMasCercano.getNombre() + " fue herido. Heridas = " + supervivienteMasCercano.getNbHeridas());
         }
-        if (supervivienteMasCercano.getNbHeridas() == 2){
+        else{
             System.out.println("superviviente " + supervivienteMasCercano.getNombre() + " ha muerto.");
             supervivienteMasCercano.setMuerto();
+            this.setHeridasInfligidas(this.getHeridasInfligidas() + 1);
+            this.setKillScore(this.getKillScore()+ 1);
         }
     }
 }

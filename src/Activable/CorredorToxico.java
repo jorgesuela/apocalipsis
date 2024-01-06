@@ -21,8 +21,8 @@ public class CorredorToxico extends Toxico implements Corredor, Serializable {
         return ACTIVACIONES;
     }
     @Override
-    public void reaccionarAntesAtaque(Superviviente superviviente) {
-        super.reaccionarAntesAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente) {
+        super.reaccionarAlAtaque(superviviente);
     }
 
 

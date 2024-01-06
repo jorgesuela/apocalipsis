@@ -17,12 +17,20 @@ public abstract class Toxico extends Zombi implements Serializable {
     }
 
     @Override
-    public void reaccionarAntesAtaque(Superviviente superviviente) {
+    public void reaccionarAlAtaque(Superviviente superviviente) {
         if(superviviente.getPosicion().equals(super.posicion)){
-            superviviente.setNbHeridas(+1);
-            System.out.println(superviviente.toString() +" fue herido. Fue herido "+superviviente.getNbHeridas()+"veces en total " );
+            superviviente.setNbHeridas(superviviente.getNbHeridas() +1);
+            this.setHeridasInfligidas(this.getHeridasInfligidas() + 1);
+            System.out.println(superviviente.getNombre() +" fue herido por sangre zombi toxica. numero heridas = " + superviviente.getNbHeridas()+"." );
+            if (superviviente.getNbHeridas() >= 2){
+                superviviente.setMuerto();
+                //killscore de zombi + 1
+                this.setKillScore(this.getKillScore() + 1);
+                this.setHeridasInfligidas(this.getHeridasInfligidas() + 1);
+                System.out.println("superviviente " + superviviente.getNombre() + " ha muerto.");
+            } 
         }
-        super.reaccionarAntesAtaque(superviviente);
+        super.reaccionarAlAtaque(superviviente);
     }
 
     @Override

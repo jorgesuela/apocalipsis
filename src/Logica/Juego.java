@@ -61,19 +61,29 @@ public class Juego implements Serializable {
         }
     }
 
+    private void imprimirInformacionZombi(Zombi zombi) {
+        if(zombi.getHeridasInfligidas() > 0){
+            System.out.println(zombi.getNombre() + ":");
+            System.out.println("- ha hecho " + zombi.getHeridasInfligidas() + " heridas a superviviente/s.");
+            System.out.println("- ha eliminado a " + zombi.getKillScore() + " superviviente/s.");
+        } 
+    }
+
     public void mostrarResultadosDelJuego(){
         for (Superviviente superviviente : supervivientes) {
             imprimirInformacionSuperviviente(superviviente);
         }
+        for (Zombi zombi : zombis) {
+            imprimirInformacionZombi(zombi);
+        }
     }
 
     public void mostrarSuperviventesYZombis(){
-        int counter = 0;
         System.out.println();
         System.out.println(supervivientes.size()>1?"Superviviente :": "Supervivientes :");
         for(Superviviente s: supervivientes){System.out.print(s.getNombre()+": heridas:"+s.getNbHeridas()+"\t");}
         System.out.println(zombis.size()>1?"\nZombi : ":"\nZombis :");
-        for(Zombi z: zombis){System.out.print("Z"+(++counter)+": "+z.toString().replace("Activable.", "").replace("class", "")+"\t");}
+        for(Zombi z: zombis){System.out.print(z.getNombre()+": "+z.toString().replace("Activable.", "").replace("class", "")+"\t");}
         System.out.println();System.out.println();
 
     }
@@ -183,8 +193,8 @@ public class Juego implements Serializable {
             if (superviviente.aSalvo()) {
                 continue;
             }
-            // bucle hasta que superviviente sin acciones
-            while((superviviente.getNbAcciones() > 0)) {
+            // bucle hasta que superviviente sin acciones o muera
+            while((superviviente.getNbAcciones() > 0) && (superviviente.isVivo())) {
                 // si el superviviente ya esta a salvo salir del bucle
                 if (superviviente.aSalvo()){
                     superviviente.setNbAcciones(0);
@@ -192,7 +202,9 @@ public class Juego implements Serializable {
                 }
                 // mostrar tablero antes de acciones
                 System.out.println(" ");
-                tablero.printTablero(zombis, supervivientesVivos, objetivo);
+                tablero.printTablero(Zombi.zombisVivos(zombis), Superviviente.supervivientesVivos(supervivientes), objetivo);
+                System.out.println(" ");
+                mostrarSuperviventesYZombis();
                 System.out.println(" ");
                 System.out.println("Que debe hacer el superviviente "  + superviviente.getNombre() + "?");
                 System.out.println("Te quedan " + superviviente.getNbAcciones() + " acciones.");
@@ -201,12 +213,9 @@ public class Juego implements Serializable {
                 // Leer la entrada del usuario como una cadena
                 int entrada = obtenerEntradaUsuario();
                 switch (entrada) {
-                    case 1 -> superviviente.moverse(tablero, zombis);
+                    case 1 -> superviviente.moverse(tablero, Zombi.zombisVivos(zombis));
                     case 2 -> superviviente.buscarEquipo();
-                    case 3 -> {
-                        List<Zombi> zombisEliminados = superviviente.atacar(tablero, zombis);
-                        zombis.removeAll(zombisEliminados); // Eliminar de lista zombis los que hayan muerto
-                    }
+                    case 3 -> superviviente.atacar(tablero, Zombi.zombisVivos(zombis));
                     case 4 -> superviviente.equiparArma();
                     case 5 -> superviviente.noHacerNada();
                     case 6 -> superviviente.consultarEquipo();
@@ -216,11 +225,12 @@ public class Juego implements Serializable {
                 }
                 // después de cada acción se comprueba si el superviviente ha logrado llegar al objetivo con el suministro
                 superviviente.checkIfSupervivienteASalvo(tablero);
+            
 
             }
             //mostrar tablero al acabar acciones de superviviente
             System.out.println(" ");
-            tablero.printTablero(zombis, Superviviente.supervivientesVivos(supervivientes), objetivo);
+            tablero.printTablero(Zombi.zombisVivos(zombis), Superviviente.supervivientesVivos(supervivientes), objetivo);
             System.out.println(" ");
 
         }
@@ -268,11 +278,13 @@ public class Juego implements Serializable {
         System.out.println("Los zombis se han activado!!!");
         System.out.println("###########################################");
         System.out.println(" ");
-        for (Zombi zombi : zombis) {
+        ArrayList<Zombi> zombisVivos = Zombi.zombisVivos(zombis);
+        for (Zombi zombi : zombisVivos) {
             for (int i = 1; i <= zombi.getNbActivaciones(); i++) {
                 // los zombis solo iran a por supervivientes que no estén a salvo y que sigan vivos obviamente
                 List<Superviviente> supervivientesObjetivo= supervivientes.stream()
-                        .filter(superviviente -> !superviviente.aSalvo()).toList();
+                        .filter(superviviente -> !superviviente.aSalvo())
+                        .filter(superviviente -> superviviente.isVivo()).toList();
 
                 // Obtener el superviviente más cercano
                 Superviviente supervivienteMasCercano = zombi.encontrarSupervivienteMasCercano(supervivientesObjetivo);
@@ -292,6 +304,7 @@ public class Juego implements Serializable {
         tablero.printTablero(zombis, Superviviente.supervivientesVivos(supervivientes), objetivo);
         System.out.println(" ");
     }
+
 
     public ArrayList<Zombi> crearTandaZombis(int numberSupervivientes, int contadorTurnos){
         ArrayList<Zombi> zombis = new ArrayList<>();

@@ -7,10 +7,11 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.List;
 
-public class MyInterfaceGrafica {
+public class MyInterfaceGrafica implements Serializable{
 
     private List<Zombi> zombis;
     private List<Superviviente> supervivientes;

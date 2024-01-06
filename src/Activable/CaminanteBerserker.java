@@ -21,7 +21,7 @@ public class CaminanteBerserker extends Berserker implements Caminante, Serializ
         return ACTIVACIONES;
     }
     @Override
-    public void reaccionarAntesAtaque(Superviviente superviviente) {
-        super.reaccionarAntesAtaque(superviviente);
+    public void reaccionarAlAtaque(Superviviente superviviente) {
+        super.reaccionarAlAtaque(superviviente);
     }
 }

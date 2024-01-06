@@ -16,7 +16,7 @@ public abstract class Normal extends Zombi implements Serializable {
     }
 
     public void reaccionarAntesAtaque(Superviviente superviviente){
-        super.reaccionarAntesAtaque(superviviente);
+        super.reaccionarAlAtaque(superviviente);
     }
 
     @Override

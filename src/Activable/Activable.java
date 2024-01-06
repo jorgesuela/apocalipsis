@@ -8,10 +8,12 @@ import java.io.Serializable;
 public abstract class Activable implements Serializable {
     protected Casilla posicion;
     protected Boolean vivo;
+    protected int killscore;
 
     public Activable(Casilla pos){
         this.vivo = true;
         this.posicion = pos;
+        this.killscore = 0;
     }
 
     //getters
@@ -25,6 +27,14 @@ public abstract class Activable implements Serializable {
 
     public boolean isVivo() {
         return this.vivo;
+    }
+
+    public int getKillScore(){
+        return this.killscore;
+    }
+
+    public void setKillScore(int killscore){
+        this.killscore = killscore;
     }
 
     protected void setMuerto(){

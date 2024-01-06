@@ -14,7 +14,6 @@ public class Superviviente extends Activable implements Serializable {
     private Integer nbAcciones;
     private final ArrayList<Equipo> equipo;
     private final ArrayList<Arma> armasActivas;
-    private Integer killScore;
     private Integer nbHeridas;
     private Boolean estaASalvo;
 
@@ -24,7 +23,6 @@ public class Superviviente extends Activable implements Serializable {
         this.nbAcciones = 3;
         this.equipo = new ArrayList<>();
         this.armasActivas = new ArrayList<>();
-        this.killScore = 0;
         this.nbHeridas = 0;
         this.estaASalvo = false;
     }
@@ -57,14 +55,6 @@ public class Superviviente extends Activable implements Serializable {
 
     public ArrayList<Equipo> getEquipo() {
         return equipo;
-    }
-
-    public Integer getKillScore() {
-        return killScore;
-    }
-
-    public void setKillScore(Integer killScore) {
-        this.killScore = killScore;
     }
 
     public Integer getNbHeridas() {
@@ -375,7 +365,8 @@ public class Superviviente extends Activable implements Serializable {
 
     // este método obligatoriamente tiene que devolver una lista de los zombies eliminados para
     // poder sacarlos de la lista en la clase juego(asi evitamos el uso de var globales)
-    public List<Zombi> atacar(Tablero tablero, ArrayList<Zombi> listaZombis) {
+    public void atacar(Tablero tablero, ArrayList<Zombi> listaZombis) {
+        int contadorMuertos = 0;
         // restar acciones
         this.restarAcciones(1);
         // Inicializar la lista de zombis eliminados
@@ -392,7 +383,7 @@ public class Superviviente extends Activable implements Serializable {
 
         if (numZombisEnCasilla == 0) {
             System.out.println("Ataque fallido, no hay zombies en la casilla " + casillaElegida);
-            return zombisEliminados; // Devolver lista vacía si no hay zombies
+            return; // Devolver lista vacía si no hay zombies
         }
         else{
             int nExitosArma = armaElegida.lanzarDado();
@@ -408,19 +399,15 @@ public class Superviviente extends Activable implements Serializable {
             // OJO: EN ESTE APARTADO HABRÁ QUE REACCIONAR AL ATAQUE DE TODOS LOS ZOMBIES QUE SE HAYAN INTENTADO ELIMINAR
             for (Zombi zombi : zombisEnCasillaMarcada) {
                 if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
-                // SI ES BERSERKER no se le puede matar con ataques a distancia, pasamos al siguiente
-                if (zombi instanceof Berserker && armaElegida.getAlcance()!= 0) continue;
-                if (armaElegida.getPotencia() >= zombi.getAguante()) {
-                    zombisEliminados.add(zombi);
-                    this.setKillScore(this.killScore + 1); //sumamos una kill al superviviente
-                    nExitosArma--; //restamos un tiro exitoso
-                }
+                zombi.reaccionarAlAtaque(this);
+                contadorMuertos++;
+                nExitosArma--; //restamos un tiro exitoso
+                
             }
         }
-        System.out.println("Ataque realizado, se han elimimado " + zombisEliminados.size() + " zombie/s.");
-        return zombisEliminados;
+        System.out.println("Ataque realizado, se han elimimado " + contadorMuertos + " zombie/s.");
+        return;
     }
-
     // util para ir quitando de la lista del juego de supervivientes los que esten muertos
     public static ArrayList<Superviviente> supervivientesVivos(ArrayList<Superviviente> supervivientes) {
         ArrayList<Superviviente> supervivientesVivos = new ArrayList<>();
