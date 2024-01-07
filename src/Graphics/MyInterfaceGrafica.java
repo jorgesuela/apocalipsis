@@ -44,8 +44,28 @@ public class MyInterfaceGrafica implements Serializable{
                         g.fillRect(x * 64, y * 64, 64, 64);
                     }
                 }
-                supervivientes.forEach(s -> drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/ashabajo.png"));
+                supervivientes.forEach(s -> {drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/ashabajo.png");if(s.getNbHeridas()==0)drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/full_life.png");if(s.getNbHeridas()==1)drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/half_life.png");});
                 zombis.forEach(z -> drawImage(g, z.getPosicion().getCoordy(), z.getPosicion().getCoordx(), 64, z.getImageName()));
+                supervivientes.forEach(superviviente -> {
+                    int counter = 1;
+                    for(Superviviente supvv : supervivientes){
+                        if(superviviente.getPosicion().equals(supvv.getPosicion())&&!superviviente.equals(supvv)){
+                            counter++;
+                        }
+                    }
+                    if (counter>1)drawImage(g, superviviente.getPosicion().getCoordy(), superviviente.getPosicion().getCoordx(), 64, "/s"+counter+".png");
+                    counter=0;
+                });
+                zombis.forEach(zombi -> {
+                    int counter = 1;
+                    for(Zombi zb : zombis){
+                        if(zombi.getPosicion().equals(zb.getPosicion())&&!zombi.equals(zb)){
+                            counter++;
+                        }
+                    }
+                    if (counter>1)drawImage(g, zombi.getPosicion().getCoordy(), zombi.getPosicion().getCoordx(), 64, "/z"+counter+".png");
+                    counter=0;
+                });
                 drawImage(g, tamano-1, tamano-1, 64, "/exit.png");
             }
         };
