@@ -1,8 +1,10 @@
-package Equipo;
+package Logica;
 
 import java.io.Serializable;
 import java.util.Random;
 
+// esta clase se utiliza solo para lanzar un dado y saber si el ataque fallara o acertara, 
+// se llamara tantas veces como dados tenga el arma
 public class Dado implements Serializable {
     public static boolean lanzarDado(int valorExito) {
         Random random = new Random();
