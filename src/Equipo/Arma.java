@@ -116,7 +116,7 @@ public class Arma extends Equipo implements Serializable {
         return nombre.toString();
     }
 
-    public int lanzarDado() {
+    public int lanzarDados() {
         int nExitos = 0;
         for (int i = 0; i < this.numDados; i++) {
             if (Dado.lanzarDado(this.valorExito)) {
