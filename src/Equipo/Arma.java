@@ -41,8 +41,7 @@ public class Arma extends Equipo implements Serializable {
         super.mostrarInfo(); // Llama al método de la clase base para mostrar la información común
         System.out.println("potencia: " + getPotencia().toString());
         System.out.println("alcance: " + getAlcance().toString());
-        System.out.println("valExito: " + this.dado.getValorExito());
-        System.out.println("nDados: " + this.dado.getNumDados());
+        System.out.println("dado -> " + this.dado.getNumDados() + " dados y exito con " + this.dado.getValorExito());
     }
 
     public static Arma generarArmaAleatoria() {
