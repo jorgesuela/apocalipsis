@@ -44,12 +44,13 @@ public class MyInterfaceGrafica implements Serializable{
                         g.fillRect(x * 64, y * 64, 64, 64);
                     }
                 }
-                supervivientes.forEach(s -> {drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/ashabajo.png");if(s.getNbHeridas()==0)drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/full_life.png");if(s.getNbHeridas()==1)drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/half_life.png");});
-                zombis.forEach(z -> drawImage(g, z.getPosicion().getCoordy(), z.getPosicion().getCoordx(), 64, z.getImageName()));
+
+                supervivientes.forEach(s -> {if(s.getNbHeridas()!=2)drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/ashabajo.png");if(s.getNbHeridas()==0)drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/full_life.png");if(s.getNbHeridas()==1)drawImage(g, s.getPosicion().getCoordy(), s.getPosicion().getCoordx(), 64, "/half_life.png");});
+                zombis.forEach(z ->{if (z.isVivo())drawImage(g, z.getPosicion().getCoordy(), z.getPosicion().getCoordx(), 64, z.getImageName());});
                 supervivientes.forEach(superviviente -> {
                     int counter = 1;
                     for(Superviviente supvv : supervivientes){
-                        if(superviviente.getPosicion().equals(supvv.getPosicion())&&!superviviente.equals(supvv)){
+                        if(supvv.getNbHeridas()!=2&&superviviente.getPosicion().equals(supvv.getPosicion())&&!superviviente.equals(supvv)){
                             counter++;
                         }
                     }
@@ -59,7 +60,7 @@ public class MyInterfaceGrafica implements Serializable{
                 zombis.forEach(zombi -> {
                     int counter = 1;
                     for(Zombi zb : zombis){
-                        if(zombi.getPosicion().equals(zb.getPosicion())&&!zombi.equals(zb)){
+                        if(zb.isVivo()&&zombi.getPosicion().equals(zb.getPosicion())&&!zombi.equals(zb)){
                             counter++;
                         }
                     }
