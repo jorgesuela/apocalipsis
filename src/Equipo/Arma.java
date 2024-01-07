@@ -116,18 +116,15 @@ public class Arma extends Equipo implements Serializable {
         return nombre.toString();
     }
 
-    public int lanzarDado(){
+    public int lanzarDado() {
         int nExitos = 0;
-        Random random = new Random();
         for (int i = 0; i < this.numDados; i++) {
-            int min = 1;
-            int max = 6;
-            int randomDados = random.nextInt(max - min + 1) + min;
-            if (randomDados >= this.valorExito) {
-                System.out.println("dado numero " + (i+1) + " = Exito");
+            if (Dado.lanzarDado(this.valorExito)) {
+                System.out.println("dado numero " + (i + 1) + " = Éxito");
                 nExitos++;
+            } else {
+                System.out.println("dado numero " + (i + 1) + " = Fallo");
             }
-            else System.out.println("dado numero " + (i+1) + " = Fallo");
         }
         return nExitos;
     }
