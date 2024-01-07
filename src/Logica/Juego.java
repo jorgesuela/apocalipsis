@@ -23,6 +23,8 @@ public class Juego implements Serializable {
     }
 
 
+
+
     public int seleccionarNumSupervivientes() {
         while (true) {
             try {

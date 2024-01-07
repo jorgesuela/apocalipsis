@@ -4,6 +4,6 @@ import Logica.Juego;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     public static void main(String[] args) {
-        new Juego().iniciar();
+        Juego juego = new Juego();juego.iniciar();
     }
 }
