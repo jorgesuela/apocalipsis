@@ -42,7 +42,6 @@ public abstract class Zombi extends Activable implements Serializable {
         if (armaElegida.getPotencia()>=getAguante()){
             this.setMuerto();
             superviviente.setKillScore(superviviente.getKillScore() + 1); //sumamos una kill al superviviente
-            System.out.println("Zombi eliminado");
         }
     }
 

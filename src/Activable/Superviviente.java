@@ -370,8 +370,6 @@ public class Superviviente extends Activable implements Serializable {
         int contadorMuertos = 0;
         // restar acciones
         this.restarAcciones(1);
-        // Inicializar la lista de zombis eliminados
-        List<Zombi> zombisEliminados = new ArrayList<>();
 
         // Con qué arma quieres atacar
         Arma armaElegida = this.elegirArmaEquipada();
@@ -387,7 +385,7 @@ public class Superviviente extends Activable implements Serializable {
             return; // Devolver lista vacía si no hay zombies
         }
         else{
-            int nExitosArma = armaElegida.lanzarDado();
+            int nExitosArma = armaElegida.getDado().lanzarDado();
 
             // Filtrar la lista de zombis: solo zombies de la lista que se encuentran en la casilla marcada para ataque
             // Además, ordena la lista de zombis por aguante de manera descendente

@@ -72,9 +72,12 @@ public class Juego implements Serializable {
     }
 
     public void mostrarResultadosDelJuego(){
+        System.out.println("####ESTADISTICAS DE LA PARTIDA####");
+        System.out.println("*SUPERVIVIENTES*");
         for (Superviviente superviviente : supervivientes) {
             imprimirInformacionSuperviviente(superviviente);
         }
+        System.out.println("*ZOMBIS*");
         for (Zombi zombi : zombis) {
             imprimirInformacionZombi(zombi);
         }

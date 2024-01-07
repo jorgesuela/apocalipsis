@@ -3,18 +3,18 @@ package Equipo;
 import java.io.Serializable;
 import java.util.Random;
 
+import Logica.Dado;
+
 public class Arma extends Equipo implements Serializable {
     private final Integer potencia;
     private final Integer alcance;
-    private final Integer valorExito;
-    private final Integer numDados;
+    private final Dado dado;
 
-    public Arma(String nombre, Integer potencia, Integer alcance, Integer valorExito, Integer numDados){
+    public Arma(String nombre, Integer potencia, Integer alcance, Dado dado){
         super(nombre);
         this.potencia = potencia;
         this.alcance = alcance;
-        this.numDados = numDados;
-        this.valorExito = valorExito;
+        this.dado = dado;
     }
 
     //getters
@@ -28,16 +28,12 @@ public class Arma extends Equipo implements Serializable {
         return alcance;
     }
 
-    public Integer getNumDados() {
-        return numDados;
-    }
-
     public Integer getPotencia() {
         return potencia;
     }
 
-    public Integer getValorExito() {
-        return valorExito;
+    public Dado getDado(){
+        return this.dado;
     }
 
     @Override
@@ -45,8 +41,7 @@ public class Arma extends Equipo implements Serializable {
         super.mostrarInfo(); // Llama al método de la clase base para mostrar la información común
         System.out.println("potencia: " + getPotencia().toString());
         System.out.println("alcance: " + getAlcance().toString());
-        System.out.println("valExito: " + getValorExito());
-        System.out.println("nDados: " + getNumDados());
+        System.out.println("dado -> " + this.dado.getNumDados() + " dados y exito con " + this.dado.getValorExito());
     }
 
     public static Arma generarArmaAleatoria() {
@@ -101,7 +96,7 @@ public class Arma extends Equipo implements Serializable {
 
         nombreArma += construirNombreArma(potencia, alcance, valorExito, numDados);
 
-        return new Arma(nombreArma, potencia, alcance, valorExito, numDados);
+        return new Arma(nombreArma, potencia, alcance, new Dado(numDados, valorExito));
     }
 
     // pone nombre al arma dependiendo de sus caracteristicas
@@ -115,23 +110,6 @@ public class Arma extends Equipo implements Serializable {
 
         return nombre.toString();
     }
-
-    public int lanzarDado(){
-        int nExitos = 0;
-        Random random = new Random();
-        for (int i = 0; i < this.numDados; i++) {
-            int min = 1;
-            int max = 6;
-            int randomDados = random.nextInt(max - min + 1) + min;
-            if (randomDados >= this.valorExito) {
-                System.out.println("dado numero " + (i+1) + " = Exito");
-                nExitos++;
-            }
-            else System.out.println("dado numero " + (i+1) + " = Fallo");
-        }
-        return nExitos;
-    }
-
 
 }
 
