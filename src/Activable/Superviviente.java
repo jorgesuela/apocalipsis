@@ -385,7 +385,7 @@ public class Superviviente extends Activable implements Serializable {
             return; // Devolver lista vacía si no hay zombies
         }
         else{
-            int nExitosArma = armaElegida.getDado().lanzarDado();
+            int nExitosArma = armaElegida.disparar();
 
             // Filtrar la lista de zombis: solo zombies de la lista que se encuentran en la casilla marcada para ataque
             // Además, ordena la lista de zombis por aguante de manera descendente

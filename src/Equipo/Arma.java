@@ -111,5 +111,9 @@ public class Arma extends Equipo implements Serializable {
         return nombre.toString();
     }
 
+    public int disparar() {
+        return dado.lanzarDado();
+    }  
+
 }
 
