@@ -15,6 +15,7 @@ public class Juego implements Serializable {
     private Casilla objetivo;
     public Tablero tablero;
     private int contadorTurnos = 1;
+    private Boolean partidaGuardada = false;
     MyInterfaceGrafica interfaceGrafica;
 
     public Juego() {
@@ -140,6 +141,7 @@ public class Juego implements Serializable {
                     this.objetivo = juegoGuardado.objetivo;
                     this.tablero = juegoGuardado.tablero;
                     this.contadorTurnos = juegoGuardado.contadorTurnos;
+                    this.partidaGuardada = true;
                 }
                 case 2 -> this.reiniciar();
             }
@@ -314,6 +316,11 @@ public class Juego implements Serializable {
     public ArrayList<Zombi> crearTandaZombis(int numberSupervivientes, int contadorTurnos){
         ArrayList<Zombi> zombis = new ArrayList<>();
         int nbZombies;
+        // si se acaba de cargar una partida no se meten zombis
+        if(partidaGuardada){
+            this.partidaGuardada = false;
+            return zombis;
+        } 
         //si es inicio de partida -> 3 zombis x superviviente
         if (contadorTurnos == 1) nbZombies = numberSupervivientes * 3;
         //si no es inicio de partida -> 1 zombi x superviviente

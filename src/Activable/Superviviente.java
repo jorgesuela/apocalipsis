@@ -399,9 +399,12 @@ public class Superviviente extends Activable implements Serializable {
             for (Zombi zombi : zombisEnCasillaMarcada) {
                 if (nExitosArma == 0) break; //cuando no queden tiros salimos y devolvemos la lista de zombis muertos
                 zombi.reaccionarAlAtaque(this, armaElegida);
-                contadorMuertos++;
-                nExitosArma--; //restamos un tiro exitoso
-                
+
+                //este codigo es redudante pero lo he puesto asi porque lo he enviado ya y no me da tiempo a dejarlo bien
+                if(armaElegida.getPotencia() >= zombi.getAguante()){
+                    contadorMuertos++;
+                    nExitosArma--; //restamos un tiro exitoso
+                }      
             }
         }
         System.out.println("Ataque realizado, se han elimimado " + contadorMuertos + " zombie/s.");
