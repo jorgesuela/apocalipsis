@@ -28,6 +28,9 @@ public class MyInterfaceGrafica implements Serializable{
         myFrame = new JFrame("apocalipsis");
         myFrame.setBounds(10, 10, 512, 512);
         myFrame.setSize(tamano*66, tamano*70);
+        myFrame.setLocationRelativeTo(null);
+        myFrame.setResizable(false);
+        myFrame.setAlwaysOnTop(true);
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         myPanel = new JPanel(new GridLayout(tamano, tamano)) {
